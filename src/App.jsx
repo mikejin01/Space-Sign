@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 
+const BASE = import.meta.env.BASE_URL
+
 const PHONE = '(718) 961-1112'
 const PHONE_DOT = '718.961.1112'
 const PHONE_TEL = 'tel:+17189611112'
@@ -205,7 +207,7 @@ export default function App() {
     <>
       <header>
         <div className="wrap nav">
-          <a className="nav-logo" href="#" onClick={closeMenu}><img src="/assets/logo-black.png" alt="SPACE SIGN" /></a>
+          <a className="nav-logo" href="#" onClick={closeMenu}><img src={`${BASE}assets/logo-black.png`} alt="SPACE SIGN" /></a>
           <nav className="nav-links">
             <a href="#work">Work</a>
             <a href="#services">Services</a>
@@ -242,7 +244,7 @@ export default function App() {
             <div
               key={sl.img}
               className={`hero-slide img${i === slide ? ' active' : ''}`}
-              style={{ backgroundImage: `url(/assets/work/${sl.img})` }}
+              style={{ backgroundImage: `url(${BASE}assets/work/${sl.img})` }}
               role="img"
               aria-label={sl.label}
               aria-hidden={i === slide ? undefined : true}
@@ -345,7 +347,7 @@ export default function App() {
           <div className="work">
             {work.map((w) => (
               <div className={`cell ${w.cls}`} key={w.img}>
-                <div className="img" style={{ backgroundImage: `url(/assets/work/${w.img})` }} />
+                <div className="img" style={{ backgroundImage: `url(${BASE}assets/work/${w.img})` }} />
                 <div className="cap"><b>{w.name}</b><span className="mono">{w.type}</span></div>
               </div>
             ))}
@@ -363,7 +365,7 @@ export default function App() {
           <div className="clients">
             {clients.map((c) => (
               <div className="client" key={c.file}>
-                <img src={`/assets/clients/${c.file}.png`} alt={c.name} loading="lazy" />
+                <img src={`${BASE}assets/clients/${c.file}.png`} alt={c.name} loading="lazy" />
               </div>
             ))}
           </div>
@@ -464,7 +466,7 @@ export default function App() {
         <div className="wrap">
           <div className="foot">
             <div className="foot-logo">
-              <img src="/assets/logo-white.png" alt="SPACE SIGN" />
+              <img src={`${BASE}assets/logo-white.png`} alt="SPACE SIGN" />
               <p className="mono" style={{ marginTop: 16, color: 'var(--mute)' }}>Design · Build · Install · Permit</p>
             </div>
             <div className="foot-cols">
