@@ -170,9 +170,11 @@ const steps = [
 export default function App() {
   const [slide, setSlide] = useState(0)
   const [activeArea, setActiveArea] = useState(null)
+  const [menuOpen, setMenuOpen] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' })
   const [sent, setSent] = useState(false)
   const go = useCallback((n) => setSlide((s) => (n + heroSlides.length) % heroSlides.length), [])
+  const closeMenu = useCallback(() => setMenuOpen(false), [])
 
   const onField = useCallback((e) => {
     const { name, value } = e.target
@@ -203,7 +205,7 @@ export default function App() {
     <>
       <header>
         <div className="wrap nav">
-          <a className="nav-logo" href="#"><img src="/assets/logo-black.png" alt="SPACE SIGN" /></a>
+          <a className="nav-logo" href="#" onClick={closeMenu}><img src="/assets/logo-black.png" alt="SPACE SIGN" /></a>
           <nav className="nav-links">
             <a href="#work">Work</a>
             <a href="#services">Services</a>
@@ -213,7 +215,24 @@ export default function App() {
             <a className="nav-phone" href={PHONE_TEL}>{PHONE}</a>
             <a className="btn" href="#quote">Get a free quote</a>
           </nav>
+          <button
+            className={`nav-toggle${menuOpen ? ' open' : ''}`}
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((o) => !o)}
+          >
+            <span /><span /><span />
+          </button>
         </div>
+        <nav className={`mobile-menu${menuOpen ? ' open' : ''}`}>
+          <a href="#work" onClick={closeMenu}>Work</a>
+          <a href="#services" onClick={closeMenu}>Services</a>
+          <a href="#clients" onClick={closeMenu}>Clients</a>
+          <a href="#areas" onClick={closeMenu}>Service Areas</a>
+          <a href="#process" onClick={closeMenu}>Process</a>
+          <a className="nav-phone" href={PHONE_TEL} onClick={closeMenu}>{PHONE}</a>
+          <a className="btn" href="#quote" onClick={closeMenu}>Get a free quote</a>
+        </nav>
       </header>
 
       {/* HERO */}
