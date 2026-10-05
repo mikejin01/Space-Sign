@@ -16,6 +16,14 @@ const services = [
   { title: 'Permits & Violations', img: photos.permits },
 ]
 
+// Crop focus for each hero photo, so the sign stays in frame at any slider shape.
+const heroFocus = {
+  'space-sign-hero-1.png': 'center 26%',
+  'space-sign-hero-2.png': 'center 34%',
+  'space-sign-hero-3.png': 'center 30%',
+  'space-sign-hero-4.png': '72% 42%',
+}
+
 const projects = gallery.filter((g, i) => i % 2 === 0 || g.type === 'Blade').slice(0, 12)
 
 const navLinks = [
@@ -144,7 +152,7 @@ export default function Speedpro() {
             <div
               key={s.img}
               className={`sp-hero-slide${i === slide ? ' active' : ''}`}
-              style={{ backgroundImage: `url(${asset(`work/${s.img}`)})` }}
+              style={{ backgroundImage: `url(${asset(`work/${s.img}`)})`, backgroundPosition: heroFocus[s.img] }}
               role="img"
               aria-label={s.label}
               aria-hidden={i === slide ? undefined : true}

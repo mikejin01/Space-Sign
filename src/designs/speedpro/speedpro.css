@@ -55,18 +55,18 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .sp-mobile-menu{display:none}
 
 /* hero */
-.sp-hero{position:relative;display:grid;grid-template-columns:736px 1fr;height:700px;background:#000;
+.sp-hero{position:relative;display:grid;grid-template-columns:clamp(540px,43vw,820px) minmax(0,1fr);align-items:center;min-height:700px;padding:100px 104px 100px 0;background:#000;
   overflow:hidden;color:#fff}
 .sp-hero-letters{position:absolute;left:60px;top:-150px;font:200 820px/.8 var(--sp-head);letter-spacing:40px;
   white-space:nowrap;pointer-events:none;
   background:linear-gradient(180deg,rgba(255,255,255,.28) 0%,rgba(255,255,255,.08) 55%,rgba(255,255,255,.24) 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent}
-.sp-hero-copy{position:relative;z-index:2;padding:128px 0 0 20px}
+.sp-hero-copy{position:relative;z-index:2;padding:0 0 0 20px}
 .sp-hero-kicker{font:700 18px/23px var(--sp-head);text-transform:uppercase;margin-bottom:6px}
-.sp-hero h1{font:700 180px/144px var(--sp-head);text-transform:uppercase;letter-spacing:-1px}
+.sp-hero h1{font:700 clamp(120px,10.2vw,180px)/.8 var(--sp-head);text-transform:uppercase;letter-spacing:-1px}
 .sp-hero h1 span{display:block}
-.sp-hero-sub{font-size:22px;line-height:27.44px;margin:30px 0 34px}
-.sp-hero-media{position:relative;z-index:2;align-self:start;margin-top:141px;height:417px;background:#111}
+.sp-hero-sub{font-size:22px;line-height:27.44px;margin:30px 0 34px;text-wrap:balance}
+.sp-hero-media{position:relative;z-index:2;aspect-ratio:7/5;background:#111;overflow:hidden}
 .sp-hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;
   transition:opacity 1.2s ease}
 .sp-hero-slide.active{opacity:1}
@@ -188,8 +188,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 /* tablet */
 @media(max-width:1280px){
-  .sp-hero{grid-template-columns:52% 1fr}
-  .sp-hero h1{font-size:140px;line-height:115px}
+  .sp-hero{grid-template-columns:clamp(500px,44vw,560px) minmax(0,1fr)}
   .sp-giant{font-size:88px;line-height:90px}
   .sp-nav-links{gap:28px}
   .sp-footer-main{grid-template-columns:1.4fr 1fr 1fr 1.3fr;padding:90px 30px 60px}
@@ -204,8 +203,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     padding:4px 24px 18px;box-shadow:0 14px 24px rgba(0,0,0,.12);font:500 16px/1 var(--sp-head);color:#000}
   .sp-mobile-menu a{padding:15px 0;border-bottom:1px solid #eee}
   .sp-mobile-menu a:last-child{border-bottom:0;color:var(--sp-red)}
-  .sp-hero h1{font-size:110px;line-height:92px}
-  .sp-hero-copy{padding-top:100px}
   .sp-giant{font-size:70px;line-height:74px}
   .sp-card-cap{padding:30px 26px 38px}
   .sp-card-cap::before{left:26px;right:26px;top:30px}
@@ -348,16 +345,23 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 /* tablet / small laptop: hero sizes to its content, reviews head in one row */
 @media(max-width:1280px) and (min-width:901px){
-  .sp-hero{height:auto;min-height:560px;padding-bottom:64px}
+  .sp-hero{min-height:560px;padding:90px 104px 80px 0}
   .sp-hero-copy{padding-right:24px}
   .sp-hero-sub{font-size:20px;line-height:26px;max-width:420px}
 }
 @media(max-width:1040px) and (min-width:901px){
-  .sp-hero-copy{padding-top:96px}
-  .sp-hero-media{margin-top:110px;height:360px}
+  .sp-hero{grid-template-columns:400px minmax(0,1fr);column-gap:24px}
+  .sp-hero h1{font-size:clamp(86px,9.6vw,98px)}
   .sp-reviews-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;padding:80px 40px 10px}
   .sp-quote-mark{left:20px;top:-10px}
   .sp-reviews-ctrl{margin-top:0;flex-direction:column;align-items:flex-end;gap:16px}
   .sp-reviews-ctrl .sp-btn{order:0;margin:0}
   .sp-arrows{transform:none}
+}
+
+@media(max-width:1100px){
+  .sp-util-links{gap:28px;padding-right:30px;white-space:nowrap}
+}
+@media(max-width:1000px){
+  .sp-util-links{display:none}
 }
