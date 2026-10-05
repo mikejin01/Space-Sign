@@ -33,7 +33,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .sp-util-phone{display:flex;align-items:center;justify-content:center;width:215px;height:100%;
   background:var(--sp-red);font-weight:700;font-size:16px;letter-spacing:2px}
 .sp-util-loc{padding-left:13px;font-weight:700;font-size:14px;letter-spacing:1.26px;text-transform:uppercase}
-.sp-util-loc span{color:var(--sp-red);font-size:20px;margin-left:8px;vertical-align:-1px}
+.sp-util-chev{color:var(--sp-red);font-size:20px;margin-left:8px;vertical-align:-1px}
 .sp-util-links{display:flex;gap:45px;margin-left:auto;padding-right:70px;font-weight:700;font-size:11px;
   line-height:14px;text-transform:uppercase}
 .sp-util-links a:hover,.sp-util-loc:hover{color:#bbb}
@@ -223,7 +223,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .sp-util-links{display:none}
   .sp-util-phone{width:auto;padding:0 14px;flex-shrink:0;white-space:nowrap;font-size:14px;letter-spacing:1px}
   .sp-util-loc{font-size:12px;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .sp-util-loc span{display:none}
+  .sp-util-chev{display:none}
   .sp-nav{height:106px;padding:0 24px;justify-content:space-between}
   .sp-burger{margin-right:0}
   .sp-logo{position:absolute;left:50%;transform:translateX(-50%)}
@@ -290,7 +290,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .sp-project{aspect-ratio:321/443}
   .sp-projects-cta-m{display:flex;width:fit-content;margin:36px auto 0}
 
-  .sp-quote{padding:0 20px 120px;background:linear-gradient(180deg,#fff 0,#fff 40px,#000 40px)}
+  .sp-quote{padding:0 20px 64px;background:linear-gradient(180deg,#fff 0,#fff 40px,#000 40px)}
   .sp-quote-box{grid-template-columns:40px 1fr;gap:16px;padding:40px 24px 50px}
   .sp-quote-icon{width:40px;height:40px;margin-top:84px}
   .sp-quote-icon svg{width:26px;height:26px}
@@ -306,9 +306,58 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .sp-footer-brand address a{align-items:center}
   .sp-footer-col{display:none}
   .sp-footer-bar p+p{gap:0 24px}
-  .sp-footer-bar{padding-bottom:84px}
+  .sp-footer-bar{padding-bottom:76px}
 }
 @media(max-width:600px){
   .sp-util-loc{font-size:11px}
+}
+
+/* mobile polish: fluid type, comfortable tap targets, tidy stacks */
+@media(max-width:900px){
+  .sp-burger em{font-size:10px}
+  .sp-burger{width:48px;min-height:44px}
+  .sp-nav-call{width:44px;height:44px;align-items:center;justify-content:center}
+  .sp-hero h1{font-size:clamp(56px,21vw,80px);line-height:.8}
+  .sp-giant{font-size:clamp(38px,calc((100vw - 69px)/5.7),60px);line-height:1}
+  .sp-h2{font-size:clamp(40px,14vw,55px);line-height:1.13}
+  .sp-specific-pills .sp-btn{width:210px}
+  .sp-avatar{width:56px;height:56px;font-size:20px;margin-top:24px}
+  .sp-stars svg{width:22px;height:22px}
+  .sp-clients-row{display:grid;grid-template-columns:repeat(3,1fr);justify-items:center;gap:22px 16px}
+  .sp-clients-row img{max-width:100%;max-height:52px}
+  .sp-dots{gap:0;margin-top:22px}
+  .sp-dots button{width:24px;height:24px;background:radial-gradient(circle,#fff 0 4.5px,transparent 5px)}
+  .sp-dots button.active{background:radial-gradient(circle,#9a9a9a 0 4.5px,transparent 5px)}
+  .sp-quote-box{grid-template-columns:1fr;gap:18px}
+  .sp-quote-icon{width:56px;height:56px;margin-top:0}
+  .sp-quote-icon svg{width:32px;height:32px}
+}
+@media(max-width:480px){
+  .sp-clients-row{grid-template-columns:repeat(2,1fr)}
   .sp-project-track{grid-auto-columns:100%}
+}
+@media(max-width:420px){
+  .sp-util-brand{display:none}
+  .sp-dots button{width:22px;height:22px}
+  .sp-card-num{font-size:16px;margin-right:10px}
+  .sp-card-cap strong{font-size:17px;line-height:20px}
+  .sp-card-all{font-size:12px}
+  .sp-review{padding:18px 20px 30px}
+  .sp-quote-box{padding:32px 20px 36px}
+}
+
+/* tablet / small laptop: hero sizes to its content, reviews head in one row */
+@media(max-width:1280px) and (min-width:901px){
+  .sp-hero{height:auto;min-height:560px;padding-bottom:64px}
+  .sp-hero-copy{padding-right:24px}
+  .sp-hero-sub{font-size:20px;line-height:26px;max-width:420px}
+}
+@media(max-width:1040px) and (min-width:901px){
+  .sp-hero-copy{padding-top:96px}
+  .sp-hero-media{margin-top:110px;height:360px}
+  .sp-reviews-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;padding:80px 40px 10px}
+  .sp-quote-mark{left:20px;top:-10px}
+  .sp-reviews-ctrl{margin-top:0;flex-direction:column;align-items:flex-end;gap:16px}
+  .sp-reviews-ctrl .sp-btn{order:0;margin:0}
+  .sp-arrows{transform:none}
 }

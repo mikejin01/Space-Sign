@@ -97,7 +97,7 @@ export default function Signmakerz() {
 
           <form className="mz-card" onSubmit={onSubmit}>
             <div className="mz-card-strip">
-              <span><Icon d={ICONS.badge} />Licensed &amp; insured <b>· NYC {LICENSE}</b></span>
+              <span><Icon d={ICONS.badge} /><i className="mz-strip-long">Licensed &amp; insured&nbsp;</i><b>· NYC {LICENSE}</b></span>
               <a href={PHONE_TEL}><Icon d={ICONS.phone} />{PHONE}</a>
             </div>
             <div className="mz-card-body">
@@ -217,7 +217,7 @@ export default function Signmakerz() {
             <span className="mz-eyebrow">Word of mouth</span>
             <h2>Built for people who notice details.</h2>
           </div>
-          <div className="mz-rev-summary"><Stars /> <b>{RATING}</b> average · {reviews.length} recent reviews</div>
+          <div className="mz-rev-summary"><Stars /> <span><b>{RATING}</b> average · {reviews.length} recent reviews</span></div>
           <div className="mz-reviews">
             {reviews.map((r, i) => (
               <article className="mz-review" key={r.name}>

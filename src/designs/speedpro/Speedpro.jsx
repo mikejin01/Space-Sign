@@ -102,7 +102,7 @@ export default function Speedpro() {
         <div className="sp-util">
           <a className="sp-util-phone" href={PHONE_TEL}>{PHONE}</a>
           <a className="sp-util-loc" href={MAPS_URL} target="_blank" rel="noreferrer">
-            Space Sign — College Point, NY <span aria-hidden="true">›</span>
+            <span className="sp-util-brand">Space Sign — </span>College Point, NY <span className="sp-util-chev" aria-hidden="true">›</span>
           </a>
           <nav className="sp-util-links" aria-label="Utility">
             <a href="#services">Service Areas</a>
