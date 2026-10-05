@@ -306,6 +306,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .sp-footer-brand address a{align-items:center}
   .sp-footer-col{display:none}
   .sp-footer-bar p+p{gap:0 24px}
+  .sp-footer-bar{padding-bottom:84px}
 }
 @media(max-width:600px){
   .sp-util-loc{font-size:11px}

@@ -1,7 +1,7 @@
 /* Floating design-style switcher. Every design injects page-wide CSS (resets,
    button and link rules), so the switcher unsets inherited styles on its own
    elements and restyles them with ss- classes. */
-.ss-root{position:fixed;right:16px;bottom:16px;z-index:1000;
+.ss-root{position:fixed;right:16px;bottom:16px;z-index:1000;transition:transform .22s ease;
   font-family:system-ui,-apple-system,'Segoe UI','Helvetica Neue',Arial,sans-serif;
   -webkit-font-smoothing:antialiased}
 .ss-root :is(button,span,div){all:unset;box-sizing:border-box}

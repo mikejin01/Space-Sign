@@ -15,6 +15,7 @@ export default function StyleSwitcher({ designs, activeId, onSelect }) {
   const rowRefs = useRef([])
   const menuId = useId()
   const active = designs.find((d) => d.id === activeId)
+  const lift = useCtaAvoidance(pillRef, active.cta, open)
 
   const close = useCallback((refocus) => {
     setOpen(false)
@@ -71,7 +72,7 @@ export default function StyleSwitcher({ designs, activeId, onSelect }) {
   }
 
   return (
-    <div className="ss-root" ref={rootRef} onBlur={onBlur}>
+    <div className="ss-root" ref={rootRef} onBlur={onBlur} style={lift ? { transform: `translateY(${-lift}px)` } : undefined}>
       {open && (
         <div className="ss-panel" id={menuId} role="menu" aria-label="Choose a design style" onKeyDown={onMenuKey}>
           <div className="ss-panel-head" aria-hidden="true">Choose a design style</div>
@@ -122,4 +123,48 @@ export default function StyleSwitcher({ designs, activeId, onSelect }) {
       </button>
     </div>
   )
+}
+
+// Slides the switcher up when one of the active design's primary buttons
+// scrolls underneath it, so it never covers a call to action.
+function useCtaAvoidance(pillRef, ctaSelector, frozen) {
+  const [lift, setLift] = useState(0)
+  useEffect(() => {
+    if (!ctaSelector || frozen) return
+    let frame = 0
+    const measure = () => {
+      frame = 0
+      const pill = pillRef.current
+      if (!pill) return
+      // the pill's resting position (bottom-right, 16px inset), ignoring any lift or transition
+      const r = pill.getBoundingClientRect()
+      const bottom = document.documentElement.clientHeight - 16
+      const base = { left: r.left, right: r.right, top: bottom - pill.offsetHeight, bottom }
+      const ctas = [...document.querySelectorAll(ctaSelector)].map((el) => el.getBoundingClientRect())
+        .filter((b) => b.width && b.right > base.left && b.left < base.right)
+      // lift above any button under the pill, then re-check in case that lands on another one
+      let next = 0
+      for (let pass = 0; pass < 4; pass++) {
+        const top = base.top - next
+        const bottom = base.bottom - next
+        const hit = ctas.filter((b) => b.bottom > top && b.top < bottom)
+        if (!hit.length) break
+        next = base.bottom - Math.min(...hit.map((b) => b.top)) + 10
+      }
+      if (next > window.innerHeight * 0.6) next = 0
+      setLift((cur) => (cur === next ? cur : next))
+    }
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(measure) }
+    schedule()
+    window.addEventListener('scroll', schedule, { passive: true })
+    window.addEventListener('resize', schedule)
+    const timer = setInterval(schedule, 1000) // late layout shifts (fonts, images)
+    return () => {
+      cancelAnimationFrame(frame)
+      clearInterval(timer)
+      window.removeEventListener('scroll', schedule)
+      window.removeEventListener('resize', schedule)
+    }
+  }, [ctaSelector, frozen, pillRef])
+  return lift
 }
