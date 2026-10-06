@@ -1,0 +1,45 @@
+/* Floating design-style switcher. Every design injects page-wide CSS (resets,
+   button and link rules), so the switcher unsets inherited styles on its own
+   elements and restyles them with ss- classes. */
+.ss-root{position:fixed;right:16px;bottom:16px;z-index:1000;transition:transform .22s ease;
+  font-family:system-ui,-apple-system,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.ss-root :is(button,span,div){all:unset;box-sizing:border-box}
+.ss-root svg{display:block;flex-shrink:0}
+
+.ss-root .ss-pill,.ss-root .ss-panel{background:rgba(42,42,44,.92);
+  backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);
+  border:1px solid rgba(255,255,255,.1);box-shadow:0 12px 32px rgba(0,0,0,.35),0 2px 6px rgba(0,0,0,.2)}
+
+/* closed state: pill */
+.ss-root .ss-pill{display:flex;align-items:center;gap:11px;padding:8px 14px 8px 9px;
+  border-radius:999px;cursor:pointer;color:#fff;transition:background .15s ease,transform .15s ease}
+.ss-root .ss-pill:hover{background:rgba(54,54,57,.95)}
+.ss-root .ss-pill:active{transform:scale(.98)}
+.ss-root .ss-swatch{display:block;width:22px;height:22px;border-radius:6px;flex-shrink:0;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.ss-root .ss-text{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ss-root .ss-label{display:block;font-size:9.5px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:#9a9aa0;line-height:1.1}
+.ss-root .ss-current{display:block;font-size:14px;font-weight:700;color:#fff;line-height:1.2}
+.ss-root .ss-chev{width:14px;height:14px;color:#c4c4c8;margin-left:2px;transition:transform .2s ease}
+.ss-root .ss-chev-open{transform:rotate(180deg)}
+
+/* open state: panel above the pill */
+.ss-root .ss-panel{display:block;position:absolute;right:0;bottom:calc(100% + 10px);
+  width:290px;max-width:calc(100vw - 32px);padding:8px;border-radius:16px;
+  animation:ss-in .16s ease-out}
+@keyframes ss-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.ss-root .ss-panel-head{display:block;padding:10px 10px 8px;font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:#9a9aa0}
+.ss-root .ss-row{display:flex;align-items:center;gap:12px;width:100%;padding:9px 10px;
+  border-radius:10px;cursor:pointer;color:#fff;transition:background .12s ease}
+.ss-root .ss-row:hover{background:rgba(255,255,255,.05)}
+.ss-root .ss-row.ss-active{background:rgba(255,255,255,.08)}
+.ss-root .ss-swatch-lg{width:30px;height:30px;border-radius:8px}
+.ss-root .ss-row .ss-text{flex:1}
+.ss-root .ss-name{display:block;font-size:14px;font-weight:700;color:#fff;line-height:1.25}
+.ss-root .ss-tagline{display:block;font-size:12.5px;color:#9a9aa0;line-height:1.3}
+.ss-root .ss-check{width:16px;height:16px;color:#fff}
+
+.ss-root .ss-pill:focus-visible,.ss-root .ss-row:focus-visible{outline:2px solid #6aa8ff;outline-offset:2px}

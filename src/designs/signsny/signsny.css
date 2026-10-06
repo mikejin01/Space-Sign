@@ -1,0 +1,232 @@
+:root{
+  --ny-navy:#1a2d4e;
+  --ny-blue:#046bd2;
+  --ny-text:#2b2f33;
+  --ny-pale:#f0f5fa;
+  --ny-chip:#eef3f8;
+  --ny-border:#ccc;
+  --ny-h:'Plus Jakarta Sans',Arial,sans-serif;
+  --ny-oswald:'Oswald','Arial Narrow',sans-serif;
+  --ny-cabin:'Cabin',Arial,sans-serif;
+  --ny-body:'Roboto',Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{overflow-x:clip;scroll-behavior:smooth}
+body{background:#fff;color:var(--ny-text);font:400 16px/26.4px var(--ny-body);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+ul{list-style:none}
+.ny{overflow-x:clip}
+.ny-wrap{max-width:1440px;margin:0 auto;padding:0 30px}
+
+/* buttons */
+.ny-btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;padding:16px 32px;border-radius:10px;
+  background:var(--ny-blue);color:#fff;font:500 16px/16px var(--ny-cabin);white-space:nowrap;transition:background .2s,transform .2s}
+.ny-btn:hover{background:#0358ad}
+.ny-btn-white{background:#fff;color:var(--ny-blue)}
+.ny-btn-white:hover{background:#e9f2fc}
+.ny-arrow{width:18px;height:12px}
+.ny-btn-navy{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:10px;background:var(--ny-navy);
+  color:#fff;font:700 14px/14px var(--ny-cabin)}
+.ny-btn-navy:hover{background:#24406e}
+
+/* utility bar */
+.ny-util{display:flex;justify-content:space-between;align-items:center;height:35px;padding:0 20px;background:var(--ny-navy);color:#fff}
+.ny-util-icons{display:flex;gap:26px;padding-left:10px}
+.ny-util-icons svg{width:14px;height:14px;fill:#fff;display:block}
+.ny-util-icons a:nth-child(2) svg{fill:none}
+.ny-util-links{display:flex;font-size:14px;line-height:20px}
+.ny-util-links a+a::before{content:"";display:inline-block;width:1px;height:10px;background:#fff;margin:0 26px 0 26px;vertical-align:0}
+.ny-util-links a:hover{opacity:.75}
+
+/* nav */
+.ny-nav{position:relative;z-index:30;display:flex;align-items:center;height:70px;padding:0 20px;background:#fff}
+.ny-logo img{width:200px;height:auto}
+.ny-nav-links{display:flex;flex:1;justify-content:space-around;padding:0 20px;font:500 17px/25.5px var(--ny-body);color:#1f2124}
+.ny-nav-links a:hover{color:var(--ny-blue)}
+.ny-burger{display:none;flex-direction:column;gap:4px;margin-left:auto;padding:8px}
+.ny-burger span{display:block;width:20px;height:2.5px;border-radius:2px;background:#1f2124}
+.ny-mobile-menu{position:absolute;top:100%;left:0;right:0;display:flex;flex-direction:column;padding:6px 20px 20px;background:#fff;
+  box-shadow:0 14px 26px rgba(26,45,78,.14);font-weight:500}
+.ny-mobile-menu a{padding:13px 0;border-bottom:1px solid #eef0f3}
+.ny-mobile-menu .ny-btn-navy{margin-top:14px;border:0;padding:14px}
+
+/* hero with navy duotone */
+.ny-hero{position:relative;display:flex;align-items:center;justify-content:center;height:520px;background:var(--ny-navy);
+  overflow:hidden;color:#fff;text-align:center}
+.ny-hero::before{content:"";position:absolute;inset:0;background:var(--ny-hero-img) center 40%/cover no-repeat;
+  filter:grayscale(1) contrast(1.1) brightness(.9);opacity:.42;mix-blend-mode:luminosity}
+.ny-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(26,45,78,.55),rgba(26,45,78,.6));mix-blend-mode:multiply}
+.ny-hero-in{position:relative;z-index:2;margin-top:-28px}
+.ny-hero h1{font:600 88px/105.6px var(--ny-oswald);text-transform:uppercase}
+.ny-hero-sub{font:400 21px/25.2px var(--ny-oswald);text-transform:uppercase;margin-top:2px}
+.ny-hero-btns{display:flex;justify-content:center;gap:30px;margin-top:30px}
+.ny-trust{display:grid;grid-template-columns:repeat(4,1fr);align-items:center;height:72px;padding:0 20px;background:var(--ny-navy);
+  color:#fff;font:400 20px/24px 'Fira Sans Condensed','Arial Narrow',sans-serif;text-transform:uppercase;text-align:center}
+.ny-trust span{position:relative}
+.ny-trust span+span::before{content:"";position:absolute;left:0;top:7px;width:1.5px;height:10px;background:#fff}
+
+/* intro */
+.ny-intro{padding:80px 0 72px}
+.ny-intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
+.ny-h2-sm{font:800 36px/46.8px var(--ny-h);color:var(--ny-navy);margin-bottom:10px}
+.ny-intro p{margin-bottom:10px}
+.ny-h3{font:600 24px/31.2px var(--ny-cabin);color:var(--ny-navy);margin:28px 0 18px}
+.ny-checks{display:grid;grid-template-columns:auto auto;justify-content:start;gap:7px 20px;margin-bottom:30px}
+.ny-checks li{display:flex;align-items:center;gap:15px}
+.ny-checks li::before{content:"";flex-shrink:0;width:20px;height:20px;border-radius:50%;
+  background:#e2edf9 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M5.5 10.5l3 3 6-7' fill='none' stroke='%23046bd2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/20px no-repeat}
+.ny-intro-img{width:100%;height:548px;object-fit:cover;border-radius:10px}
+
+/* section heads */
+.ny-head{text-align:center;max-width:960px;margin:0 auto}
+.ny-head h2{font:800 46px/59.8px var(--ny-h);color:var(--ny-navy);margin-top:18px}
+.ny-head p{max-width:900px;margin:18px auto 0}
+.ny-chip{display:inline-block;padding:6px 10px;border-radius:20px;background:var(--ny-chip);font:600 14px/14px var(--ny-h);
+  text-transform:uppercase;color:var(--ny-navy)}
+
+/* gallery */
+.ny-gallery{padding:0 0 70px}
+.ny-tabs{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:40px 0 30px}
+.ny-tabs button{padding:10px;font:500 16px/16px var(--ny-h);text-transform:uppercase;color:var(--ny-navy);background:#fff;
+  box-shadow:0 1px 2px rgba(0,0,0,.05);transition:background .15s,color .15s}
+.ny-tabs button:hover{background:var(--ny-chip)}
+.ny-tabs button.on{background:var(--ny-navy);color:#fff}
+.ny-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px}
+.ny-grid figure{position:relative;aspect-ratio:323/242;border-radius:10px;overflow:hidden;background:var(--ny-pale)}
+.ny-grid img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.ny-grid figcaption{position:absolute;left:0;right:0;bottom:0;padding:24px 14px 10px;color:#fff;font:500 14px/18px var(--ny-cabin);
+  background:linear-gradient(transparent,rgba(26,45,78,.85));opacity:0;transition:opacity .2s}
+.ny-grid figure:hover img{transform:scale(1.04)}
+.ny-grid figure:hover figcaption{opacity:1}
+
+/* services */
+.ny-services{padding:50px 0 60px}
+.ny-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:50px}
+.ny-card{border:1px solid var(--ny-border);border-radius:10px;overflow:hidden;padding-bottom:24px}
+.ny-card-img{position:relative;height:250px;background-size:cover;background-position:center}
+.ny-badge{position:absolute;top:16px;right:16px;padding:5px 8px;border-radius:20px;background:var(--ny-blue);color:#fff;
+  font:400 14px/14px var(--ny-cabin)}
+.ny-card h3{font:600 24px/31.2px var(--ny-cabin);color:var(--ny-navy);margin:22px 20px 10px}
+.ny-card p{margin:0 20px 15px}
+.ny-dots{margin:0 20px}
+.ny-dots li{display:flex;align-items:center;gap:12px;padding:2.5px 0}
+.ny-dots li::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--ny-blue);flex-shrink:0}
+
+/* client logo strip */
+.ny-logos{padding:26px 0}
+.ny-logos-row{display:flex;justify-content:space-around;align-items:center;gap:30px}
+.ny-logos-row img{max-height:56px;max-width:170px;width:auto;height:auto;min-width:0;object-fit:contain;filter:grayscale(1) contrast(1.1);opacity:.8}
+
+/* cta banner */
+.ny-cta-wrap{padding:55px 20px}
+.ny-cta{display:flex;justify-content:space-between;align-items:center;gap:24px;max-width:1100px;margin:0 auto;padding:50px 30px;
+  border-radius:10px;background:var(--ny-navy);color:#fff}
+.ny-cta h2{font:700 26px/31px var(--ny-h)}
+
+/* full-service partner */
+.ny-partner{padding:0 0 80px}
+.ny-partner .ny-head h2{max-width:750px;margin:0 auto}
+.ny-partner .ny-head p{margin-top:20px}
+.ny-panel{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin:45px 20px 0;padding:40px;border-radius:15px;background:var(--ny-pale)}
+.ny-pcard{padding:50px 20px;border-radius:15px;background:#fff}
+.ny-picon{display:block;width:52px;height:52px;color:var(--ny-navy)}
+.ny-picon svg{width:100%;height:100%}
+.ny-pcard h3{font:700 22px/28.6px var(--ny-h);color:var(--ny-navy);margin:28px 0 14px}
+
+/* footer */
+.ny-footer{background:var(--ny-navy);color:#fff;padding:40px 40px 30px}
+.ny-foot-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px}
+.ny-foot-col{display:flex;flex-direction:column;align-items:flex-start}
+.ny-foot-col h5{font:500 18px/22px var(--ny-cabin);text-transform:uppercase;margin-bottom:25px}
+.ny-foot-col a,.ny-foot-col span{font-size:16px;line-height:30.4px}
+.ny-foot-col a:hover{text-decoration:underline}
+.ny-foot-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:50px;font:400 16px/20px var(--ny-cabin)}
+.ny-foot-bottom img{width:144px}
+
+/* tablet */
+@media(max-width:1200px){
+  .ny-nav-links{font-size:15px;padding:0 10px}
+  .ny-logo img{width:170px}
+  .ny-grid{grid-template-columns:repeat(3,1fr);gap:20px}
+  .ny-panel{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:1024px){
+  .ny-nav-links,.ny-nav>.ny-btn-navy{display:none}
+  .ny-burger{display:flex}
+  .ny-intro-grid{grid-template-columns:1fr}
+  .ny-intro-img{height:420px}
+  .ny-cards{grid-template-columns:repeat(2,1fr)}
+  .ny-trust{font-size:16px}
+}
+@media(max-width:900px){
+  .ny-foot-grid{grid-template-columns:1fr 1fr}
+  .ny-trust{font-size:14px}
+}
+@media(max-width:767px){
+  .ny-wrap{padding:0 15px}
+  .ny-util{justify-content:center;height:36px;padding:0 10px}
+  .ny-util-icons{display:none}
+  .ny-util-links{font-size:11px;white-space:nowrap}
+  .ny-util-links a+a::before{margin:0 6px}
+  .ny-util-links a:last-child{display:none}
+  .ny-nav{height:36px;padding:0 15px}
+  .ny-logo img{width:138px}
+  .ny-burger{padding:6px 0}
+  .ny-hero{height:250px;margin-top:6px}
+  .ny-hero-in{margin-top:0}
+  .ny-hero h1{font-size:44px;line-height:52px}
+  .ny-hero-sub{font-size:14px;line-height:18px}
+  .ny-hero-btns{gap:15px;margin-top:14px}
+  .ny-hero-btns .ny-btn{padding:9px 12px;font-size:12px;gap:8px;border-radius:7px}
+  .ny-hero-btns .ny-arrow{width:13px}
+  .ny-trust{display:none}
+  .ny-intro{padding:40px 0 40px}
+  .ny-h2-sm{font-size:26px;line-height:34px}
+  .ny-intro p{font-size:14.5px;line-height:23px}
+  .ny-h3{font-size:20px;margin:20px 0 14px}
+  .ny-checks{grid-template-columns:1fr;font-size:14px}
+  .ny-intro-grid .ny-btn{display:flex;width:100%;padding:12px}
+  .ny-intro-img{height:262px}
+  .ny-head h2{font-size:26px;line-height:34px;margin-top:14px}
+  .ny-head p{font-size:15px;line-height:24px;margin-top:14px}
+  .ny-tabs{gap:6px;margin:28px 0 22px}
+  .ny-tabs button{font-size:12px;line-height:12px}
+  .ny-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .ny-services{padding:30px 0 40px}
+  .ny-cards{grid-template-columns:1fr;gap:18px;margin-top:30px}
+  .ny-card-img{height:228px}
+  .ny-card p{font-size:15px;line-height:24.5px}
+  .ny-logos-row{flex-wrap:wrap;justify-content:center;gap:16px 26px}
+  .ny-logos-row img{max-height:40px;max-width:120px}
+  .ny-cta-wrap{padding:30px 15px}
+  .ny-cta{flex-direction:column;text-align:center;padding:50px 24px}
+  .ny-cta h2{font-size:21px;line-height:28px}
+  .ny-panel{grid-template-columns:1fr;margin:30px 15px 0;padding:20px}
+  .ny-pcard{padding:24px 14px}
+  .ny-picon{width:34px;height:34px}
+  .ny-pcard h3{font-size:18px;margin:14px 0 10px}
+  .ny-pcard p{font-size:15px;line-height:23px}
+  .ny-footer{padding:36px 20px 26px}
+  .ny-foot-grid{grid-template-columns:1fr 1fr;gap:30px 20px}
+  .ny-foot-col h5{font-size:16px;margin-bottom:14px}
+  .ny-foot-col a,.ny-foot-col span{font-size:14px;line-height:26px;overflow-wrap:anywhere}
+  .ny-foot-bottom{flex-direction:column-reverse;gap:18px;align-items:flex-start;font-size:14px}
+}
+
+/* mobile polish */
+@media(max-width:1024px){
+  .ny-burger{width:44px;height:44px;align-items:center;justify-content:center;margin-right:-12px}
+}
+@media(max-width:767px){
+  .ny-nav{height:52px}
+  .ny-partner .ny-head{padding:0 15px}
+  .ny-util-links a{padding:8px 0}
+  .ny-foot-col a,.ny-foot-col span{line-height:22px;padding:5px 0}
+  .ny-tabs button{padding:10px 12px}
+}
+@media(max-width:420px){
+  .ny-foot-col:last-child{grid-column:1/-1}
+  .ny-foot-col a,.ny-foot-col span{overflow-wrap:normal}
+}
