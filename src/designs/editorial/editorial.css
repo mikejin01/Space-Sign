@@ -6,6 +6,9 @@
   --mute:#56504f;     /* graphite — secondary text */
   --line:#e0e0e0;     /* hairline border */
   --red:#e4121d;      /* signal red */
+  --r-sm:6px;         /* tags, inputs, small labels */
+  --r-md:10px;        /* buttons */
+  --r-lg:16px;        /* cards, panels, photos */
 }
 /* dark bands — re-scope the palette so child rules invert automatically.
    The page alternates: hero ■ / license □ / trust ■ / services □ / work ■ /
@@ -35,7 +38,7 @@ img{display:block}
   background:radial-gradient(120% 90% at 50% 0%,transparent 40%,rgba(0,0,0,.55))}
 .ph span{position:relative;z-index:2;font-family:'Space Mono',monospace;font-size:10px;
   letter-spacing:.12em;text-transform:uppercase;color:#a4a199;background:#0c0c0b;
-  padding:6px 9px;margin:16px;border:1px solid var(--line)}
+  padding:6px 9px;margin:16px;border:1px solid var(--line);border-radius:var(--r-sm)}
 
 /* real photo fill */
 .img{width:100%;height:100%;background-size:cover;background-position:center;
@@ -51,6 +54,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
 .nav-links a:hover{color:#000}
 .btn{display:inline-flex;align-items:center;gap:9px;background:var(--red);color:#fff !important;
   font-weight:700;font-size:13px;letter-spacing:.02em;padding:13px 22px;border:1px solid var(--red);
+  border-radius:var(--r-md);
   transition:background .18s ease,border-color .18s ease,transform .18s ease,box-shadow .18s ease}
 .btn:hover{background:#b10d16;border-color:#b10d16;color:#fff !important;
   transform:translateY(-2px);box-shadow:0 8px 22px rgba(228,18,29,.32)}
@@ -93,12 +97,13 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
 .hero-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:4;
   width:52px;height:52px;display:flex;align-items:center;justify-content:center;
   background:rgba(12,12,11,.45);border:1px solid var(--line);color:var(--ink);
-  font-size:26px;line-height:1;cursor:pointer;backdrop-filter:blur(6px);transition:.18s}
+  font-size:26px;line-height:1;cursor:pointer;backdrop-filter:blur(6px);transition:.18s;
+  border-radius:50%}
 .hero-arrow:hover{background:var(--red);border-color:var(--red);color:#fff}
 .hero-arrow.prev{left:24px}
 .hero-arrow.next{right:24px}
 .hero-dots{display:flex;gap:10px;margin-top:30px}
-.hero-dot{width:34px;height:4px;padding:0;border:none;cursor:pointer;
+.hero-dot{width:34px;height:4px;padding:0;border:none;border-radius:999px;cursor:pointer;
   background:rgba(243,241,234,.25);transition:.2s}
 .hero-dot:hover{background:rgba(243,241,234,.5)}
 .hero-dot.active{background:var(--red);width:54px}
@@ -115,7 +120,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
 .hero-actions{display:flex;gap:12px;flex-shrink:0}
 
 /* hero quote card — frosted dark glass, blends with the dark hero scrim */
-.quote-card{position:relative;align-self:end;
+.quote-card{position:relative;align-self:end;border-radius:var(--r-lg);overflow:hidden;
   background:linear-gradient(180deg,rgba(26,26,24,.78),rgba(12,12,11,.90));
   backdrop-filter:blur(20px) saturate(1.25);-webkit-backdrop-filter:blur(20px) saturate(1.25);
   border:1px solid rgba(243,241,234,.14);padding:26px 24px 22px;
@@ -134,7 +139,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
 .qc-fields{display:flex;flex-direction:column;gap:8px}
 .quote-card input,.quote-card textarea{width:100%;font-family:'Archivo',Arial,sans-serif;font-size:13.5px;
   color:var(--ink);background:rgba(243,241,234,.045);border:1px solid rgba(243,241,234,.14);
-  border-radius:2px;padding:11px 13px;transition:border-color .18s ease,background .18s ease}
+  border-radius:var(--r-sm);padding:11px 13px;transition:border-color .18s ease,background .18s ease}
 .quote-card input::placeholder,.quote-card textarea::placeholder{color:#8b887f}
 .quote-card input:focus,.quote-card textarea:focus{outline:none;border-color:var(--red);
   background:rgba(243,241,234,.08)}
@@ -171,6 +176,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
 /* services — one row of capability cards (Kinetic Industrial) */
 .svc{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
 .svc-card{position:relative;display:flex;flex-direction:column;min-height:320px;overflow:hidden;
+  border-radius:var(--r-lg);
   background:var(--bg2);border:1px solid var(--ink);padding:32px;
   transition:border-color .2s ease,transform .2s ease,background .2s ease}
 .svc-card:hover{border-color:var(--red);background:#fff}
@@ -184,7 +190,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
 .svc-card p{color:var(--mute);font-size:14.5px;line-height:1.6;margin-bottom:18px;position:relative;z-index:1}
 .svc-card .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:0}
 .tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;
-  border:1px solid #c9c4c4;padding:5px 9px;color:#6b6463}
+  border:1px solid #c9c4c4;border-radius:var(--r-sm);padding:5px 9px;color:#6b6463}
 
 /* work */
 .work{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
@@ -193,9 +199,9 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
 .work .cap{position:absolute;left:0;bottom:0;z-index:3;padding:18px;width:100%;color:#f3f1ea;
   background:linear-gradient(0deg,rgba(12,12,11,.9),transparent);
   display:flex;justify-content:space-between;align-items:flex-end;opacity:0;transition:.22s;transform:translateY(8px)}
-.work .cell{border:1px solid rgba(243,241,234,.1);border-radius:3px}
+.work .cell{border:1px solid rgba(243,241,234,.1);border-radius:var(--r-lg)}
 .work .cell::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
-  border:1px solid transparent;border-radius:3px;transition:border-color .22s ease}
+  border:1px solid transparent;border-radius:inherit;transition:border-color .22s ease}
 .work .cell:hover::after{border-color:var(--red)}
 .work .cell .img{transition:transform .45s ease}
 .work .cell:hover .img{transform:scale(1.05)}
@@ -242,7 +248,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
 
 /* process */
 .proc{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.proc-step{border:1px solid var(--line);background:var(--bg2);padding:30px 26px 40px}
+.proc-step{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--bg2);padding:30px 26px 40px}
 .proc-step .s{color:var(--red);font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.1em;
   display:block;margin-bottom:48px}
 .proc-step h4{font-size:20px;font-weight:800;margin-bottom:10px}
