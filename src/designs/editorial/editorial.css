@@ -212,13 +212,21 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
 .tall{grid-column:span 2;height:480px}
 .third{grid-column:span 2;height:300px}
 
-/* clients */
-.clients{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
-.client{background:#fff;border:1px solid #d8d4d4;height:118px;
-  display:flex;align-items:center;justify-content:center;padding:22px 26px;
-  transition:border-color .2s ease,transform .2s ease}
-.client:hover{transform:translateY(-3px);border-color:var(--ink)}
-.client img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+/* clients — one-row logo marquee. Spacing is padding on each logo, not flex
+   gap, so translating the doubled track by -50% lands exactly on the loop. */
+.logo-marquee{overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.logo-track{display:flex;width:max-content;animation:logo-marquee 60s linear infinite}
+.logo-marquee:hover .logo-track{animation-play-state:paused}
+.logo{flex:none;display:flex;align-items:center;justify-content:center;height:56px;padding:0 32px}
+.logo img{max-height:100%;max-width:180px;width:auto;height:auto}
+@keyframes logo-marquee{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@media(prefers-reduced-motion:reduce){
+  .logo-marquee{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
+  .logo-track{animation:none}
+  .logo[aria-hidden]{display:none}
+}
 
 /* areas */
 .areas{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
@@ -296,8 +304,6 @@ footer{padding:60px 0 44px;border-top:4px solid var(--red)}
   .areas{grid-template-columns:1fr}
   .proc{grid-template-columns:1fr 1fr}
   .hero-arrow{display:none}
-  .clients{grid-template-columns:repeat(2,1fr)}
-  .client{height:96px;padding:16px 18px}
 }
 @media(max-width:600px){
   .wrap{padding:0 18px}
@@ -327,7 +333,8 @@ footer{padding:60px 0 44px;border-top:4px solid var(--red)}
   .svc-card h3{margin-top:16px}
   .work{gap:10px}
   .work .cell{height:240px !important}
-  .clients{grid-template-columns:repeat(2,1fr);gap:12px}
+  .logo{height:40px;padding:0 20px}
+  .logo img{max-width:130px}
   .area-map{height:320px;padding:12px}
   .area-grid{grid-template-columns:1fr 1fr;gap:0 24px}
   .area-grid li{font-size:15px;padding:13px 0}

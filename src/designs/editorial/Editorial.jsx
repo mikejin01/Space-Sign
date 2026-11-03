@@ -198,12 +198,15 @@ export default function Editorial() {
             <div><div className="k mono">03 / Our Clients</div><h2>Brands we've lit up</h2></div>
             <p>From national chains to neighborhood storefronts across the Tri-State — a few of the businesses we've built signage for.</p>
           </div>
-          <div className="clients">
-            {clients.map((c) => (
-              <div className="client" key={c.file}>
-                <img src={`${BASE}assets/clients/${c.file}.png`} alt={c.name} loading="lazy" />
-              </div>
-            ))}
+          {/* Two copies of the logos so the -50% loop point is seamless; the copy is hidden from screen readers. */}
+          <div className="logo-marquee">
+            <div className="logo-track">
+              {[0, 1].map((copy) => clients.map((c) => (
+                <div className="logo" key={`${copy}-${c.file}`} aria-hidden={copy ? true : undefined}>
+                  <img src={`${BASE}assets/clients/${c.file}.png`} alt={copy ? '' : c.name} />
+                </div>
+              )))}
+            </div>
           </div>
         </div>
       </section>
