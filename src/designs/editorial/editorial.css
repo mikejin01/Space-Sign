@@ -12,7 +12,7 @@
 }
 /* dark bands — re-scope the palette so child rules invert automatically.
    The page alternates: hero ■ / license □ / trust ■ / services □ / work ■ /
-   clients □ / about ■ / process □ / cta ■ / footer ■ */
+   clients □ / about ■ / permits (gray inlay) / process □ / cta ■ / footer ■ */
 .hero,.cta,footer,.dark{
   --bg2:#141413;--panel:#1a1a18;--ink:#f3f1ea;--mute:#9b988f;--line:#2a2a27;
 }
@@ -23,7 +23,7 @@
   background:linear-gradient(90deg,var(--red) 0%,var(--red) 18%,transparent 18%)}
 .hero{color:var(--ink)}
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;overflow-x:clip}
+html{scroll-behavior:smooth;overflow-x:clip;scroll-padding-top:78px} /* clear the sticky header on anchor jumps */
 body{background:var(--bg);color:var(--ink);font-family:'Archivo',Arial,sans-serif;
   -webkit-font-smoothing:antialiased}
 .wrap{max-width:1400px;margin:0 auto;padding:0 44px}
@@ -50,7 +50,8 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
 .nav{display:flex;align-items:center;justify-content:space-between;height:78px}
 .nav-logo img{width:150px;height:auto}
 .nav-links{display:flex;gap:34px;align-items:center}
-.nav-links a{font-size:14px;font-weight:600;color:#33312e}
+.nav-links a{font-size:16px;font-weight:600;color:#33312e}
+.nav-links .btn{font-size:14px}
 .nav-links a:hover{color:#000}
 .btn{display:inline-flex;align-items:center;gap:9px;background:var(--red);color:#fff !important;
   font-weight:700;font-size:13px;letter-spacing:.02em;padding:13px 22px;border:1px solid var(--red);
@@ -155,6 +156,9 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
   color:#1d63c4;-webkit-text-stroke:.5px #1d63c4}
 .license .lic{color:var(--red)}
 .license-sub{margin-top:14px;color:var(--mute);font-size:clamp(13px,1.6vw,16px)}
+.license-sub a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;
+  transition:color .18s ease}
+.license-sub a:hover{color:var(--red)}
 
 /* trust strip */
 .trust{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
@@ -237,6 +241,16 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
 .about-facts a{color:var(--ink);transition:color .18s ease}
 .about-facts a:hover{color:var(--red)}
 
+/* permits & violations — gray inlay so it reads apart from the white Process band */
+.permits{background:var(--bg2)}
+.pv{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.pv-panel{display:flex;flex-direction:column;background:var(--bg);border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:36px;scroll-margin-top:20px}
+.pv-panel h3{font-size:26px;font-weight:800;letter-spacing:-.01em;margin-bottom:14px}
+.pv-panel p{color:var(--mute);font-size:15.5px;line-height:1.65;margin-bottom:14px}
+.pv-panel .btn{align-self:flex-start;margin-top:auto}
+.pv-panel p:last-of-type{margin-bottom:28px}
+
 /* process */
 .proc{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .proc-step{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--bg2);padding:30px 26px 40px}
@@ -267,6 +281,9 @@ footer{padding:60px 0 44px;border-top:4px solid var(--red)}
 .foot-bottom{display:flex;justify-content:space-between;margin-top:50px;padding-top:22px;
   border-top:1px solid var(--line);color:var(--mute);font-size:12px}
 
+@media(max-width:1200px){
+  .nav-links{gap:22px} /* six links + button must fit down to the 900px hamburger breakpoint */
+}
 @media(max-width:1040px){
   .hero-grid{grid-template-columns:1fr;gap:44px}
   .quote-card{max-width:440px;width:100%}
@@ -285,10 +302,12 @@ footer{padding:60px 0 44px;border-top:4px solid var(--red)}
   .svc{grid-template-columns:1fr}
   .work .cell{grid-column:1/-1 !important;height:300px !important}
   .about{grid-template-columns:1fr;gap:32px}
+  .pv{grid-template-columns:1fr}
   .proc{grid-template-columns:1fr 1fr}
   .hero-arrow{display:none}
 }
 @media(max-width:600px){
+  html{scroll-padding-top:64px}
   .wrap{padding:0 18px}
   .nav{height:64px}
   .nav-logo img{width:124px}
@@ -319,6 +338,9 @@ footer{padding:60px 0 44px;border-top:4px solid var(--red)}
   .logo{height:40px;padding:0 20px}
   .logo img{max-width:130px}
   .about-bio p{font-size:16px}
+  .pv{gap:14px}
+  .pv-panel{padding:26px 22px}
+  .pv-panel h3{font-size:22px}
   .proc{grid-template-columns:1fr;gap:12px}
   .proc-step{padding:24px 22px 28px}
   .proc-step .s{margin-bottom:28px}

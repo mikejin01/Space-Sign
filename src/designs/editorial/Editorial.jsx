@@ -44,8 +44,9 @@ export default function Editorial() {
           <nav className="nav-links">
             <a href="#work">Work</a>
             <a href="#services">Services</a>
-            <a href="#clients">Clients</a>
-            <a href="#areas">Service Areas</a>
+            <a href="#about">About Us</a>
+            <a href="#permits">Permits</a>
+            <a href="#violations">Violations</a>
             <a href="#process">Process</a>
             <a className="btn" href="#quote">Get a free quote</a>
           </nav>
@@ -61,8 +62,9 @@ export default function Editorial() {
         <nav className={`mobile-menu${menuOpen ? ' open' : ''}`}>
           <a href="#work" onClick={closeMenu}>Work</a>
           <a href="#services" onClick={closeMenu}>Services</a>
-          <a href="#clients" onClick={closeMenu}>Clients</a>
-          <a href="#areas" onClick={closeMenu}>Service Areas</a>
+          <a href="#about" onClick={closeMenu}>About Us</a>
+          <a href="#permits" onClick={closeMenu}>Permits</a>
+          <a href="#violations" onClick={closeMenu}>Violations</a>
           <a href="#process" onClick={closeMenu}>Process</a>
           <a className="nav-phone" href={PHONE_TEL} onClick={closeMenu}>{PHONE}</a>
           <a className="btn" href="#quote" onClick={closeMenu}>Get a free quote</a>
@@ -137,7 +139,7 @@ export default function Editorial() {
           <p className="license-line">
             Space Sign is a <span className="nyc">NYC</span> Licensed Sign Hanger <span className="lic">(#215)</span>
           </p>
-          <p className="license-sub">We also help with violation removals for DOB &amp; ECB sign violations.</p>
+          <p className="license-sub">We also help with <a href="#violations">violation removals</a> for DOB &amp; ECB sign violations.</p>
         </div>
       </section>
 
@@ -228,11 +230,33 @@ export default function Editorial() {
         </div>
       </section>
 
+      {/* PERMITS & VIOLATIONS — copy verbatim from spacesign.com (see BUSINESS-INFO.md) */}
+      <section className="sec permits" id="permits">
+        <div className="wrap">
+          <div className="sec-head">
+            <div><div className="k mono">05 / Permits &amp; Violations</div><h2>Permits &amp; violations</h2></div>
+          </div>
+          <div className="pv">
+            <article className="pv-panel">
+              <h3>DOB Sign Permits</h3>
+              <p>All signs require Sign Permits issued by the NYC Department of Buildings (DOB). NYC Licensed Sign Hangers are the only persons legally allowed to pull a Sign Permit in NYC.</p>
+              <p>As Licensed Sign Hanger #215, we prepare the drawings and file the permit for you.</p>
+              <a className="btn" href="#quote">Get a free quote</a>
+            </article>
+            <article className="pv-panel" id="violations">
+              <h3>DOB &amp; ECB Violations</h3>
+              <p>NYC DOB and NYC ECB issue violations for all types of signs, awnings, and canopies that are in violation of the NYC Administrative Codes. NYC Sign Violations can only be corrected and cleared by NYC Licensed Sign Hangers.</p>
+              <a className="btn" href="#quote">Get a free quote</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
       {/* PROCESS */}
       <section className="sec" id="process">
         <div className="wrap">
           <div className="sec-head">
-            <div><div className="k mono">05 / Process</div><h2>Four steps, one team</h2></div>
+            <div><div className="k mono">06 / Process</div><h2>Four steps, one team</h2></div>
             <p>Full-concierge service — we handle sales, design, permitting, manufacture and installation in-house.</p>
           </div>
           <div className="proc">
@@ -265,8 +289,8 @@ export default function Editorial() {
               <p className="mono" style={{ marginTop: 16, color: 'var(--mute)' }}>Design · Build · Install · Permit</p>
             </div>
             <div className="foot-cols">
-              <div className="foot-col"><h5 className="mono">Studio</h5><a href="#work">Work</a><a href="#services">Services</a><a href="#process">Process</a><a href="#areas">Service Areas</a></div>
-              <div className="foot-col"><h5 className="mono">Services</h5><a href="#services">Channel Letters</a><a href="#services">LED Neon &amp; Lightbox</a><a href="#services">Awnings &amp; Vestibules</a><a href="#services">Permits &amp; Violations</a></div>
+              <div className="foot-col"><h5 className="mono">Studio</h5><a href="#work">Work</a><a href="#services">Services</a><a href="#about">About Us</a><a href="#permits">Permits</a><a href="#violations">Violations</a><a href="#process">Process</a></div>
+              <div className="foot-col"><h5 className="mono">Services</h5><a href="#services">Channel Letters</a><a href="#services">LED Neon &amp; Lightbox</a><a href="#services">Awnings &amp; Vestibules</a><a href="#permits">Permits &amp; Violations</a></div>
               <div className="foot-col">
                 <h5 className="mono">Contact</h5>
                 <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
