@@ -12,7 +12,7 @@
 }
 /* dark bands — re-scope the palette so child rules invert automatically.
    The page alternates: hero ■ / license □ / trust ■ / services □ / work ■ /
-   clients □ / areas ■ / process □ / cta ■ / footer ■ */
+   clients □ / about ■ / process □ / cta ■ / footer ■ */
 .hero,.cta,footer,.dark{
   --bg2:#141413;--panel:#1a1a18;--ink:#f3f1ea;--mute:#9b988f;--line:#2a2a27;
 }
@@ -228,31 +228,14 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
   .logo[aria-hidden]{display:none}
 }
 
-/* areas */
-.areas{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
-.area-map{height:470px;border:1px solid var(--ink);padding:16px;
-  background:radial-gradient(120% 120% at 50% 25%,#1b2330,#0d1118)}
-.area-map svg{width:100%;height:100%;display:block}
-.rg{fill:#3c4150;stroke:#7d8493;stroke-width:1.3;cursor:pointer;
-  transition:fill .25s ease,stroke .25s ease,filter .25s ease}
-.rg:hover,.rg.active{fill:var(--red);stroke:#ff7a64}
-.rg.active{filter:drop-shadow(0 0 7px rgba(255,59,29,.65))}
-.rg-label{fill:#c5cad6;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.05em;
-  text-transform:uppercase;pointer-events:none;transition:fill .25s ease;font-weight:700}
-.rg-label.active{fill:#fff}
-.map-water{fill:#56607a;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.18em;
-  text-transform:uppercase}
-.shop-ring{fill:none;stroke:var(--red);stroke-width:2}
-.shop-dot{fill:#fff;stroke:var(--red);stroke-width:2.5}
-.shop-label{fill:#fff;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;font-weight:700}
-.shop-sub{fill:#b7b4aa;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.04em}
-.area-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 40px}
-.area-grid li{list-style:none;padding:16px 0;border-bottom:1px solid var(--line);cursor:default;
-  display:flex;justify-content:space-between;align-items:center;font-size:18px;font-weight:500;
-  transition:color .2s ease}
-.area-grid li .mono{color:var(--mute)}
-.area-grid li:hover,.area-grid li.active{color:var(--red)}
-.area-grid li.active .mono{color:var(--red)}
+/* about — storefront photo + short bio */
+.about{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:center}
+.about-photo{aspect-ratio:3/2;border:1px solid var(--line);border-radius:var(--r-lg)}
+.about-bio p{font-size:18px;line-height:1.65;color:#cdcabf}
+.about-facts{display:flex;flex-wrap:wrap;gap:10px 28px;list-style:none;margin-top:28px;padding-top:22px;
+  border-top:1px solid var(--line);color:var(--mute)}
+.about-facts a{color:var(--ink);transition:color .18s ease}
+.about-facts a:hover{color:var(--red)}
 
 /* process */
 .proc{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
@@ -301,7 +284,7 @@ footer{padding:60px 0 44px;border-top:4px solid var(--red)}
   .sec-head{flex-direction:column;align-items:flex-start}
   .svc{grid-template-columns:1fr}
   .work .cell{grid-column:1/-1 !important;height:300px !important}
-  .areas{grid-template-columns:1fr}
+  .about{grid-template-columns:1fr;gap:32px}
   .proc{grid-template-columns:1fr 1fr}
   .hero-arrow{display:none}
 }
@@ -335,9 +318,7 @@ footer{padding:60px 0 44px;border-top:4px solid var(--red)}
   .work .cell{height:240px !important}
   .logo{height:40px;padding:0 20px}
   .logo img{max-width:130px}
-  .area-map{height:320px;padding:12px}
-  .area-grid{grid-template-columns:1fr 1fr;gap:0 24px}
-  .area-grid li{font-size:15px;padding:13px 0}
+  .about-bio p{font-size:16px}
   .proc{grid-template-columns:1fr;gap:12px}
   .proc-step{padding:24px 22px 28px}
   .proc-step .s{margin-bottom:28px}
@@ -350,7 +331,6 @@ footer{padding:60px 0 44px;border-top:4px solid var(--red)}
   .foot-bottom{flex-direction:column;gap:10px;text-align:left}
 }
 @media(max-width:380px){
-  .area-grid{grid-template-columns:1fr}
   .trust{grid-template-columns:1fr}
   .trust div{border-left:none}
 }

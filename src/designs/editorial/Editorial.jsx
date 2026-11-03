@@ -1,10 +1,9 @@
 import { useState, useEffect, useCallback } from 'react'
 import useDesignAssets from '../../shared/useDesignAssets.js'
 import {
-  BASE, PHONE, PHONE_TEL, EMAIL, heroSlides, services, work, clients, steps, sendQuoteEmail,
+  BASE, PHONE, PHONE_TEL, EMAIL, MAPS_URL, LICENSE, SINCE, heroSlides, services, work, clients, steps, sendQuoteEmail,
 } from '../../shared/content.js'
 import { icons } from './icons.jsx'
-import { regions } from './regions.js'
 import css from './editorial.css?inline'
 
 const FONTS = 'https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap'
@@ -12,12 +11,9 @@ const FONTS = 'https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600
 // Grid span for each work tile, in the order of `work`.
 const workLayout = ['big', 'tall', 'third', 'third', 'third', 'third', 'third', 'third']
 
-const areas = regions.map((r) => ({ key: r.key, name: r.name }))
-
 export default function Editorial() {
   useDesignAssets(css, FONTS, 'Space Sign — NYC Licensed Sign Maker')
   const [slide, setSlide] = useState(0)
-  const [activeArea, setActiveArea] = useState(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' })
   const [sent, setSent] = useState(false)
@@ -211,63 +207,23 @@ export default function Editorial() {
         </div>
       </section>
 
-      {/* AREAS */}
-      <section className="sec dark" id="areas">
+      {/* ABOUT */}
+      <section className="sec dark" id="about">
         <div className="wrap">
           <div className="sec-head">
-            <div><div className="k mono">04 / Service Areas</div><h2>Where we work</h2></div>
-            <p>Based in College Point, Queens, with field crews serving the five boroughs and the wider Tri-State region — from East Long Island to New Jersey.</p>
+            <div><div className="k mono">04 / About Us</div><h2>About us</h2></div>
           </div>
-          <div className="areas">
-            <div className="area-map">
-              <svg viewBox="0 0 560 460" role="img" aria-label="Space Sign Tri-State service area map">
-                <text className="map-water" x="415" y="140" textAnchor="middle">L.I. SOUND</text>
-                <text className="map-water" x="345" y="300" textAnchor="middle">ATLANTIC OCEAN</text>
-                {regions.map((r) => (
-                  <path
-                    key={r.key}
-                    d={r.d}
-                    className={`rg${activeArea === r.key ? ' active' : ''}`}
-                    onMouseEnter={() => setActiveArea(r.key)}
-                    onMouseLeave={() => setActiveArea(null)}
-                  >
-                    <title>{r.name}</title>
-                  </path>
-                ))}
-                {regions.filter((r) => r.showLabel).map((r) => (
-                  <text
-                    key={r.key}
-                    className={`rg-label${activeArea === r.key ? ' active' : ''}`}
-                    x={r.lx}
-                    y={r.ly}
-                    textAnchor="middle"
-                  >
-                    {r.label}
-                  </text>
-                ))}
-                {/* College Point HQ marker */}
-                <line className="shop-lead" x1="263.6" y1="194.3" x2="300" y2="252" />
-                <circle className="shop-ring" cx="263.6" cy="194.3" r="5">
-                  <animate attributeName="r" values="5;20" dur="2.4s" repeatCount="indefinite" />
-                  <animate attributeName="opacity" values="0.85;0" dur="2.4s" repeatCount="indefinite" />
-                </circle>
-                <circle className="shop-dot" cx="263.6" cy="194.3" r="5" />
-                <text className="shop-label" x="306" y="250">OUR SHOP</text>
-                <text className="shop-sub" x="306" y="262">College Point, Queens</text>
-              </svg>
+          <div className="about">
+            {/* Placeholder until the client sends a storefront photo (public/assets/work/space-sign-storefront.jpg). */}
+            <div className="about-photo ph"><span>Storefront photo — coming soon</span></div>
+            <div className="about-bio">
+              <p>Since 1987, Space Sign has designed, built and installed storefront signs from our shop in College Point, Queens. Every sign is made under one roof in our purpose-built factory, where traditional craft meets the latest sign technology. As a NYC Licensed Sign Hanger (#215), our in-house permit department also handles DOB permits and violation removal — so one team takes your sign from first sketch to final inspection, anywhere from East Long Island to New Jersey.</p>
+              <ul className="about-facts mono">
+                <li>Est. {SINCE}</li>
+                <li>Licensed {LICENSE}</li>
+                <li><a href={MAPS_URL} target="_blank" rel="noreferrer">College Point, Queens</a></li>
+              </ul>
             </div>
-            <ul className="area-grid">
-              {areas.map((a, i) => (
-                <li
-                  key={a.key}
-                  className={activeArea === a.key ? 'active' : ''}
-                  onMouseEnter={() => setActiveArea(a.key)}
-                  onMouseLeave={() => setActiveArea(null)}
-                >
-                  {a.name} <span className="mono">{String(i + 1).padStart(2, '0')}</span>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
       </section>
