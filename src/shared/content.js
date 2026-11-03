@@ -6,7 +6,6 @@ export const BASE = import.meta.env.BASE_URL
 export const asset = (path) => `${BASE}assets/${path}`
 
 export const PHONE = '(718) 961-1112'
-export const PHONE_DOT = '718.961.1112'
 export const PHONE_TEL = 'tel:+17189611112'
 export const FAX = '(718) 961-5577'
 export const EMAIL = 'info@spacesign.com'
@@ -17,7 +16,6 @@ export const SINCE = 1987
 export const RATING = '4.9'
 
 export const heroSlides = [
-  { img: 'space-sign-hero-1.png', label: 'Space Sign — Custom Storefront Signage' },
   { img: 'space-sign-hero-2.png', label: 'Space Sign — Illuminated Channel Letters' },
   { img: 'space-sign-hero-3.png', label: 'Space Sign — Storefront Installation' },
   { img: 'space-sign-hero-4.png', label: 'Space Sign — Custom Sign Fabrication' },

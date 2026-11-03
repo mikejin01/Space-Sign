@@ -49,8 +49,6 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
 .nav-links{display:flex;gap:34px;align-items:center}
 .nav-links a{font-size:14px;font-weight:600;color:#33312e}
 .nav-links a:hover{color:#000}
-.nav-phone{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.04em;color:#000 !important}
-.nav-phone:hover{color:var(--red) !important}
 .btn{display:inline-flex;align-items:center;gap:9px;background:var(--red);color:#fff !important;
   font-weight:700;font-size:13px;letter-spacing:.02em;padding:13px 22px;border:1px solid var(--red);
   transition:background .18s ease,border-color .18s ease,transform .18s ease,box-shadow .18s ease}
@@ -76,7 +74,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
 .mobile-menu a{font-size:16px;font-weight:600;color:#33312e;padding:14px 0;
   border-bottom:1px solid #ececec}
 .mobile-menu a:last-child{border-bottom:none}
-.mobile-menu .nav-phone{font-family:'Space Mono',monospace;font-size:15px;color:#000 !important}
+.mobile-menu .nav-phone{color:#000 !important}
 .mobile-menu .btn{justify-content:center;margin-top:14px;padding:14px 22px}
 
 /* hero */

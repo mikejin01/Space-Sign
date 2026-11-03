@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import useDesignAssets from '../../shared/useDesignAssets.js'
 import {
-  BASE, PHONE, PHONE_DOT, PHONE_TEL, EMAIL, heroSlides, services, work, clients, steps, sendQuoteEmail,
+  BASE, PHONE, PHONE_TEL, EMAIL, heroSlides, services, work, clients, steps, sendQuoteEmail,
 } from '../../shared/content.js'
 import { icons } from './icons.jsx'
 import { regions } from './regions.js'
@@ -51,7 +51,6 @@ export default function Editorial() {
             <a href="#clients">Clients</a>
             <a href="#areas">Service Areas</a>
             <a href="#process">Process</a>
-            <a className="nav-phone" href={PHONE_TEL}>{PHONE}</a>
             <a className="btn" href="#quote">Get a free quote</a>
           </nav>
           <button
@@ -117,7 +116,7 @@ export default function Editorial() {
             <form className="quote-card" onSubmit={onQuoteSubmit}>
               <div className="qc-top">
                 <span className="qc-kicker mono">Call us today</span>
-                <a className="qc-phone" href={PHONE_TEL}>{PHONE_DOT}</a>
+                <a className="qc-phone" href={PHONE_TEL}>{PHONE}</a>
               </div>
               <div className="qc-div" />
               <h2 className="qc-h">Get a free quote</h2>
