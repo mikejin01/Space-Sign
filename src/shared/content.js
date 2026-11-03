@@ -14,6 +14,11 @@ export const MAPS_URL = 'https://maps.google.com/?q=15-25+132nd+Street+College+P
 export const LICENSE = '#215'
 export const SINCE = 1987
 export const RATING = '4.9'
+// From the Google Maps listing (checked 2026-11-03).
+export const HOURS = [
+  { days: 'Mon – Fri', time: '8:00 AM – 6:00 PM' },
+  { days: 'Sat – Sun', time: 'Closed' },
+]
 
 export const heroSlides = [
   { img: 'space-sign-hero-2.png', label: 'Space Sign — Illuminated Channel Letters' },

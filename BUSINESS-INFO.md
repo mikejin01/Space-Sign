@@ -14,6 +14,7 @@
 - **Fax:** (718) 961-5577
 - **Email:** info@spacesign.com
 - **Address:** 15-25 132nd Street, College Point, NY 11356 (Queens)
+- **Hours:** Mon–Fri 8:00 AM–6:00 PM; Sat–Sun closed (source: Google Maps listing, checked 2026-11-03; matches Yahoo Local)
 
 ## Positioning / About copy (verbatim)
 - "Based out of Queens, NY, we at Space Sign provide a full-concierge service, taking care of all our client's signage needs from sales and design, to the manufacture and final installation processes."

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import useDesignAssets from '../../shared/useDesignAssets.js'
 import {
-  BASE, PHONE, PHONE_TEL, EMAIL, MAPS_URL, LICENSE, SINCE, heroSlides, services, work, clients, steps, sendQuoteEmail,
+  BASE, PHONE, PHONE_TEL, EMAIL, MAPS_URL, LICENSE, SINCE, HOURS, heroSlides, services, work, clients, steps, sendQuoteEmail,
 } from '../../shared/content.js'
 import { icons } from './icons.jsx'
 import css from './editorial.css?inline'
@@ -296,6 +296,10 @@ export default function Editorial() {
                 <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
                 <a href={PHONE_TEL}>{PHONE}</a>
                 <a href="https://maps.google.com/?q=15-25+132nd+Street+College+Point+NY+11356" target="_blank" rel="noreferrer">15-25 132nd St, College Point, NY 11356</a>
+                <h5 className="mono foot-sub">Hours</h5>
+                <dl className="foot-hours">
+                  {HOURS.map((h) => <div key={h.days}><dt>{h.days}</dt><dd>{h.time}</dd></div>)}
+                </dl>
               </div>
             </div>
           </div>

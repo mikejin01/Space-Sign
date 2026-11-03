@@ -278,6 +278,9 @@ footer{padding:60px 0 44px;border-top:4px solid var(--red)}
 .foot-col h5{color:var(--mute);margin-bottom:14px}
 .foot-col a{display:block;font-size:14px;padding:5px 0;color:#cdcabf;font-weight:500}
 .foot-col a:hover{color:var(--red)}
+.foot-col .foot-sub{margin:18px 0 6px}
+.foot-hours div{display:flex;gap:14px;font-size:14px;padding:5px 0;color:#cdcabf;font-weight:500}
+.foot-hours dt{min-width:74px}
 .foot-bottom{display:flex;justify-content:space-between;margin-top:50px;padding-top:22px;
   border-top:1px solid var(--line);color:var(--mute);font-size:12px}
 
