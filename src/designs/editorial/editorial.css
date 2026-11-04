@@ -216,16 +216,21 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
 .tall{grid-column:span 2;height:480px}
 .third{grid-column:span 2;height:300px}
 
-/* clients — one-row logo marquee. Spacing is padding on each logo, not flex
-   gap, so translating the doubled track by -50% lands exactly on the loop. */
-.logo-marquee{overflow:hidden;
+/* clients — one-row logo marquee, moving right to left. Spacing is padding on
+   each logo, not flex gap, so translating the doubled track by -50% lands
+   exactly on the loop. The bottom padding holds the hover caption; the matching
+   negative margin keeps the section the same height. */
+.logo-marquee{overflow:hidden;padding-bottom:36px;margin-bottom:-36px;
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
   mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.logo-track{display:flex;width:max-content;animation:logo-marquee 60s linear infinite}
+.logo-track{display:flex;width:max-content;animation:logo-marquee 110s linear infinite}
 .logo-marquee:hover .logo-track{animation-play-state:paused}
-.logo{flex:none;display:flex;align-items:center;justify-content:center;height:56px;padding:0 32px}
-.logo img{max-height:100%;max-width:180px;width:auto;height:auto}
-@keyframes logo-marquee{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.logo{position:relative;flex:none;display:flex;align-items:center;justify-content:center;height:70px;padding:0 36px}
+.logo img{max-height:100%;max-width:220px;width:auto;height:auto}
+.logo-name{position:absolute;top:100%;left:50%;margin-top:12px;transform:translate(-50%,4px);
+  white-space:nowrap;color:var(--ink);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+.logo:hover .logo-name{opacity:1;transform:translate(-50%,0)}
+@keyframes logo-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(prefers-reduced-motion:reduce){
   .logo-marquee{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
   .logo-track{animation:none}
@@ -338,8 +343,8 @@ footer{padding:60px 0 44px;border-top:4px solid var(--red)}
   .svc-card h3{margin-top:16px}
   .work{gap:10px}
   .work .cell{height:240px !important}
-  .logo{height:40px;padding:0 20px}
-  .logo img{max-width:130px}
+  .logo{height:50px;padding:0 24px}
+  .logo img{max-width:160px}
   .about-bio p{font-size:16px}
   .pv{gap:14px}
   .pv-panel{padding:26px 22px}

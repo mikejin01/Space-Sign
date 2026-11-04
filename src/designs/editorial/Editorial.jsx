@@ -202,6 +202,8 @@ export default function Editorial() {
               {[0, 1].map((copy) => clients.map((c) => (
                 <div className="logo" key={`${copy}-${c.file}`} aria-hidden={copy ? true : undefined}>
                   <img src={`${BASE}assets/clients/${c.file}.png`} alt={copy ? '' : c.name} />
+                  {/* Hover caption. Hidden from screen readers because the img alt already names the brand. */}
+                  <span className="logo-name mono" aria-hidden="true">{c.name}</span>
                 </div>
               )))}
             </div>
