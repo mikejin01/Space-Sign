@@ -218,8 +218,9 @@ export default function Editorial() {
             <div><div className="k mono">04 / About Us</div><h2>About us</h2></div>
           </div>
           <div className="about">
-            {/* Placeholder until the client sends a storefront photo (public/assets/work/space-sign-storefront.jpg). */}
-            <div className="about-photo ph"><span>Storefront photo — coming soon</span></div>
+            <div className="about-logo">
+              <img src={`${BASE}assets/logo-white-large.png`} alt="Space Sign" width="506" height="109" />
+            </div>
             <div className="about-bio">
               <p>Since 1987, Space Sign has designed, built and installed storefront signs from our shop in College Point, Queens. Every sign is made under one roof in our purpose-built factory, where traditional craft meets the latest sign technology. As a NYC Licensed Sign Hanger (#215), our in-house permit department also handles DOB permits and violation removal — so one team takes your sign from first sketch to final inspection, anywhere from East Long Island to New Jersey.</p>
               <ul className="about-facts mono">
