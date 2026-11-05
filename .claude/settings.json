@@ -15,7 +15,16 @@
       "Bash(curl -sL -A \"Mozilla/5.0\" \"https://www.spacesign.com/sitemap.xml\")",
       "Bash(curl -sL -A \"Mozilla/5.0\" \"https://www.spacesign.com/robots.txt\")",
       "Bash(curl -sL -A \"Mozilla/5.0\" \"https://www.spacesign.com/pages-sitemap.xml\")",
-      "WebFetch(domain:www.spacesign.com)"
+      "WebFetch(domain:www.spacesign.com)",
+      "mcp__claude-in-chrome__tabs_context_mcp",
+      "ClaudeInChromeDomain(www.speedpro.com)",
+      "ClaudeInChromeDomain(www.signmakerz.com)",
+      "ClaudeInChromeDomain(signsny.com)",
+      "ClaudeInChromeDomain(localhost:5173)",
+      "mcp__claude-in-chrome__tabs_create_mcp",
+      "ClaudeInChromeDomain(www.google.com)",
+      "ClaudeInChromeDomain(localhost:4173)",
+      "ClaudeInChromeDomain(nordvpn.com)"
     ]
   }
 }
