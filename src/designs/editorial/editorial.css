@@ -1,44 +1,59 @@
+/* Palette modelled on docs/nord-vpn-reference.png: an all-white page whose
+   colour lives in the cards — cool light-gray cards by default, a few blue and
+   dark cards for emphasis, and icons that each carry their own hue. Red stays
+   the one action colour. */
 :root{
-  --bg:#ffffff;       /* page background — clean white */
-  --bg2:#f3f3f3;      /* industrial gray inlay */
-  --panel:#f3f3f3;    /* card surface */
-  --ink:#0a0a0a;      /* absolute black — text & structure */
-  --mute:#56504f;     /* graphite — secondary text */
-  --line:#e0e0e0;     /* hairline border */
-  --red:#e4121d;      /* signal red */
+  --bg:#ffffff;       /* page background — every section is white */
+  --bg2:#f3f6fb;      /* cool light gray — default card surface */
+  --panel:#f3f6fb;    /* card surface */
+  --ink:#17181c;      /* near-black — text & structure */
+  --mute:#595c64;     /* cool graphite — secondary text */
+  --line:#e3e6ec;     /* hairline border */
+  --on-ink:#fff;      /* text on an ink-filled surface (ghost button hover) */
+  --red:#e4121d;      /* signal red — buttons and key highlights */
+  --blue:#3e5fff;     /* blue — feature card, step numbers, "NYC" */
+  --amber:#f0960e;
+  --green:#16a35a;
+  --purple:#8b5cf6;
+  --dark:#1d1e20;     /* dark cards */
   --r-sm:6px;         /* tags, inputs, small labels */
   --r-md:10px;        /* buttons */
   --r-lg:16px;        /* cards, panels, photos */
 }
-/* dark bands — re-scope the palette so child rules invert automatically.
-   The page alternates: hero ■ / license □ / trust ■ / services □ / work ■ /
-   clients □ / about ■ / permits (gray inlay) / process □ / cta ■ / footer ■ */
-.hero,.cta,footer,.dark{
-  --bg2:#141413;--panel:#1a1a18;--ink:#f3f1ea;--mute:#9b988f;--line:#2a2a27;
+/* icon tones — a CTA icon sets --tone and glows in it */
+.tone-red{--tone:var(--red)}
+.tone-blue{--tone:var(--blue)}
+.tone-amber{--tone:var(--amber)}
+.tone-green{--tone:var(--green)}
+.tone-purple{--tone:var(--purple)}
+/* on dark surfaces the tones brighten so they still read */
+.dark .tone-red{--tone:#ff4d55}
+.dark .tone-blue{--tone:#7088ff}
+.dark .tone-amber{--tone:#ffb340}
+.dark .tone-green{--tone:#34d17f}
+.dark .tone-purple{--tone:#a685ff}
+/* dark palette — re-scoped on dark surfaces so child rules invert: the hero
+   (text on photos), the quote pop-up (matches the hero's form), the dark
+   cards, bands and page heroes (.dark) and the footer. */
+.hero,.quote-modal,.dark,footer{
+  --bg2:#141413;--panel:#1a1a18;--ink:#f3f1ea;--mute:#9b988f;--line:#2a2a27;--on-ink:#0a0a0a;
 }
-.cta,footer,.dark{--bg:#0c0c0b;background:var(--bg);color:var(--ink)}
-.dark{background:linear-gradient(180deg,#16161a 0%,#0d0d0c 38%,#0c0c0b 100%)}
-.sec.dark{position:relative}
-.sec.dark::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--red) 0%,var(--red) 18%,transparent 18%)}
-.hero{color:var(--ink)}
+.hero,.dark,footer{color:var(--ink)}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;overflow-x:clip;scroll-padding-top:78px} /* clear the sticky header on anchor jumps */
-body{background:var(--bg);color:var(--ink);font-family:'Archivo',Arial,sans-serif;
+/* type — Inter throughout, as on nordvpn.com: semibold (600) headings in
+   sentence case with slight negative tracking, regular body text, no capitals */
+body{background:var(--bg);color:var(--ink);
+  font-family:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;line-height:1.5;
   -webkit-font-smoothing:antialiased}
+/* even line lengths: headings split into balanced lines, paragraphs avoid a lone last word */
+h1,h2,h3,h4{text-wrap:balance}
+p{text-wrap:pretty}
 .wrap{max-width:1400px;margin:0 auto;padding:0 44px}
-.mono{font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:.16em;font-size:11px}
+/* small labels — kickers, captions, footer headings */
+.label{font-size:13px;font-weight:600}
 a{color:inherit;text-decoration:none}
 img{display:block}
-
-.ph{position:relative;background:
-  repeating-linear-gradient(45deg,#1b1b19 0 10px,#222220 10px 20px);
-  display:flex;align-items:flex-end;overflow:hidden}
-.ph::after{content:"";position:absolute;inset:0;
-  background:radial-gradient(120% 90% at 50% 0%,transparent 40%,rgba(0,0,0,.55))}
-.ph span{position:relative;z-index:2;font-family:'Space Mono',monospace;font-size:10px;
-  letter-spacing:.12em;text-transform:uppercase;color:#a4a199;background:#0c0c0b;
-  padding:6px 9px;margin:16px;border:1px solid var(--line);border-radius:var(--r-sm)}
 
 /* real photo fill */
 .img{width:100%;height:100%;background-size:cover;background-position:center;
@@ -46,22 +61,23 @@ img{display:block}
 
 /* nav */
 header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
-  backdrop-filter:blur(14px) saturate(1.3);border-bottom:1px solid #e0e0e0}
+  backdrop-filter:blur(14px) saturate(1.3);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:78px}
 .nav-logo img{width:150px;height:auto}
 .nav-links{display:flex;gap:34px;align-items:center}
-.nav-links a{font-size:16px;font-weight:600;color:#33312e}
-.nav-links .btn{font-size:14px}
-.nav-links a:hover{color:#000}
+.nav-links a{font-size:16px;font-weight:500;color:#3a3c42}
+.nav-links .btn{font-size:14px;font-weight:600}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a[aria-current="page"]{color:var(--red)}
 .btn{display:inline-flex;align-items:center;gap:9px;background:var(--red);color:#fff !important;
-  font-weight:700;font-size:13px;letter-spacing:.02em;padding:13px 22px;border:1px solid var(--red);
-  border-radius:var(--r-md);
+  font-family:inherit;font-weight:600;font-size:14px;line-height:1.3;padding:12px 22px;
+  border:1px solid var(--red);border-radius:var(--r-md);cursor:pointer;
   transition:background .18s ease,border-color .18s ease,transform .18s ease,box-shadow .18s ease}
 .btn:hover{background:#b10d16;border-color:#b10d16;color:#fff !important;
   transform:translateY(-2px);box-shadow:0 8px 22px rgba(228,18,29,.32)}
-.btn.ghost{background:transparent;color:#fff !important;border-color:rgba(255,255,255,.55)}
-.btn.ghost:hover{background:#fff;color:#0a0a0a !important;border-color:#fff;
-  transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.28)}
+.btn.ghost{background:transparent;color:var(--ink) !important;border-color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--on-ink) !important;border-color:var(--ink);
+  transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.18)}
 
 /* mobile nav toggle (hamburger) — hidden on desktop */
 .nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;
@@ -74,20 +90,24 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
 
 /* mobile dropdown menu — hidden until opened on small screens */
 .mobile-menu{display:none;flex-direction:column;background:rgba(255,255,255,.98);
-  backdrop-filter:blur(14px) saturate(1.3);border-bottom:1px solid #e0e0e0;
+  backdrop-filter:blur(14px) saturate(1.3);border-bottom:1px solid var(--line);
   padding:8px 22px 22px}
-.mobile-menu a{font-size:16px;font-weight:600;color:#33312e;padding:14px 0;
-  border-bottom:1px solid #ececec}
+.mobile-menu a{font-size:16px;font-weight:500;color:#3a3c42;padding:14px 0;
+  border-bottom:1px solid var(--line)}
 .mobile-menu a:last-child{border-bottom:none}
-.mobile-menu .nav-phone{color:#000 !important}
-.mobile-menu .btn{justify-content:center;margin-top:14px;padding:14px 22px}
+.mobile-menu a[aria-current="page"]{color:var(--red)}
+.mobile-menu .nav-phone{color:var(--ink) !important}
+.mobile-menu .btn{justify-content:center;margin-top:14px;padding:14px 22px;font-size:16px;font-weight:600}
+
+/* homepage first screen — the hero, then the license banner. The hero takes the
+   height the banner leaves below the 78px sticky header, so on desktop the banner
+   sits on screen, right at the fold. */
+.fold{display:flex;flex-direction:column;min-height:calc(100svh - 78px)}
 
 /* hero */
-.hero{position:relative;min-height:90vh;display:flex;flex-direction:column;
+.hero{position:relative;flex:1 0 auto;display:flex;flex-direction:column;
   justify-content:flex-end;overflow:hidden;border-bottom:1px solid var(--line)}
 .hero-bg{position:absolute;inset:0}
-.hero-bg .ph{width:100%;height:100%;align-items:stretch}
-.hero-bg .ph span{align-self:flex-end}
 .hero-bg::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
   background:linear-gradient(180deg,rgba(12,12,11,.65) 0%,rgba(12,12,11,.35) 35%,rgba(12,12,11,.7) 75%,rgba(12,12,11,.96) 100%)}
 
@@ -108,14 +128,13 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
   background:rgba(243,241,234,.25);transition:.2s}
 .hero-dot:hover{background:rgba(243,241,234,.5)}
 .hero-dot.active{background:var(--red);width:54px}
-.hero-content{position:relative;z-index:3;padding:120px 0 64px;width:100%}
+.hero-content{position:relative;z-index:3;padding:40px 0 36px;width:100%}
 .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:56px;align-items:end}
-.hero-kicker{display:flex;gap:16px;align-items:center;color:#f3f1ea;font-weight:700;
-  margin-bottom:26px;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+.hero-kicker{display:flex;gap:16px;align-items:center;color:#f3f1ea;font-size:14px;
+  margin-bottom:24px;text-shadow:0 1px 8px rgba(0,0,0,.6)}
 .hero-kicker::before{content:"";width:42px;height:2px;background:var(--red);flex-shrink:0}
-.hero h1{font-size:clamp(38px,5vw,76px);font-weight:800;line-height:.92;letter-spacing:-.03em;
-  text-transform:uppercase}
-.hero h1 em{font-style:normal;-webkit-text-stroke:1.4px var(--ink);color:transparent}
+.hero h1{font-size:clamp(38px,4.6vw,68px);font-weight:600;line-height:1.08;letter-spacing:-.025em}
+.hero h1 em{font-style:normal;color:var(--red)}
 .hero-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px 40px;margin-top:34px}
 .hero-row p{max-width:42ch;color:#c9c6bc;font-size:16px;line-height:1.6}
 .hero-actions{display:flex;gap:12px;flex-shrink:0}
@@ -128,93 +147,152 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
   box-shadow:0 24px 56px rgba(0,0,0,.5)}
 .quote-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
   background:linear-gradient(90deg,var(--red) 0,var(--red) 30%,transparent 30%)}
-.qc-top{display:flex;flex-direction:column;gap:5px}
-.qc-kicker{display:flex;align-items:center;gap:10px;color:var(--red);font-size:10px}
+.qc-top{display:flex;flex-direction:column;gap:8px}
+.qc-kicker{display:flex;align-items:center;gap:10px;color:var(--red)}
 .qc-kicker::before{content:"";width:18px;height:1px;background:var(--red)}
-.qc-phone{font-size:28px;font-weight:800;letter-spacing:-.01em;line-height:1;color:var(--ink);
-  width:fit-content;transition:color .18s ease}
-.qc-phone:hover{color:var(--red)}
-.qc-div{height:1px;background:rgba(243,241,234,.12);margin:16px 0}
-.qc-h{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.16em;
-  text-transform:uppercase;color:#cfccc2;margin-bottom:13px}
+.qc-h{font-size:26px;font-weight:600;letter-spacing:-.015em;line-height:1.2;color:var(--ink)}
+.qc-sub{color:#c9c6bc;font-size:14px;line-height:1.5}
+.qc-div{height:1px;background:rgba(243,241,234,.12);margin:18px 0 16px}
 .qc-fields{display:flex;flex-direction:column;gap:8px}
-.quote-card input,.quote-card textarea{width:100%;font-family:'Archivo',Arial,sans-serif;font-size:13.5px;
+.quote-card input,.quote-card textarea{width:100%;font-family:inherit;font-size:14px;
   color:var(--ink);background:rgba(243,241,234,.045);border:1px solid rgba(243,241,234,.14);
   border-radius:var(--r-sm);padding:11px 13px;transition:border-color .18s ease,background .18s ease}
 .quote-card input::placeholder,.quote-card textarea::placeholder{color:#8b887f}
 .quote-card input:focus,.quote-card textarea:focus{outline:none;border-color:var(--red);
   background:rgba(243,241,234,.08)}
+/* left invalid after the user has touched it (or tried to submit) */
+.quote-card input:user-invalid,.quote-card textarea:user-invalid{border-color:var(--red);
+  background:rgba(228,18,29,.1)}
 .quote-card textarea{resize:vertical;min-height:74px;line-height:1.5}
 .qc-submit{width:100%;justify-content:center;margin-top:13px;padding-top:12px;padding-bottom:12px}
-.qc-fine{color:var(--mute);text-align:center;margin-top:12px;font-size:9.5px;letter-spacing:.08em;line-height:1.5}
+.qc-fine{color:var(--mute);text-align:center;margin-top:12px;font-size:12px;font-weight:400;line-height:1.5}
+/* in the hero the card is a little tighter than in the pop-up — the card sets the
+   hero's height, and the license banner has to fit below it */
+.hero .qc-top{gap:6px}
+.hero .qc-h{font-size:24px}
+.hero .qc-div{margin:14px 0 12px}
+.hero .quote-card input,.hero .quote-card textarea{padding:10px 13px}
+.hero .quote-card textarea{min-height:0;height:85px} /* three lines */
+.hero .qc-submit{margin-top:12px}
+.hero .qc-fine{margin-top:10px}
+
+/* quote pop-up — the hero's quote card inside a native <dialog>. The dialog box
+   hugs the card, so a click that lands on the dialog itself is a backdrop click. */
+.quote-modal{width:min(420px,calc(100% - 32px));max-width:none;
+  max-height:calc(100% - 32px);max-height:calc(100dvh - 32px);margin:auto;padding:0;
+  border:none;border-radius:var(--r-lg);background:transparent;color:var(--ink);
+  overflow:auto;overscroll-behavior:contain}
+.quote-modal::backdrop{background:rgba(12,12,11,.62);
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.quote-modal[open]{animation:qm-in .24s ease-out}
+.quote-modal[open]::backdrop{animation:qm-fade .24s ease-out}
+.qm-close{position:absolute;top:16px;right:16px;z-index:2;width:36px;height:36px;padding:0;
+  display:flex;align-items:center;justify-content:center;color:var(--ink);cursor:pointer;
+  background:rgba(243,241,234,.06);border:1px solid rgba(243,241,234,.16);border-radius:50%;
+  transition:background .18s ease,border-color .18s ease}
+.qm-close:hover{background:var(--red);border-color:var(--red)}
+.qm-close svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+html:has(.quote-modal[open]){overflow:hidden} /* stop the page scrolling behind the pop-up */
+@keyframes qm-in{from{opacity:0;transform:translateY(14px) scale(.98)}}
+@keyframes qm-fade{from{opacity:0}}
+@media(prefers-reduced-motion:reduce){
+  .quote-modal[open],.quote-modal[open]::backdrop{animation:none}
+}
+
+/* page hero — the banner atop every page but the homepage (PageHero.jsx): the
+   title, lede and quote and call buttons over a photo, darkest on the left where
+   the copy sits. One height on every page. It's a min-height, so a very narrow
+   screen grows the banner rather than clip the copy. */
+.page-hero{position:relative;display:flex;align-items:center;min-height:360px;padding:48px 0;
+  overflow:hidden;background:#0c0d0f}
+.page-hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.page-hero::before{content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(90deg,rgba(12,12,11,.9) 0%,rgba(12,12,11,.74) 45%,rgba(12,12,11,.4) 100%)}
+.page-hero-in{position:relative;z-index:2;width:100%}
+.page-hero h1{font-size:clamp(36px,4.2vw,56px);font-weight:600;letter-spacing:-.025em;line-height:1.1}
+.page-hero p{max-width:60ch;margin-top:14px;color:#c9c6bc;font-size:17px;line-height:1.6}
+.page-hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
 
 /* license banner */
-.license{padding:52px 0;text-align:center;background:var(--bg2);border-bottom:1px solid var(--line)}
+.license{padding:44px 0 36px;text-align:center}
 .license-line{display:flex;flex-wrap:wrap;gap:.3em;justify-content:center;align-items:center;
-  font-size:clamp(22px,3.4vw,40px);font-weight:800;letter-spacing:-.02em;line-height:1.1}
-.license .nyc{font-weight:900;font-size:1.18em;letter-spacing:-.05em;line-height:.9;
-  color:#1d63c4;-webkit-text-stroke:.5px #1d63c4}
+  font-size:clamp(22px,3vw,36px);font-weight:600;letter-spacing:-.02em;line-height:1.2}
+.license .nyc{font-weight:800;font-size:1.12em;letter-spacing:-.03em;line-height:.9;color:var(--blue)}
 .license .lic{color:var(--red)}
 .license-sub{margin-top:14px;color:var(--mute);font-size:clamp(13px,1.6vw,16px)}
 .license-sub a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;
   transition:color .18s ease}
 .license-sub a:hover{color:var(--red)}
 
-/* trust strip */
-.trust{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
-.trust div{padding:30px 36px;border-left:1px solid var(--line)}
-.trust div:first-child{border-left:none}
-.trust .n{font-size:34px;font-weight:800;letter-spacing:-.02em}
+/* trust — one rounded stat card on the reference's light-blue gradient */
+.trust{display:grid;grid-template-columns:repeat(4,1fr);border-radius:var(--r-lg);
+  background:linear-gradient(100deg,#f2f6fc 0%,#e3f1ff 100%);border:1px solid #dde7f4}
+.trust>div{padding:30px 36px;border-left:1px solid #d3dfef}
+.trust>div:first-child{border-left:none}
+.trust .n{font-size:36px;font-weight:600;letter-spacing:-.02em;line-height:1.2}
 .trust .n em{font-style:normal;color:var(--red)}
+.trust .n .star{color:var(--amber)}
 .trust .l{margin-top:6px;color:var(--mute);font-size:13px}
 
-/* section */
-.sec{padding:96px 0;border-bottom:1px solid var(--line)}
-.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:48px;
-  padding-bottom:20px;border-bottom:2px solid var(--ink)}
-.sec-head .k{color:var(--red);margin-bottom:16px}
-.sec-head h2{font-size:clamp(32px,4.4vw,58px);font-weight:900;letter-spacing:-.025em;
-  text-transform:uppercase;line-height:.96}
-.sec-head p{max-width:40ch;color:var(--mute);font-size:15px;line-height:1.6}
+/* section — white bands divided by whitespace alone */
+.sec{padding:96px 0}
+/* section header — a centered heading with a one-line blurb under it, sized
+   like nordvpn.com's (40px semibold heading, 16px blurb) */
+.sec-head{text-align:center;max-width:800px;margin:0 auto 48px}
+.sec-head h2{font-size:clamp(30px,3.2vw,40px);font-weight:600;letter-spacing:-.015em;line-height:1.3}
+.sec-head p{margin-top:16px;color:#3a3c42;font-size:16px;line-height:1.5;text-wrap:balance}
 
-/* services — one row of capability cards (Kinetic Industrial) */
+/* sign types — light-gray cards with a 3:2 photo over a title and one line of
+   copy. Each card spans three rows shared with its neighbours (photo, title,
+   copy), so titles and copy line up across the row whatever their length. The
+   Sign Types page's 12 cards fill 4, 3 or 2 columns evenly; the homepage's
+   .svc-row of 4 skips the 3-column step. */
 .svc{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
-.svc-card{position:relative;display:flex;flex-direction:column;min-height:320px;overflow:hidden;
-  border-radius:var(--r-lg);
-  background:var(--bg2);border:1px solid var(--ink);padding:32px;
-  transition:border-color .2s ease,transform .2s ease,background .2s ease}
-.svc-card:hover{border-color:var(--red);background:#fff}
-.svc-icon-tr{position:absolute;top:20px;right:20px;color:var(--ink);opacity:.1;
-  transition:opacity .25s ease,color .25s ease,transform .35s ease}
-.svc-icon-tr svg{width:58px;height:58px;display:block}
-.svc-icon-tr .ic-dot{opacity:1}
-.svc-card:hover .svc-icon-tr{opacity:1;color:var(--red);transform:scale(1.06)}
-.svc-card h3{font-size:23px;font-weight:800;margin-top:auto;margin-bottom:12px;
-  letter-spacing:-.01em;color:var(--ink);position:relative;z-index:1}
-.svc-card p{color:var(--mute);font-size:14.5px;line-height:1.6;margin-bottom:18px;position:relative;z-index:1}
-.svc-card .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:0}
-.tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;
-  border:1px solid #c9c4c4;border-radius:var(--r-sm);padding:5px 9px;color:#6b6463}
+.svc-card{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:0;align-content:start;
+  overflow:hidden;border-radius:var(--r-lg);background:var(--bg2);border:1px solid transparent;
+  transition:border-color .2s ease,transform .2s ease,background .2s ease,box-shadow .2s ease}
+.svc-card:hover{background:#fff;border-color:var(--line);transform:translateY(-4px);
+  box-shadow:0 20px 44px rgba(20,28,45,.08)}
+.svc-img{overflow:hidden;aspect-ratio:3/2;background:var(--line)}
+.svc-img img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.svc-card:hover .svc-img img{transform:scale(1.05)}
+.svc-card h3{font-size:19px;font-weight:600;line-height:1.35;margin:20px 22px 6px;
+  letter-spacing:-.01em;color:var(--ink)}
+.svc-card p{color:var(--mute);font-size:14.5px;line-height:1.55;margin:0 22px 22px}
+/* the "View all …" button under a homepage preview */
+.sec-more{display:flex;justify-content:center;margin-top:40px}
 
-/* work */
-.work{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
-.work .cell{position:relative;overflow:hidden}
-.work .cell .ph{width:100%;height:100%}
+/* work — photo tiles whose caption slides up on hover (and always shows on touch
+   screens, which can't hover). Tiles are 4:3. The homepage's .work-bento puts
+   the first photo large over a 2×2 of them (so it's 4:3 too, at every width);
+   the Our Work page's .work-grid is all small tiles. The photo is positioned
+   absolutely so it never stretches its tile. */
+.work{display:grid;gap:14px;grid-template-columns:repeat(4,1fr)}
+.work .cell{position:relative;overflow:hidden;aspect-ratio:4/3;border:1px solid var(--line);border-radius:var(--r-lg)}
+.work-bento .cell:first-child{grid-column:span 2;grid-row:span 2;aspect-ratio:auto}
+.work .cell img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
+.work .cell:hover img{transform:scale(1.05)}
 .work .cap{position:absolute;left:0;bottom:0;z-index:3;padding:18px;width:100%;color:#f3f1ea;
   background:linear-gradient(0deg,rgba(12,12,11,.9),transparent);
-  display:flex;justify-content:space-between;align-items:flex-end;opacity:0;transition:.22s;transform:translateY(8px)}
-.work .cell{border:1px solid rgba(243,241,234,.1);border-radius:var(--r-lg)}
+  display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;column-gap:12px;row-gap:2px;
+  opacity:0;transition:.22s;transform:translateY(8px)} /* the type drops under the name when both don't fit */
 .work .cell::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
   border:1px solid transparent;border-radius:inherit;transition:border-color .22s ease}
 .work .cell:hover::after{border-color:var(--red)}
-.work .cell .img{transition:transform .45s ease}
-.work .cell:hover .img{transform:scale(1.05)}
 .work .cell:hover .cap{opacity:1;transform:none}
+@media(hover:none){.work .cap{opacity:1;transform:none}}
 .work .cap b{font-size:15px;font-weight:600}
-.work .cap .mono{color:var(--red)}
-.big{grid-column:span 4;height:480px}
-.tall{grid-column:span 2;height:480px}
-.third{grid-column:span 2;height:300px}
+.work .cap .label{color:var(--red);white-space:nowrap}
+
+/* Our Work page filters — a pill per sign type with its photo count; the chosen one is filled */
+.work-filters{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:1040px;margin:0 auto 36px}
+.work-filters button{font:inherit;font-size:14px;font-weight:500;line-height:1;padding:10px 15px;cursor:pointer;
+  border:1px solid var(--line);border-radius:999px;background:#fff;color:#3a3c42;
+  transition:border-color .2s ease,background .2s ease,color .2s ease}
+.work-filters button:hover{border-color:var(--ink);color:var(--ink)}
+.work-filters button span{margin-left:3px;color:var(--mute);font-weight:400}
+.work-filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.work-filters button[aria-pressed="true"] span{color:inherit;opacity:.7}
 
 /* clients — one-row logo marquee, moving right to left. Spacing is padding on
    each logo, not flex gap, so translating the doubled track by -50% lands
@@ -237,51 +315,169 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
   .logo[aria-hidden]{display:none}
 }
 
-/* about — logo panel + short bio. The logo source is 506px wide, so it is
-   capped at 360px to stay sharp. */
-.about{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:center}
-.about-logo{display:flex;align-items:center;justify-content:center;aspect-ratio:3/2;padding:40px;
-  background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg)}
+/* about — logo panel + short bio in equal columns; the panel stretches to the
+   bio's height so the two blocks share a top and bottom edge. The logo source
+   is 506px wide, so it is capped at 360px to stay sharp. */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.about-logo{display:flex;align-items:center;justify-content:center;min-height:280px;padding:40px;
+  background:linear-gradient(160deg,#f3f6fb 0%,#e4eafb 100%);border-radius:var(--r-lg)}
 .about-logo img{width:min(100%,360px);height:auto}
-.about-bio p{font-size:18px;line-height:1.65;color:#cdcabf}
+.about-bio p{font-size:18px;line-height:1.65;color:#3a3c42}
 .about-facts{display:flex;flex-wrap:wrap;gap:10px 28px;list-style:none;margin-top:28px;padding-top:22px;
   border-top:1px solid var(--line);color:var(--mute)}
 .about-facts a{color:var(--ink);transition:color .18s ease}
 .about-facts a:hover{color:var(--red)}
 
-/* permits & violations — gray inlay so it reads apart from the white Process band */
-.permits{background:var(--bg2)}
-.pv{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.pv-panel{display:flex;flex-direction:column;background:var(--bg);border:1px solid var(--line);
-  border-radius:var(--r-lg);padding:36px;scroll-margin-top:20px}
-.pv-panel h3{font-size:26px;font-weight:800;letter-spacing:-.01em;margin-bottom:14px}
-.pv-panel p{color:var(--mute);font-size:15.5px;line-height:1.65;margin-bottom:14px}
-.pv-panel .btn{align-self:flex-start;margin-top:auto}
-.pv-panel p:last-of-type{margin-bottom:28px}
+/* panels — rounded feature cards after the reference's trio: light gray by
+   default, .blue or .dark for emphasis. The icon tile takes its hue from a
+   .tone-* class on it. Used by the homepage's permits & violations and the
+   About, Permits and Violations pages. .panels puts three in a row, .pair two. */
+.panels{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.panels.pair{grid-template-columns:1fr 1fr}
+.panel{display:flex;flex-direction:column;padding:36px;border-radius:var(--r-lg);background:var(--bg2)}
+.panel.blue{background:var(--blue);--ink:#fff;--mute:rgba(255,255,255,.84);color:var(--ink)}
+.panel.dark{background:var(--dark)}
+.panel-icon{display:flex;align-items:center;justify-content:center;width:56px;height:56px;
+  border-radius:14px;margin-bottom:24px;color:var(--tone,var(--red));
+  background:color-mix(in srgb,var(--tone,var(--red)) 15%,transparent)}
+.panel-icon svg{width:40px;height:40px;display:block;stroke-width:2.5}
+.panel.blue .panel-icon{--tone:#fff}
+.panel h3{font-size:24px;font-weight:600;line-height:1.3;letter-spacing:-.015em;margin-bottom:12px}
+.panel p{color:var(--mute);font-size:15.5px;line-height:1.65;margin-bottom:14px}
+.panel p:last-of-type{margin-bottom:28px}
+/* the closing button or link sits at the bottom, so panels in a row line up */
+.panel>.btn,.panel>.text-link,.panel-actions{align-self:flex-start;margin-top:auto}
+.panel-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px}
+/* red would clash with the blue, so the blue panel's button is white and its link stays white */
+.panel.blue .btn{background:#fff;border-color:#fff;color:var(--blue) !important}
+.panel.blue .btn:hover{background:#eef1ff;border-color:#eef1ff;box-shadow:0 8px 22px rgba(12,24,96,.28)}
+.panel.blue .text-link:hover{color:var(--ink)}
 
-/* process */
-.proc{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.proc-step{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--bg2);padding:30px 26px 40px}
-.proc-step .s{color:var(--red);font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.1em;
-  display:block;margin-bottom:48px}
-.proc-step h4{font-size:20px;font-weight:800;margin-bottom:10px}
-.proc-step p{color:var(--mute);font-size:14px;line-height:1.55}
+/* a text link whose arrow nudges right on hover */
+.text-link{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:var(--ink);
+  transition:color .18s ease}
+.text-link span{transition:transform .18s ease}
+.text-link:hover{color:var(--red)}
+.text-link:hover span{transform:translateX(3px)}
+.nowrap{white-space:nowrap}
 
-/* CTA */
-.cta{padding:120px 0;text-align:center;position:relative;overflow:hidden}
-.cta::before{content:"";position:absolute;inset:0;background:
-  radial-gradient(60% 80% at 50% 30%,rgba(255,59,29,.16),transparent 70%)}
-.cta-in{position:relative;z-index:2;max-width:900px;margin:0 auto}
-.cta h2{font-size:clamp(44px,7vw,104px);font-weight:800;line-height:.92;letter-spacing:-.03em;
-  text-transform:uppercase}
-.cta h2 em{font-style:normal;color:var(--red)}
-.cta p{color:#b7b4aa;font-size:17px;line-height:1.6;margin:26px auto 36px;max-width:50ch}
+/* left-aligned section headings and large body copy, beside a photo, card or list */
+.ab-story h2,.ab-area h2,.pv-body h2{font-size:clamp(30px,3.2vw,40px);font-weight:600;letter-spacing:-.015em;line-height:1.3}
+.ab-copy p,.ab-area p,.pv-body>p{font-size:18px;line-height:1.65;color:#3a3c42}
+
+/* About Us page (About.jsx) — a two-column story, three expertise panels, a
+   service-area card on the trust strip's light-blue gradient, and the team's
+   closing note */
+.ab-story{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.ab-kicker{color:var(--red);margin-bottom:14px}
+.ab-copy p+p{margin-top:16px}
+.ab-area{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;padding:56px;
+  border-radius:var(--r-lg);background:linear-gradient(100deg,#f2f6fc 0%,#e3f1ff 100%);border:1px solid #dde7f4}
+.ab-area p{margin:16px 0 22px}
+.ab-places{display:flex;flex-wrap:wrap;gap:10px;list-style:none}
+.ab-places li{padding:10px 18px;border-radius:999px;background:#fff;border:1px solid #dde7f4;
+  font-size:15px;font-weight:500}
+.ab-signoff{text-align:center}
+.ab-note{max-width:30ch;margin:0 auto;font-size:clamp(26px,3vw,36px);font-weight:600;
+  letter-spacing:-.02em;line-height:1.3;text-wrap:balance}
+.ab-sign{margin-top:18px;color:var(--mute)}
+
+/* Permits and Violations pages (Permits.jsx, Violations.jsx) — a grid of rule
+   cards (.pv-rules), a blue stat card beside a checklist (.pv-feature) and, on
+   Violations, a dark strip of penalties (.pv-stakes) */
+.pv-rules{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;list-style:none}
+.pv-rules.four{grid-template-columns:repeat(4,1fr)}
+.pv-rules li{padding:28px;border-radius:var(--r-lg);background:var(--bg2)}
+.pv-num{display:block;margin-bottom:16px;color:var(--blue)}
+.pv-rules .panel-icon{width:44px;height:44px;border-radius:12px;margin-bottom:18px}
+.pv-rules .panel-icon svg{width:30px;height:30px}
+.pv-rules h3{font-size:19px;font-weight:600;line-height:1.35;letter-spacing:-.01em}
+.pv-rules p{margin-top:8px;color:var(--mute);font-size:15px;line-height:1.6}
+.pv-feature{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:64px;align-items:center}
+.pv-stat{display:flex;flex-direction:column;justify-content:flex-end;min-height:360px;padding:40px;
+  border-radius:var(--r-lg);color:#fff;background:linear-gradient(150deg,#5a75ff 0%,var(--blue) 55%,#2f4ee6 100%)}
+.pv-stat .label{color:rgba(255,255,255,.82)}
+.pv-stat b{margin:4px 0 18px;font-size:clamp(72px,9vw,128px);font-weight:700;letter-spacing:-.045em;line-height:1}
+.pv-stat p{max-width:30ch;font-size:17px;line-height:1.5;color:rgba(255,255,255,.88)}
+.pv-body>p{margin-top:16px}
+.pv-checks{display:grid;gap:14px;list-style:none;margin-top:24px}
+.pv-checks li{display:flex;gap:12px;font-size:16.5px;line-height:1.55;color:#3a3c42}
+.pv-checks svg{flex:none;width:24px;height:24px;margin-top:1px;color:var(--green);stroke-width:3}
+.pv-body>.btn{margin-top:32px}
+.pv-stakes{display:grid;grid-template-columns:repeat(3,1fr);border-radius:var(--r-lg);background:var(--dark)}
+.pv-stakes>div{padding:40px 36px;border-left:1px solid var(--line)}
+.pv-stakes>div:first-child{border-left:none}
+.pv-stakes b{display:block;font-size:clamp(36px,4vw,52px);font-weight:600;letter-spacing:-.025em;line-height:1.1;color:#ff4d55}
+.pv-stakes p{margin-top:12px;color:var(--mute);font-size:15.5px;line-height:1.6}
+
+/* Contact page (Contact.jsx) — the contact details beside the message form. The
+   form is the quote card in light colours: the trust strip's light-blue gradient,
+   white fields and a soft red ring on focus. */
+.ct{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,480px);gap:64px;align-items:start;
+  max-width:1120px}
+.ct h2{font-size:clamp(30px,3.2vw,40px);font-weight:600;letter-spacing:-.015em;line-height:1.3}
+.ct-list{margin-top:28px;border-top:1px solid var(--line)}
+.ct-list>div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;padding:20px 0;
+  border-bottom:1px solid var(--line)}
+.ct-list dt{color:var(--mute);padding-top:3px}
+.ct-list dd{display:flex;flex-direction:column;align-items:flex-start;gap:6px;font-size:18px;line-height:1.5}
+.ct-list dd>a:not(.text-link){transition:color .18s ease}
+.ct-list dd>a:not(.text-link):hover{color:var(--red)}
+.ct-hours span{display:inline-block;min-width:96px}
+.ct-form .quote-card{padding:34px 32px 28px;border-color:#dde7f4;
+  background:linear-gradient(160deg,#f6f9fd 0%,#e3f1ff 100%);box-shadow:0 24px 48px rgba(20,28,45,.07);
+  backdrop-filter:none;-webkit-backdrop-filter:none}
+.ct-form .qc-sub{color:var(--mute)}
+.ct-form .qc-div{background:#d6e1f0}
+.ct-form .qc-fields{gap:12px}
+/* hover, focus and invalid are restated: the field rule below has the same
+   specificity as the quote card's own state rules and comes later, so it would win */
+.ct-form .quote-card input,.ct-form .quote-card textarea{padding:13px 14px;font-size:15px;
+  background:#fff;border-color:#d6e1f0;box-shadow:0 1px 2px rgba(20,28,45,.04);
+  transition:border-color .18s ease,background .18s ease,box-shadow .18s ease}
+.ct-form .quote-card input::placeholder,.ct-form .quote-card textarea::placeholder{color:#8a8f99}
+.ct-form .quote-card input:hover,.ct-form .quote-card textarea:hover{border-color:#b9c7dc}
+.ct-form .quote-card input:focus,.ct-form .quote-card textarea:focus{background:#fff;border-color:var(--red);
+  box-shadow:0 0 0 3px rgba(228,18,29,.12)}
+.ct-form .quote-card input:user-invalid,.ct-form .quote-card textarea:user-invalid{border-color:var(--red);background:#fff6f6}
+.ct-form .qc-submit{padding-top:14px;padding-bottom:14px;font-size:15px}
+
+/* CTA — a full-width dark band over a sign photo, after the reference's closing
+   band. Layers: photo and its dark overlay, then the copy. */
+.cta{position:relative;overflow:hidden;text-align:center;padding:64px 0 72px;background:#0c0d0f}
+/* zoomed in so the sign's black panel fills the band and the wall beside it is cropped out */
+.cta-bg{position:absolute;inset:0;background-position:center 35%;transform:scale(1.25);transform-origin:45% 40%}
+.cta-bg::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(55% 65% at 50% 55%,rgba(228,18,29,.16),transparent 70%),
+    linear-gradient(180deg,rgba(9,10,12,.9) 0%,rgba(9,10,12,.84) 45%,rgba(9,10,12,.95) 100%)}
+.cta-in{position:relative;z-index:2;max-width:1180px;margin:0 auto}
+/* a row of service icons in glass circles, each glowing in its own colour */
+.cta-icons{display:flex;justify-content:center;margin-bottom:26px}
+.cta-icon{display:flex;align-items:center;justify-content:center;width:64px;height:64px;margin:0 -3px;
+  border-radius:50%;color:var(--tone);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.cta-icon svg{width:36px;height:36px;display:block;stroke-width:2.4;filter:drop-shadow(0 0 8px var(--tone))}
+.cta h2{font-size:clamp(34px,4vw,60px);font-weight:600;line-height:1.1;letter-spacing:-.025em;
+  text-wrap:balance}
+.cta h2 em{font-style:normal;color:var(--red);text-shadow:0 0 28px rgba(228,18,29,.6)}
+.cta p{color:#c9c6bc;font-size:17px;line-height:1.6;margin:20px auto 28px;max-width:62ch;text-wrap:balance}
 .cta-actions{display:flex;gap:14px;justify-content:center}
+.cta .cta-note{margin:18px auto 0;max-width:none;color:var(--mute);font-size:13px}
+.cta-note span{white-space:nowrap}
+/* inline, so the check stays beside the first word when the note wraps */
+.cta-note svg{display:inline-block;width:16px;height:16px;margin-right:8px;vertical-align:-3px;stroke-width:3.4}
 
-/* footer */
-footer{padding:60px 0 44px;border-top:4px solid var(--red)}
+/* footer — dark, like the reference's */
+footer{padding:64px 0 44px;background:#141415}
 .foot{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
 .foot-logo img{width:172px}
+/* social links — round glass buttons under the tagline that fill red on hover, like the footer links */
+.foot-social{display:flex;gap:10px;margin-top:22px}
+.foot-social a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;
+  color:#cdcabf;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);
+  transition:color .18s ease,background .18s ease,border-color .18s ease,transform .18s ease}
+.foot-social a:hover{color:#fff;background:var(--red);border-color:var(--red);transform:translateY(-2px)}
+.foot-social svg{width:18px;height:18px;display:block}
 .foot-cols{display:flex;gap:60px}
 .foot-col h5{color:var(--mute);margin-bottom:14px}
 .foot-col a{display:block;font-size:14px;padding:5px 0;color:#cdcabf;font-weight:500}
@@ -293,28 +489,51 @@ footer{padding:60px 0 44px;border-top:4px solid var(--red)}
   border-top:1px solid var(--line);color:var(--mute);font-size:12px}
 
 @media(max-width:1200px){
-  .nav-links{gap:22px} /* six links + button must fit down to the 900px hamburger breakpoint */
+  .nav-links{gap:22px} /* six links + button must fit down to the 960px hamburger breakpoint */
+  .svc{grid-template-columns:repeat(3,1fr)} /* four columns get too narrow for the titles */
+  /* the homepage's four stay one row, a little tighter. Same specificity as the
+     .svc / .svc-card rules, so the 900px and 600px rules below still win. */
+  .svc-row{grid-template-columns:repeat(4,1fr);gap:16px}
+  .svc-row h3{font-size:17px;margin:16px 16px 6px}
+  .svc-row p{font-size:13.5px;margin:0 16px 18px}
+  .work-grid{grid-template-columns:repeat(3,1fr)}
 }
 @media(max-width:1040px){
+  .nav-links{gap:16px}
   .hero-grid{grid-template-columns:1fr;gap:44px}
   .quote-card{max-width:440px;width:100%}
+  /* three panels get too narrow: one centered column of them */
+  .panels:not(.pair){grid-template-columns:1fr;max-width:680px;margin:0 auto}
+  .pv-rules,.pv-rules.four{grid-template-columns:1fr 1fr}
 }
-@media(max-width:900px){
-  .wrap{padding:0 22px}
+/* below 960px the six links + button no longer fit beside the logo: the hamburger takes over */
+@media(max-width:960px){
   .nav-links{display:none}
   .nav-toggle{display:flex}
   .mobile-menu.open{display:flex}
+}
+@media(max-width:900px){
+  .wrap{padding:0 22px}
   .hero-content{padding:100px 0 48px}
   .hero-row{flex-direction:column;align-items:flex-start}
   .quote-card{max-width:none}
   .trust{grid-template-columns:1fr 1fr}
-  .trust div:nth-child(1),.trust div:nth-child(3){border-left:none}
-  .sec-head{flex-direction:column;align-items:flex-start}
-  .svc{grid-template-columns:1fr}
-  .work .cell{grid-column:1/-1 !important;height:300px !important}
+  .trust>div:nth-child(odd){border-left:none}
+  .trust>div:nth-child(n+3){border-top:1px solid #d3dfef}
+  .svc{grid-template-columns:1fr 1fr;gap:16px}
+  /* two columns: the bento's large photo gets its own full-width row */
+  .work{grid-template-columns:1fr 1fr}
+  .work-bento .cell:first-child{grid-row:auto;aspect-ratio:3/2}
   .about{grid-template-columns:1fr;gap:32px}
-  .pv{grid-template-columns:1fr}
-  .proc{grid-template-columns:1fr 1fr}
+  .panels.pair{grid-template-columns:1fr}
+  .ab-story,.ab-area{grid-template-columns:1fr;gap:28px}
+  .ab-area{padding:40px}
+  .pv-feature{grid-template-columns:1fr;gap:32px}
+  .pv-stat{min-height:0}
+  .pv-stakes{grid-template-columns:1fr}
+  .pv-stakes>div{border-left:none;border-top:1px solid var(--line)}
+  .pv-stakes>div:first-child{border-top:none}
+  .ct{grid-template-columns:minmax(0,1fr);gap:48px;max-width:680px}
   .hero-arrow{display:none}
 }
 @media(max-width:600px){
@@ -323,47 +542,93 @@ footer{padding:60px 0 44px;border-top:4px solid var(--red)}
   .nav{height:64px}
   .nav-logo img{width:124px}
   /* hero — let height follow content so the quote form is never clipped */
-  .hero{min-height:auto}
+  .fold{min-height:0}
   .hero-content{padding:84px 0 40px}
-  .hero-kicker{margin-bottom:18px;flex-wrap:wrap;gap:8px;font-size:10px;letter-spacing:.08em}
+  .hero-kicker{margin-bottom:18px;flex-wrap:wrap;gap:8px;font-size:13px}
   .hero-kicker::before{width:28px}
-  .hero h1{font-size:clamp(26px,7.3vw,52px);overflow-wrap:break-word;hyphens:auto}
+  .hero h1{font-size:clamp(30px,8.4vw,48px);overflow-wrap:break-word;hyphens:auto}
   .hero-row{margin-top:24px}
   .hero-row p{font-size:15px}
   .hero-dots{margin-top:22px}
   .hero-grid{gap:32px}
   .quote-card{padding:22px 18px 18px}
-  .qc-phone{font-size:24px}
+  .qc-h{font-size:24px}
+  /* page hero — the copy spans the width, so the scrim darkens it evenly; the
+     two buttons split a row, each taking a row of its own if they don't fit */
+  .page-hero{min-height:320px;padding:36px 0}
+  .page-hero::before{background:linear-gradient(180deg,rgba(12,12,11,.78),rgba(12,12,11,.88))}
+  .page-hero h1{font-size:clamp(30px,8.4vw,40px)}
+  .page-hero p{margin-top:12px;font-size:15px}
+  .page-hero-actions{margin-top:22px;gap:10px}
+  .page-hero-actions .btn{flex:1 1 auto;justify-content:center;padding-left:14px;padding-right:14px}
   /* tighter vertical rhythm on small screens */
   .sec{padding:60px 0}
   .sec-head{margin-bottom:32px}
-  .sec-head h2{font-size:clamp(22px,5.6vw,58px)}
-  .license{padding:40px 0}
-  .license-line{font-size:clamp(16px,4.2vw,40px)}
-  .trust div{padding:24px 18px}
-  .trust .n{font-size:23px;word-break:break-word}
-  .svc-card{min-height:0;padding:26px 22px}
-  .svc-card h3{margin-top:16px}
+  .sec-head p{margin-top:12px;font-size:15px}
+  .sec-head h2{font-size:clamp(26px,7vw,34px)}
+  .sec-more{margin-top:28px}
+  .license-line{font-size:clamp(18px,4.8vw,36px)}
+  .license{padding:40px 0 32px}
+  .trust>div{padding:22px 18px}
+  .trust .n{font-size:24px;word-break:break-word}
+  /* two narrow columns — tighter type and padding */
+  .svc{gap:12px}
+  .svc-card h3{font-size:15.5px;margin:12px 14px 4px}
+  .svc-card p{font-size:13px;line-height:1.5;margin:0 14px 14px}
   .work{gap:10px}
-  .work .cell{height:240px !important}
+  .work .cap{padding:12px}
+  .work .cap b{font-size:13.5px}
+  .work-filters{gap:6px;margin-bottom:24px}
+  .work-filters button{font-size:13px;padding:8px 11px}
   .logo{height:50px;padding:0 24px}
   .logo img{max-width:160px}
   .about-bio p{font-size:16px}
-  .pv{gap:14px}
-  .pv-panel{padding:26px 22px}
-  .pv-panel h3{font-size:22px}
-  .proc{grid-template-columns:1fr;gap:12px}
-  .proc-step{padding:24px 22px 28px}
-  .proc-step .s{margin-bottom:28px}
-  .cta{padding:72px 0}
+  .panels{gap:14px}
+  .panel{padding:26px 22px}
+  .panel h3{font-size:21px}
+  .ab-story h2,.ab-area h2,.pv-body h2{font-size:clamp(26px,7vw,34px)}
+  .ab-copy p,.ab-area p,.pv-body>p{font-size:16px}
+  .ab-area{padding:28px 22px}
+  .ab-places{gap:8px}
+  .ab-places li{padding:8px 14px;font-size:14px}
+  .pv-rules,.pv-rules.four{grid-template-columns:1fr;gap:12px}
+  .pv-rules li{padding:22px}
+  .pv-stat{padding:28px 24px}
+  .pv-stakes>div{padding:26px 22px}
+  .pv-checks li{font-size:15.5px}
+  .ct h2{font-size:clamp(26px,7vw,34px)}
+  .ct-list{margin-top:20px}
+  .ct-list>div{grid-template-columns:minmax(0,1fr);gap:4px;padding:16px 0}
+  .ct-list dd{font-size:16px}
+  .ct-form .quote-card{padding:26px 20px 22px}
+  .cta{padding:48px 0 56px}
+  .cta-icons{margin-bottom:22px}
+  .cta-icon{width:50px;height:50px;margin:0 -2px}
+  .cta-icon svg{width:28px;height:28px}
   .cta p{font-size:15px;margin:20px auto 28px}
+  .cta .cta-note{font-size:12px}
   .cta-actions{flex-direction:column;align-items:stretch;gap:12px}
   .cta-actions .btn{justify-content:center}
-  .foot{flex-direction:column;gap:32px}
-  .foot-cols{flex-direction:column;gap:28px}
-  .foot-bottom{flex-direction:column;gap:10px;text-align:left}
+  /* footer — like the reference's mobile footer: small type in short blocks split
+     by hairlines. Studio and Services share a row; Contact spans it below. */
+  footer{padding:44px 0 28px}
+  .foot{flex-direction:column;gap:0}
+  .foot-logo{padding-bottom:28px}
+  .foot-logo img{width:148px}
+  .foot-social{margin-top:18px}
+  .foot-social a{width:36px;height:36px}
+  .foot-social svg{width:16px;height:16px}
+  .foot-cols{display:grid;grid-template-columns:auto 1fr;gap:28px 48px;padding:28px 0;
+    border-top:1px solid var(--line)}
+  .foot-col:last-child{grid-column:1/-1}
+  .foot-col h5{margin-bottom:8px;font-size:12px}
+  .foot-col a,.foot-hours div{font-size:14px;padding:5px 0}
+  .foot-bottom{flex-direction:column;gap:6px;margin-top:0;padding-top:20px;line-height:1.5}
+  .foot-legal>span{display:block;text-wrap:balance}
+  .foot-copy{margin-bottom:4px;color:#cdcabf;font-size:13px}
 }
 @media(max-width:380px){
   .trust{grid-template-columns:1fr}
-  .trust div{border-left:none}
+  .trust>div{border-left:none}
+  .trust>div:nth-child(n+2){border-top:1px solid #d3dfef}
 }

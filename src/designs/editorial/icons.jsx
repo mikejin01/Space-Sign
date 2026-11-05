@@ -65,4 +65,41 @@ export const icons = {
       <path d="M28 35 l2.2 2.2 L34.5 32.5" />
     </svg>
   ),
+  // Circled check mark — a small reassurance bullet
+  check: (
+    <svg {...ICON_PROPS} aria-hidden="true">
+      <circle cx="24" cy="24" r="17" />
+      <path d="M17 24.5 L21.8 29.3 L31 20" />
+    </svg>
+  ),
+  // ID card — a sign hanger's license
+  license: (
+    <svg {...ICON_PROPS} aria-hidden="true">
+      <rect x="6" y="11" width="36" height="26" rx="3" />
+      <circle cx="17" cy="21.5" r="3.6" />
+      <path d="M11 31.5 c1.2-3.2 3.3-4.8 6-4.8 s4.8 1.6 6 4.8" />
+      <path d="M28 19 H36" className="ic-dot" />
+      <path d="M28 24 H36" className="ic-dot" />
+      <path d="M28 29 H33" className="ic-dot" />
+    </svg>
+  ),
+  // Warning triangle — a sign violation
+  violation: (
+    <svg {...ICON_PROPS} aria-hidden="true">
+      <path d="M24 8 L41.5 38.5 H6.5 Z" />
+      <path d="M24 19 V28.5" />
+      <circle cx="24" cy="33" r="1.2" className="ic-dot" />
+    </svg>
+  ),
+  // Social marks (footer) — filled glyphs on a 24 grid, not the line style above
+  linkedin: (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45Z" />
+    </svg>
+  ),
+  facebook: (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M13.6 22v-9h3.03l.45-3.5H13.6V7.26c0-1.01.28-1.7 1.74-1.7h1.86V2.43a25 25 0 0 0-2.71-.14c-2.68 0-4.52 1.64-4.52 4.65V9.5H6.94V13h3.03v9h3.63Z" />
+    </svg>
+  ),
 }

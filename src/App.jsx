@@ -20,23 +20,36 @@ function store(id) {
   }
 }
 
-// ?style=<id> wins, then the last choice from localStorage, then the default.
+const params = new URLSearchParams(window.location.search)
+
+// The page, from the path: '/Space-Sign/' is 'home', '/Space-Sign/signs/' is 'signs'.
+// Each page has its own HTML entry (see vite.config.js).
+const page = window.location.pathname.slice(import.meta.env.BASE_URL.length)
+  .replace(/index\.html$/, '').replace(/\/+$/, '') || 'home'
+const isHome = page === 'home'
+
+// The switcher is for design reviews: it shows only with ?switcher=on, on the homepage.
+const showSwitcher = isHome && params.get('switcher') === 'on'
+
+// Only Editorial has pages beyond the homepage. On the homepage ?style=<id> wins,
+// then (while the switcher is out) the last choice from localStorage, then the
+// default, so a hidden switcher never leaves someone stuck on another design.
 function initialDesign() {
-  const fromUrl = new URLSearchParams(window.location.search).get('style')
+  if (!isHome) return 'editorial'
+  const fromUrl = params.get('style')
   if (getDesign(fromUrl)) return fromUrl
-  const stored = readStored()
+  const stored = showSwitcher && readStored()
   if (getDesign(stored)) return stored
   return DEFAULT_DESIGN
 }
-
-const showSwitcher = new URLSearchParams(window.location.search).get('switcher') !== 'off'
 
 export default function App() {
   const [activeId, setActiveId] = useState(initialDesign)
   const { Component } = getDesign(activeId)
 
-  // Keep the URL and localStorage in sync so every design has a shareable link.
+  // While the switcher is out, keep the URL and localStorage in sync so every design has a shareable link.
   useEffect(() => {
+    if (!showSwitcher) return
     const url = new URL(window.location.href)
     if (url.searchParams.get('style') !== activeId) {
       url.searchParams.set('style', activeId)
@@ -55,7 +68,7 @@ export default function App() {
   return (
     <>
       <Suspense fallback={null}>
-        <Component key={activeId} />
+        <Component key={activeId} page={page} />
       </Suspense>
       {showSwitcher && <StyleSwitcher designs={designs} activeId={activeId} onSelect={select} />}
     </>

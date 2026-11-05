@@ -15,6 +15,8 @@
 - **Email:** info@spacesign.com
 - **Address:** 15-25 132nd Street, College Point, NY 11356 (Queens)
 - **Hours:** Mon–Fri 8:00 AM–6:00 PM; Sat–Sun closed (source: Google Maps listing, checked 2026-11-03; matches Yahoo Local)
+- **LinkedIn:** https://www.linkedin.com/company/space-sign/
+- **Facebook:** https://www.facebook.com/spacesignNY/
 
 ## Positioning / About copy (verbatim)
 - "Based out of Queens, NY, we at Space Sign provide a full-concierge service, taking care of all our client's signage needs from sales and design, to the manufacture and final installation processes."
@@ -49,6 +51,8 @@ illuminated-sign-box, blade-signs, push-thru-sign, carved-signs, awning-vestibul
 interior-signs, banners, custom-vinyl-decals, permit-violations.
 
 ## Asset archive
-- `public/assets/work/` — curated, web-optimized photos used by the homepage.
+- `public/assets/work/` — curated, web-optimized photos: the hero slides and the hand-picked Our Work photos (`work` in `content.js`), named `<sign type>-<business>.jpg` for SEO.
+- `public/assets/signs/` — one photo per sign type, from spacesign.com/signs (`signTypes`).
+- `public/assets/portfolio/` — the Our Work page's other photos: every spacesign.com product-gallery photo (Nov 2026), minus repeats and ones already in `work/`, named `<sign type>-<nn>[-<business>].jpg` for SEO (`portfolio`). The business was read off each sign by eye; 18 photos show none and have no suffix.
 - `public/assets/archive/` — every image scraped from the homepage (optimized), for future use.
 - Originals were downloaded at full resolution during scraping (not committed).
