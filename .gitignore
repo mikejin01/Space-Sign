@@ -21,3 +21,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Client photo downloads (originals, ~1 GB); the site uses the WebP copies in public/assets
+docs/space-sign-*.zip

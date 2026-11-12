@@ -1,26 +1,23 @@
 import { useState, useEffect, useCallback } from 'react'
-import { BASE, MAPS_URL, LICENSE, SINCE, heroSlides, signTypes, work, clients } from '../../shared/content.js'
+import { BASE, MAPS_URL, LICENSE, SINCE, heroSlides, signTypes, clients } from '../../shared/content.js'
+import { projects } from '../../shared/projects.js'
 import { icons } from './icons.jsx'
 import QuoteForm from './QuoteForm.jsx'
 import { SignTypeGrid } from './SignTypes.jsx'
 import { WorkTile } from './Work.jsx'
+import ProjectGallery from './ProjectGallery.jsx'
 
 // The homepage sections. The shell (Editorial.jsx) adds the header, CTA band and
-// footer around them; `onQuote` opens its quote pop-up.
+// footer around them; `onQuote` opens its quote pop-up, and `onQuote(id)` opens
+// it with that service chosen.
 export default function Home({ onQuote }) {
   const [slide, setSlide] = useState(0)
+  const [gallery, setGallery] = useState(null) // { projects, at } while the project gallery is open
   const go = useCallback((n) => setSlide((s) => (n + heroSlides.length) % heroSlides.length), [])
 
   useEffect(() => {
     const id = setInterval(() => setSlide((s) => (s + 1) % heroSlides.length), 5500)
     return () => clearInterval(id)
-  }, [])
-
-  // Arriving from another page at /#permits: that section didn't exist yet when the
-  // browser looked for it, so jump there now. 'instant' skips smooth scrolling.
-  useEffect(() => {
-    const id = window.location.hash.slice(1)
-    if (id) document.getElementById(id)?.scrollIntoView({ behavior: 'instant' })
   }, [])
 
   return (
@@ -162,7 +159,7 @@ export default function Home({ onQuote }) {
             <p>A cross-section of recent storefront, illuminated and interior programs across NYC.</p>
           </div>
           <div className="work work-bento">
-            {work.slice(0, 5).map((w) => <WorkTile key={w.img} {...w} />)}
+            {projects.slice(0, 5).map((p, k) => <WorkTile key={p.id} project={p} onOpen={() => setGallery({ projects, at: k })} />)}
           </div>
           <div className="sec-more">
             <a className="btn ghost" href={`${BASE}work/`}>View all work</a>
@@ -184,7 +181,7 @@ export default function Home({ onQuote }) {
               <p>All signs require Sign Permits issued by the NYC Department of Buildings (DOB). NYC Licensed Sign Hangers are the only persons legally allowed to pull a Sign Permit in NYC.</p>
               <p>As Licensed Sign Hanger #215, we prepare the drawings and file the permit for you.</p>
               <div className="panel-actions">
-                <button className="btn" type="button" aria-haspopup="dialog" onClick={onQuote}>Get a free quote</button>
+                <button className="btn" type="button" aria-haspopup="dialog" onClick={() => onQuote('permit')}>Get a free quote</button>
                 <a className="text-link" href={`${BASE}permits/`}>How sign permits work <span aria-hidden="true">→</span></a>
               </div>
             </article>
@@ -193,13 +190,16 @@ export default function Home({ onQuote }) {
               <h3>DOB &amp; ECB Violations</h3>
               <p>NYC DOB and NYC ECB issue violations for all types of signs, awnings, and canopies that are in violation of the NYC Administrative Codes. NYC Sign Violations can only be corrected and cleared by NYC Licensed Sign Hangers.</p>
               <div className="panel-actions">
-                <button className="btn" type="button" aria-haspopup="dialog" onClick={onQuote}>Get a free quote</button>
+                <button className="btn" type="button" aria-haspopup="dialog" onClick={() => onQuote('violation')}>Get a free quote</button>
                 <a className="text-link" href={`${BASE}violations/`}>How we clear violations <span aria-hidden="true">→</span></a>
               </div>
             </article>
           </div>
         </div>
       </section>
+
+      {/* the "Our work" cards open it, and it steps on through every project */}
+      <ProjectGallery request={gallery} onClose={() => setGallery(null)} onQuote={onQuote} />
     </>
   )
 }

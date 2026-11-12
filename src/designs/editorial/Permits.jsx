@@ -38,11 +38,12 @@ export function LicenseCheck() {
 }
 
 // The Permits page, /permits/ (permits/index.html). The copy is lightly edited
-// from spacesign.com/permit-violations.
+// from spacesign.com/permit-violations. Its quote buttons choose the permit service.
 export default function Permits({ onQuote }) {
+  const quote = () => onQuote('permit')
   return (
     <>
-      <PageHero title="NYC sign permits" img={photos.permits} onQuote={onQuote}>
+      <PageHero title="NYC sign permits" img={photos.permits} onQuote={quote}>
         Space Sign is a NYC Licensed Sign Hanger ({LICENSE}). We help our clients with both sign and awning permits.
       </PageHero>
 
@@ -77,7 +78,7 @@ export default function Permits({ onQuote }) {
             <ul className="pv-checks">
               {services.map((s) => <li key={s}>{icons.check}<span>{s}</span></li>)}
             </ul>
-            <button className="btn" type="button" aria-haspopup="dialog" onClick={onQuote}>Get a free quote</button>
+            <button className="btn" type="button" aria-haspopup="dialog" onClick={quote}>Get a free quote</button>
           </div>
         </div>
       </section>

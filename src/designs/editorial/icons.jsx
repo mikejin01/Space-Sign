@@ -91,6 +91,21 @@ export const icons = {
       <circle cx="24" cy="33" r="1.2" className="ic-dot" />
     </svg>
   ),
+  // Open-end wrench — sign repair and maintenance. Drawn upright, then turned 45°.
+  repair: (
+    <svg {...ICON_PROPS} aria-hidden="true">
+      <path transform="rotate(45 24 24)" d="M21 22.5 V39 A3 3 0 0 0 27 39 V22.5 A9 9 0 0 0 27 5.5 V12 H21 V5.5 A9 9 0 0 0 21 22.5 Z" />
+    </svg>
+  ),
+  // Speech bubble — "something else", a question for us
+  message: (
+    <svg {...ICON_PROPS} aria-hidden="true">
+      <path d="M10 11 H38 a2 2 0 0 1 2 2 V31 a2 2 0 0 1 -2 2 H22 L14 39.5 V33 H10 a2 2 0 0 1 -2 -2 V13 a2 2 0 0 1 2 -2 Z" />
+      <circle cx="17" cy="22" r="1.5" className="ic-dot" />
+      <circle cx="24" cy="22" r="1.5" className="ic-dot" />
+      <circle cx="31" cy="22" r="1.5" className="ic-dot" />
+    </svg>
+  ),
   // Social marks (footer) — filled glyphs on a 24 grid, not the line style above
   linkedin: (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

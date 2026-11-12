@@ -26,16 +26,17 @@
 .tone-amber{--tone:var(--amber)}
 .tone-green{--tone:var(--green)}
 .tone-purple{--tone:var(--purple)}
-/* on dark surfaces the tones brighten so they still read */
-.dark .tone-red{--tone:#ff4d55}
-.dark .tone-blue{--tone:#7088ff}
-.dark .tone-amber{--tone:#ffb340}
-.dark .tone-green{--tone:#34d17f}
-.dark .tone-purple{--tone:#a685ff}
+/* on dark surfaces (dark sections, and the hero's and pop-up's quote forms) the
+   tones brighten so they still read */
+.dark .tone-red,.hero .tone-red,.quote-modal .tone-red{--tone:#ff4d55}
+.dark .tone-blue,.hero .tone-blue,.quote-modal .tone-blue{--tone:#7088ff}
+.dark .tone-amber,.hero .tone-amber,.quote-modal .tone-amber{--tone:#ffb340}
+.dark .tone-green,.hero .tone-green,.quote-modal .tone-green{--tone:#34d17f}
+.dark .tone-purple,.hero .tone-purple,.quote-modal .tone-purple{--tone:#a685ff}
 /* dark palette — re-scoped on dark surfaces so child rules invert: the hero
    (text on photos), the quote pop-up (matches the hero's form), the dark
    cards, bands and page heroes (.dark) and the footer. */
-.hero,.quote-modal,.dark,footer{
+.hero,.quote-modal,.gallery-modal,.dark,footer{
   --bg2:#141413;--panel:#1a1a18;--ink:#f3f1ea;--mute:#9b988f;--line:#2a2a27;--on-ink:#0a0a0a;
 }
 .hero,.dark,footer{color:var(--ink)}
@@ -128,7 +129,7 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
   background:rgba(243,241,234,.25);transition:.2s}
 .hero-dot:hover{background:rgba(243,241,234,.5)}
 .hero-dot.active{background:var(--red);width:54px}
-.hero-content{position:relative;z-index:3;padding:40px 0 36px;width:100%}
+.hero-content{position:relative;z-index:3;padding:28px 0 36px;width:100%}
 .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:56px;align-items:end}
 .hero-kicker{display:flex;gap:16px;align-items:center;color:#f3f1ea;font-size:14px;
   margin-bottom:24px;text-shadow:0 1px 8px rgba(0,0,0,.6)}
@@ -164,17 +165,62 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
 .quote-card input:user-invalid,.quote-card textarea:user-invalid{border-color:var(--red);
   background:rgba(228,18,29,.1)}
 .quote-card textarea{resize:vertical;min-height:74px;line-height:1.5}
+/* the service picker (ServiceField in QuoteForm.jsx) — a field-shaped button
+   with a chevron that opens a list of choices with their pictures. Left blank
+   it reads in placeholder grey. A choice shows its picture first (.has-media),
+   pulled into the line by negative margins so the field keeps the text fields'
+   height; it fades in on each change. Pictures (.qc-media) are 4:3, the shape
+   of the sign photos: the photo, or an icon on a tile tinted in its own colour,
+   or for "Not sure yet" an empty dashed tile. */
+.qc-select{display:flex;align-items:center;gap:10px;width:100%;cursor:pointer;user-select:none;
+  font-size:14px;line-height:normal;color:var(--ink);padding:11px 38px 11px 13px;
+  background:rgba(243,241,234,.045) no-repeat right 13px center/14px 14px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239b988f' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  border:1px solid rgba(243,241,234,.14);border-radius:var(--r-sm);
+  transition:border-color .18s ease,background-color .18s ease}
+.qc-select.has-media{padding-left:6px}
+.qc-select.is-empty{color:#8b887f}
+.qc-select:focus{outline:none;border-color:var(--red);background-color:rgba(243,241,234,.08)}
+.qc-select-text{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qc-select .qc-media{margin:-7px 0;animation:qc-media-in .22s ease-out}
+.qc-media{flex:none;width:40px;height:30px;border-radius:4px;object-fit:cover}
+.qc-icon{display:flex;align-items:center;justify-content:center;color:var(--tone);
+  background:color-mix(in srgb,var(--tone) 18%,transparent)}
+.qc-icon svg{width:22px;height:22px;stroke-width:2.6}
+.qc-media-none{border:1px dashed color-mix(in srgb,currentColor 35%,transparent)}
+/* the list — a popover under (or over) the field, white beside the light card
+   and dark (.dark) beside the dark ones. The highlighted option is shaded; the
+   chosen one is bold with a red tick. */
+.qc-list{position:fixed;z-index:100;overflow-y:auto;overscroll-behavior:contain;padding:6px;
+  color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:var(--r-md);
+  box-shadow:0 18px 44px rgba(20,28,45,.16);animation:qc-list-in .14s ease-out}
+.qc-list.dark{background:var(--panel);border-color:rgba(243,241,234,.14);box-shadow:0 24px 56px rgba(0,0,0,.55)}
+.qc-group{padding:12px 8px 6px;color:var(--mute);font-size:12px}
+.qc-opt{display:flex;align-items:center;gap:12px;padding:5px 10px 5px 5px;border-radius:var(--r-sm);
+  font-size:14px;line-height:1.3;cursor:pointer}
+.qc-opt.active{background:rgba(20,28,45,.06)}
+.qc-list.dark .qc-opt.active{background:rgba(243,241,234,.08)}
+.qc-opt[aria-selected="true"]{font-weight:600}
+.qc-opt-text{flex:1;min-width:0}
+.qc-tick{flex:none;width:16px;height:16px;fill:none;stroke:var(--red);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+@keyframes qc-media-in{from{opacity:0;transform:scale(.85)}}
+@keyframes qc-list-in{from{opacity:0;transform:translateY(-4px)}}
+@media(prefers-reduced-motion:reduce){.qc-select .qc-media,.qc-list{animation:none}}
+/* the subtitle names a chosen service in bold */
+.qc-sub strong{color:var(--ink);font-weight:600}
 .qc-submit{width:100%;justify-content:center;margin-top:13px;padding-top:12px;padding-bottom:12px}
 .qc-fine{color:var(--mute);text-align:center;margin-top:12px;font-size:12px;font-weight:400;line-height:1.5}
 /* in the hero the card is a little tighter than in the pop-up — the card sets the
-   hero's height, and the license banner has to fit below it */
+   hero's height, and the license banner has to fit below it. With the service
+   field the first screen needs about 830px of window height. */
 .hero .qc-top{gap:6px}
 .hero .qc-h{font-size:24px}
-.hero .qc-div{margin:14px 0 12px}
+.hero .qc-div{margin:12px 0 10px}
 .hero .quote-card input,.hero .quote-card textarea{padding:10px 13px}
-.hero .quote-card textarea{min-height:0;height:85px} /* three lines */
-.hero .qc-submit{margin-top:12px}
-.hero .qc-fine{margin-top:10px}
+.hero .qc-select{padding-top:10px;padding-bottom:10px}
+.hero .quote-card textarea{min-height:0;height:64px} /* two lines */
+.hero .qc-submit{margin-top:10px}
+.hero .qc-fine{margin-top:8px}
 
 /* quote pop-up — the hero's quote card inside a native <dialog>. The dialog box
    hugs the card, so a click that lands on the dialog itself is a backdrop click. */
@@ -182,22 +228,63 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
   max-height:calc(100% - 32px);max-height:calc(100dvh - 32px);margin:auto;padding:0;
   border:none;border-radius:var(--r-lg);background:transparent;color:var(--ink);
   overflow:auto;overscroll-behavior:contain}
-.quote-modal::backdrop{background:rgba(12,12,11,.62);
+.quote-modal::backdrop,.gallery-modal::backdrop{background:rgba(12,12,11,.62);
   backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
-.quote-modal[open]{animation:qm-in .24s ease-out}
-.quote-modal[open]::backdrop{animation:qm-fade .24s ease-out}
+.quote-modal[open],.gallery-modal[open]{animation:qm-in .24s ease-out}
+.quote-modal[open]::backdrop,.gallery-modal[open]::backdrop{animation:qm-fade .24s ease-out}
 .qm-close{position:absolute;top:16px;right:16px;z-index:2;width:36px;height:36px;padding:0;
   display:flex;align-items:center;justify-content:center;color:var(--ink);cursor:pointer;
   background:rgba(243,241,234,.06);border:1px solid rgba(243,241,234,.16);border-radius:50%;
   transition:background .18s ease,border-color .18s ease}
 .qm-close:hover{background:var(--red);border-color:var(--red)}
 .qm-close svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
-html:has(.quote-modal[open]){overflow:hidden} /* stop the page scrolling behind the pop-up */
+html:has(.quote-modal[open]),html:has(.gallery-modal[open]){overflow:hidden} /* stop the page scrolling behind a pop-up */
 @keyframes qm-in{from{opacity:0;transform:translateY(14px) scale(.98)}}
 @keyframes qm-fade{from{opacity:0}}
 @media(prefers-reduced-motion:reduce){
-  .quote-modal[open],.quote-modal[open]::backdrop{animation:none}
+  .quote-modal[open],.quote-modal[open]::backdrop,.gallery-modal[open],.gallery-modal[open]::backdrop,.gm-stage img{animation:none}
 }
+
+/* project gallery pop-up (ProjectGallery.jsx) — one dark panel: the photo on a
+   black stage with arrows, a bar of the project's photos and a count beneath it,
+   and the details beside them. The stage has a fixed size and the photo is
+   contained in it, so the pop-up keeps its size as the photos change. Under
+   900px the details go below the photo. Like the quote pop-up, its content fills
+   the dialog box, so a click on the dialog itself is a backdrop click. */
+.gallery-modal{width:min(1180px,calc(100% - 32px));max-width:none;
+  max-height:calc(100% - 32px);max-height:calc(100dvh - 32px);margin:auto;padding:0;
+  border:1px solid rgba(243,241,234,.12);border-radius:var(--r-lg);background:var(--panel);color:var(--ink);
+  overflow:auto;overscroll-behavior:contain;box-shadow:0 24px 64px rgba(0,0,0,.5)}
+.gm-close{background:rgba(12,12,11,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.gm{display:grid;grid-template-columns:minmax(0,1fr) 340px}
+.gm-media{display:flex;flex-direction:column;gap:12px;min-width:0;padding:16px;background:#0e0e0d}
+.gm-stage{position:relative;height:min(64vh,620px);border-radius:var(--r-md);overflow:hidden;background:#000;
+  touch-action:pan-y;user-select:none}
+.gm-stage img{display:block;width:100%;height:100%;object-fit:contain;animation:qm-fade .2s ease-out}
+.gm-arrow{position:absolute;top:50%;z-index:2;display:flex;align-items:center;justify-content:center;
+  width:44px;height:44px;padding:0;transform:translateY(-50%);cursor:pointer;color:#fff;
+  background:rgba(12,12,11,.55);border:1px solid rgba(243,241,234,.18);border-radius:50%;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:background .18s ease,opacity .18s ease}
+.gm-arrow:hover{background:var(--red);border-color:var(--red)}
+.gm-arrow:disabled{opacity:0;pointer-events:none}
+.gm-arrow svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.gm-arrow.prev{left:12px}
+.gm-arrow.next{right:12px}
+.gm-bar{display:flex;align-items:center;gap:16px;min-height:54px}
+.gm-thumbs{display:flex;gap:8px;min-width:0;overflow-x:auto;scrollbar-width:none}
+.gm-thumbs::-webkit-scrollbar{display:none}
+.gm-thumbs button{flex:none;width:72px;height:54px;padding:0;overflow:hidden;cursor:pointer;opacity:.55;
+  background:none;border:2px solid transparent;border-radius:6px;transition:opacity .18s ease,border-color .18s ease}
+.gm-thumbs button:hover{opacity:.9}
+.gm-thumbs button[aria-current]{opacity:1;border-color:var(--red)}
+.gm-thumbs img{display:block;width:100%;height:100%;object-fit:cover}
+.gm-count{margin-left:auto;white-space:nowrap;color:var(--mute);font-size:13px;font-variant-numeric:tabular-nums}
+.gm-info{display:flex;flex-direction:column;padding:60px 28px 28px}
+.gm-type{color:var(--red)}
+.gm-info h2{margin-top:10px;font-size:26px;font-weight:600;letter-spacing:-.015em;line-height:1.2}
+.gm-caption{margin-top:14px;font-size:16px;line-height:1.55}
+.gm-details{margin-top:12px;color:var(--mute);font-size:14px;line-height:1.6}
+.gm-actions{display:flex;flex-direction:column;align-items:flex-start;gap:16px;margin-top:auto;padding-top:28px}
 
 /* page hero — the banner atop every page but the homepage (PageHero.jsx): the
    title, lede and quote and call buttons over a photo, darkest on the left where
@@ -243,10 +330,10 @@ html:has(.quote-modal[open]){overflow:hidden} /* stop the page scrolling behind 
 .sec-head p{margin-top:16px;color:#3a3c42;font-size:16px;line-height:1.5;text-wrap:balance}
 
 /* sign types — light-gray cards with a 3:2 photo over a title and one line of
-   copy. Each card spans three rows shared with its neighbours (photo, title,
-   copy), so titles and copy line up across the row whatever their length. The
-   Sign Types page's 12 cards fill 4, 3 or 2 columns evenly; the homepage's
-   .svc-row of 4 skips the 3-column step. */
+   copy, each a link to its row on the Sign Types page. Each card spans three
+   rows shared with its neighbours (photo, title, copy), so titles and copy line
+   up across the row whatever their length. A full set fills 4, 3 or 2 columns
+   evenly; the homepage's .svc-row of 4 skips the 3-column step. */
 .svc{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
 .svc-card{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:0;align-content:start;
   overflow:hidden;border-radius:var(--r-lg);background:var(--bg2);border:1px solid transparent;
@@ -269,6 +356,15 @@ html:has(.quote-modal[open]){overflow:hidden} /* stop the page scrolling behind 
    absolutely so it never stretches its tile. */
 .work{display:grid;gap:14px;grid-template-columns:repeat(4,1fr)}
 .work .cell{position:relative;overflow:hidden;aspect-ratio:4/3;border:1px solid var(--line);border-radius:var(--r-lg)}
+/* a project card is a button (WorkTile): reset its look, and ring it when focused by keyboard */
+.work button.cell{display:block;width:100%;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer;background:var(--line)}
+.work .cell:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.work .cell:focus-visible .cap{opacity:1;transform:none}
+/* "3 photos" on a card of several */
+.cell-count{position:absolute;top:10px;right:10px;z-index:3;display:inline-flex;align-items:center;gap:6px;
+  padding:5px 10px;border-radius:999px;background:rgba(12,12,11,.7);color:#fff;font-size:12px;font-weight:600;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.cell-count svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
 .work-bento .cell:first-child{grid-column:span 2;grid-row:span 2;aspect-ratio:auto}
 .work .cell img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
 .work .cell:hover img{transform:scale(1.05)}
@@ -293,6 +389,40 @@ html:has(.quote-modal[open]){overflow:hidden} /* stop the page scrolling behind 
 .work-filters button span{margin-left:3px;color:var(--mute);font-weight:400}
 .work-filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
 .work-filters button[aria-pressed="true"] span{color:inherit;opacity:.7}
+
+/* Sign Types page (SignTypes.jsx) — a sticky bar of the 12 types (pills like the
+   Our Work filters) over one row per type: title and description beside the
+   row's buttons, then a strip of five photo tiles, the last counting the rest.
+   The bar scrolls sideways when it doesn't fit; its inner row is max-content
+   with auto margins, so it centres when it does. Rows touch (padding, not
+   margin), so the bar always has one to mark. */
+.st-nav{position:sticky;top:78px;z-index:50;overflow-x:auto;scrollbar-width:none;padding:12px 44px;
+  background:rgba(255,255,255,.9);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);
+  border-bottom:1px solid var(--line)}
+.st-nav::-webkit-scrollbar{display:none}
+.st-nav-in{display:flex;gap:8px;width:max-content;margin:0 auto}
+.st-nav a{font-size:14px;font-weight:500;line-height:1;padding:10px 15px;white-space:nowrap;
+  border:1px solid var(--line);border-radius:999px;background:#fff;color:#3a3c42;
+  transition:border-color .2s ease,background .2s ease,color .2s ease}
+.st-nav a:hover{border-color:var(--ink);color:var(--ink)}
+.st-nav a[aria-current]{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+/* anchor jumps land below the header (78px) and the bar (61px) */
+html:has(.st-nav){scroll-padding-top:139px}
+.st-list{padding:16px 0 72px}
+.st-row{padding:48px 0;border-top:1px solid var(--line)}
+.st-row:first-child{border-top:none}
+.st-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px 48px;margin-bottom:28px}
+.st-text{flex:1 1 560px;max-width:760px}
+.st-text h2{font-size:clamp(26px,2.6vw,34px);font-weight:600;letter-spacing:-.015em;line-height:1.25}
+.st-text p{margin-top:12px;color:#3a3c42;font-size:16.5px;line-height:1.6}
+.st-actions{display:flex;flex-wrap:wrap;gap:12px}
+.work.st-strip{grid-template-columns:repeat(5,minmax(0,1fr))}
+.st-strip .cap .label{display:none} /* the row already names the type */
+.work .st-more img{filter:brightness(.42);transition:transform .45s ease,filter .3s ease}
+.work .st-more:hover img{filter:brightness(.55)}
+.st-more span{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;color:#fff;font-size:32px;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.st-more small{font-size:14px;font-weight:500;letter-spacing:0;color:#d9d6cc}
 
 /* clients — one-row logo marquee, moving right to left. Spacing is padding on
    each logo, not flex gap, so translating the doubled track by -50% lands
@@ -440,6 +570,14 @@ html:has(.quote-modal[open]){overflow:hidden} /* stop the page scrolling behind 
 .ct-form .quote-card input:focus,.ct-form .quote-card textarea:focus{background:#fff;border-color:var(--red);
   box-shadow:0 0 0 3px rgba(228,18,29,.12)}
 .ct-form .quote-card input:user-invalid,.ct-form .quote-card textarea:user-invalid{border-color:var(--red);background:#fff6f6}
+.ct-form .qc-select{padding-top:13px;padding-bottom:13px;padding-left:14px;font-size:15px;
+  background-color:#fff;border-color:#d6e1f0;box-shadow:0 1px 2px rgba(20,28,45,.04);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23595c64' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  transition:border-color .18s ease,box-shadow .18s ease}
+.ct-form .qc-select.has-media{padding-left:7px}
+.ct-form .qc-select.is-empty{color:#8a8f99}
+.ct-form .qc-select:hover{border-color:#b9c7dc}
+.ct-form .qc-select:focus{background-color:#fff;border-color:var(--red);box-shadow:0 0 0 3px rgba(228,18,29,.12)}
 .ct-form .qc-submit{padding-top:14px;padding-bottom:14px;font-size:15px}
 
 /* CTA — a full-width dark band over a sign photo, after the reference's closing
@@ -524,6 +662,19 @@ footer{padding:64px 0 44px;background:#141415}
   /* two columns: the bento's large photo gets its own full-width row */
   .work{grid-template-columns:1fr 1fr}
   .work-bento .cell:first-child{grid-row:auto;aspect-ratio:3/2}
+  /* Sign Types: the bar lines up with the page gutter, and each row's photos
+     become a swipeable strip running to the screen edges */
+  .st-nav{padding:12px 22px}
+  .work.st-strip{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:42%;
+    overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;
+    margin:0 -22px;padding:0 22px;scroll-padding:0 22px}
+  .st-strip::-webkit-scrollbar{display:none}
+  .st-strip .cell{scroll-snap-align:start}
+  /* gallery: one column, the photo 4:3 on top */
+  .gm{grid-template-columns:minmax(0,1fr)}
+  .gm-stage{height:auto;aspect-ratio:4/3}
+  .gm-info{padding:20px 22px 24px}
+  .gm-actions{margin-top:0;padding-top:22px}
   .about{grid-template-columns:1fr;gap:32px}
   .panels.pair{grid-template-columns:1fr}
   .ab-story,.ab-area{grid-template-columns:1fr;gap:28px}
@@ -580,6 +731,27 @@ footer{padding:64px 0 44px;background:#141415}
   .work .cap b{font-size:13.5px}
   .work-filters{gap:6px;margin-bottom:24px}
   .work-filters button{font-size:13px;padding:8px 11px}
+  .st-nav{top:64px;padding:10px 18px}
+  .st-nav a{font-size:13px;padding:8px 12px}
+  html:has(.st-nav){scroll-padding-top:116px} /* the 64px header and the 52px bar */
+  .st-list{padding:8px 0 44px}
+  .st-row{padding:36px 0}
+  .st-head{margin-bottom:20px}
+  .st-text h2{font-size:clamp(24px,6.6vw,30px)}
+  .st-text p{margin-top:10px;font-size:15px}
+  .st-actions{width:100%;gap:10px}
+  .st-actions .btn{flex:1 1 auto;justify-content:center;padding-left:14px;padding-right:14px}
+  .work.st-strip{grid-auto-columns:72%;margin:0 -18px;padding:0 18px;scroll-padding:0 18px}
+  .st-more span{font-size:26px}
+  .gallery-modal{width:calc(100% - 20px);max-height:calc(100dvh - 20px)}
+  .gm-media{padding:8px;gap:8px}
+  .gm-bar{flex-wrap:wrap;gap:6px 12px;min-height:0}
+  .gm-thumbs{flex:1 1 100%} /* the strip gets the full width; the count goes under it */
+  .gm-count{margin-left:0}
+  .gm-arrow{width:38px;height:38px}
+  .gm-thumbs button{width:60px;height:45px}
+  .gm-info h2{font-size:22px}
+  .gm-caption{font-size:15px}
   .logo{height:50px;padding:0 24px}
   .logo img{max-width:160px}
   .about-bio p{font-size:16px}

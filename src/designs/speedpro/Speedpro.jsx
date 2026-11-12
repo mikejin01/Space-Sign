@@ -18,10 +18,10 @@ const services = [
 
 // Crop focus for each hero photo, so the sign stays in frame at any slider shape.
 const heroFocus = {
-  'space-sign-hero-1.png': 'center 26%',
-  'space-sign-hero-2.png': 'center 34%',
-  'space-sign-hero-3.png': 'center 30%',
-  'space-sign-hero-4.png': '72% 42%',
+  'space-sign-hero-1.webp': 'center 26%',
+  'space-sign-hero-2.webp': 'center 34%',
+  'space-sign-hero-3.webp': 'center 30%',
+  'space-sign-hero-4.webp': '72% 42%',
 }
 
 const projects = gallery.filter((g, i) => i % 2 === 0 || g.type === 'Blade').slice(0, 12)

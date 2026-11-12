@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import useDesignAssets from '../../shared/useDesignAssets.js'
 import { BASE, PHONE, PHONE_TEL, EMAIL, HOURS, SOCIAL, photos } from '../../shared/content.js'
 import { icons } from './icons.jsx'
@@ -57,14 +57,34 @@ export default function Editorial({ page }) {
   const { Page, title, cta = true } = pages[page] ?? pages.home
   useDesignAssets(css, FONTS, title)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [quoteService, setQuoteService] = useState('') // the pop-up form's service id; '' is none
+  const [quoteMessage, setQuoteMessage] = useState('') // the pop-up form's message
+  const suggested = useRef('') // the last message a button suggested
   const quoteRef = useRef(null)
   const closeMenu = useCallback(() => setMenuOpen(false), [])
 
   const current = (P) => (Page === P ? 'page' : undefined)
 
-  // Every "Get a free quote" button opens the quote pop-up.
-  const openQuote = useCallback(() => {
+  // Arriving at /#permits or /signs/#blade: the section didn't exist yet when the
+  // browser looked for it, so jump there now. 'instant' skips smooth scrolling.
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1))
+    if (id) document.getElementById(id)?.scrollIntoView({ behavior: 'instant' })
+  }, [])
+
+  // Every "Get a free quote" button opens the quote pop-up. A button for one
+  // service passes its id (from signTypes or otherServices) to choose it in the
+  // form, and the project gallery also suggests a message ("I'd like a sign like
+  // the one you made for …"). The suggestion replaces only an empty message or an
+  // earlier suggestion, never what the visitor typed. The other buttons pass their
+  // click event, which leaves the form as it is.
+  const openQuote = useCallback((service, message) => {
     setMenuOpen(false)
+    if (typeof service === 'string') setQuoteService(service)
+    if (typeof message === 'string') {
+      setQuoteMessage((m) => (!m.trim() || m === suggested.current ? message : m))
+      suggested.current = message
+    }
     if (!quoteRef.current.open) quoteRef.current.showModal()
   }, [])
   const closeQuote = useCallback(() => quoteRef.current.close(), [])
@@ -134,7 +154,7 @@ export default function Editorial({ page }) {
             </div>
             <div className="foot-cols">
               <div className="foot-col"><h5 className="label">Studio</h5>{navLinks.map(([, href, label]) => <a key={href} href={href}>{label}</a>)}</div>
-              <div className="foot-col"><h5 className="label">Services</h5><a href={SIGNS_URL}>Channel Letters</a><a href={SIGNS_URL}>LED Neon &amp; Lightbox</a><a href={SIGNS_URL}>Awnings &amp; Vestibules</a><a href={PERMITS_URL}>Permits &amp; Violations</a></div>
+              <div className="foot-col"><h5 className="label">Services</h5><a href={`${SIGNS_URL}#channel-letters`}>Channel Letters</a><a href={`${SIGNS_URL}#led-neon`}>LED Neon &amp; Lightbox</a><a href={`${SIGNS_URL}#awning-vestibule`}>Awnings &amp; Vestibules</a><a href={PERMITS_URL}>Permits &amp; Violations</a></div>
               <div className="foot-col">
                 <h5 className="label">Contact</h5>
                 <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
@@ -160,7 +180,7 @@ export default function Editorial({ page }) {
         <button className="qm-close" type="button" aria-label="Close" onClick={closeQuote}>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6 18 18M18 6 6 18" /></svg>
         </button>
-        <QuoteForm />
+        <QuoteForm service={quoteService} onService={setQuoteService} message={quoteMessage} onMessage={setQuoteMessage} />
       </dialog>
     </>
   )
