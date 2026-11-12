@@ -33,9 +33,12 @@ export const heroSlides = [
 ]
 
 // The 12 sign types on spacesign.com/signs, in that page's order and with its
-// titles. Each photo (public/assets/signs/) is the one that page shows for the
-// type, at its crop. `id` names the type in URLs (/signs/#blade, /work/?type=blade)
-// and in the quote form. `copy` is the homepage card's one line; `details` is the
+// titles, plus Flat Panel Sign (after Carved), a folder in the client's Google
+// Drive photos (Nov 2026) that spacesign.com doesn't have. Each photo
+// (public/assets/signs/) is the one that page shows for the type, at its crop;
+// Flat Panel's is cropped from one of its Drive photos. `id` names the type in
+// URLs (/signs/#blade, /work/?type=blade) and in the quote form. `copy` is the
+// homepage card's one line; `details` is the
 // Sign Types page's description. spacesign.com's type pages have no description,
 // only the styles some types come in (channel letters: front lit, back lit, front
 // & back lit; awning, vestibule, canopy; custom vinyl, digital printing, banners;
@@ -71,6 +74,10 @@ export const signTypes = [
     copy: 'Carved panels with raised lettering and real depth.',
     made: 'A carved sign',
     details: 'Carved panels with raised lettering and real depth, finished in paint or gold. A timeless, crafted look for boutiques, restaurants and professional offices.' },
+  { id: 'flat-panel', title: 'Flat Panel Sign', img: 'flat-panel.webp', alt: 'Spirals Cinnamon Rolls flat panel sign above a storefront',
+    copy: 'Aluminum panels with printed graphics, clean and affordable.',
+    made: 'A flat panel sign',
+    details: 'Flat aluminum panels with your name, logo and colors in printed or cut vinyl, mounted across your storefront or building. A clean, durable and affordable sign, sized to the facade, from narrow shopfronts to warehouses.' },
   { id: 'pylon', title: 'Pylon Sign', img: 'pylon.jpg', alt: 'Feel Beauty pylon sign on two posts',
     copy: 'Freestanding signs that mark your site from the road.',
     made: 'A freestanding pylon sign',

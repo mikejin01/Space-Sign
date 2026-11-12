@@ -31,7 +31,7 @@ Queens, Brooklyn, Manhattan, the Bronx, Long Island — and the wider Tri-State 
 
 ## Services / Products
 Channel Letters (Front Lit / Back Lit / Front & Back Lit), 3D Letters, LED Neon Signs,
-Illuminated Lightbox Signs, Blade Signs, Push-Thru Signs, Carved Signs, Pylon Signs,
+Illuminated Lightbox Signs, Blade Signs, Push-Thru Signs, Carved Signs, Flat Panel Signs (a category in the client's Google Drive photos, not on spacesign.com), Pylon Signs,
 Interior Signs, Awnings & Vestibules, Digital Printing / Custom Vinyl Decals, Custom Banners,
 Trade Show Booths & Displays, Sign Installation & Maintenance, DOB Permits, DOB/ECB Violation Removal.
 
@@ -53,6 +53,6 @@ interior-signs, banners, custom-vinyl-decals, permit-violations.
 ## Asset archive
 - `public/assets/work/` — curated, web-optimized photos: the hero slides and the hand-picked Our Work photos (`work` in `src/shared/projects.js`), named `<sign type>-<business>.jpg` for SEO.
 - `public/assets/signs/` — one photo per sign type, from spacesign.com/signs (`signTypes`).
-- `public/assets/portfolio/` — the Our Work page's other photos: every spacesign.com product-gallery photo (all 257 gallery slots, checked Nov 2026 by matching each image) not already in `work/`, plus the four photos atop spacesign.com/channel-letters, named `<sign type>-<nn>[-<business>].jpg` for SEO (`portfolio` in `src/shared/projects.js`). A photo shown in two galleries is saved once and listed under both types. The business was read off each sign by eye; 14 photos show none and have no suffix. Photos of one job (same building and sign, judged by eye) share a `project` key and show as one card on Our Work, with all of them in the project gallery; 11 projects have several photos.
+- `public/assets/portfolio/` — the Our Work page's other photos: every spacesign.com product-gallery photo (all 257 gallery slots, checked Nov 2026 by matching each image) not already in `work/`, plus the four photos atop spacesign.com/channel-letters, then the client's Google Drive photos (Nov 2026, four folders: Outdoor Signage, Awnings, Interior Signage, Digital Print, Booth & Display) not already on the site, named `<sign type>-<nn>[-<business>].webp` for SEO (`portfolio` in `src/shared/projects.js`). Drive photos are WebP, at most 1600px on the long side, in sRGB with no metadata; 145 gallery photos the Drive had at a higher resolution were replaced by the Drive copy (same name, now `.webp`), and the 95 the Drive didn't have are still the 800px `.jpg` from spacesign.com. Duplicates were found by perceptual hash and feature matching, then checked by eye: exact copies and re-crops of one shot count as one photo. A photo shown in two galleries or two Drive folders is saved once and listed under both types. The business was read off each sign by eye or taken from the Drive file name. Photos of one job (same building and sign, judged by eye) share a `project` key and show as one card on Our Work, with all of them in the project gallery.
 - `public/assets/archive/` — every image scraped from the homepage (optimized), for future use.
 - Originals were downloaded at full resolution during scraping (not committed).
