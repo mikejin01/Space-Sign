@@ -51,8 +51,8 @@ illuminated-sign-box, blade-signs, push-thru-sign, carved-signs, awning-vestibul
 interior-signs, banners, custom-vinyl-decals, permit-violations.
 
 ## Asset archive
-- `public/assets/work/` — curated, web-optimized photos: the hero slides and the hand-picked Our Work photos (`work` in `content.js`), named `<sign type>-<business>.jpg` for SEO.
+- `public/assets/work/` — curated, web-optimized photos: the hero slides and the hand-picked Our Work photos (`work` in `src/shared/projects.js`), named `<sign type>-<business>.jpg` for SEO.
 - `public/assets/signs/` — one photo per sign type, from spacesign.com/signs (`signTypes`).
-- `public/assets/portfolio/` — the Our Work page's other photos: every spacesign.com product-gallery photo (all 257 gallery slots, checked Nov 2026 by matching each image) not already in `work/`, plus the four photos atop spacesign.com/channel-letters, named `<sign type>-<nn>[-<business>].jpg` for SEO (`portfolio`). A photo shown in two galleries is saved once and listed under both types. The business was read off each sign by eye; 14 photos show none and have no suffix. Photos of one job (same building and sign, judged by eye) share a `project` key and show as one card on Our Work, with all of them in the project gallery; 11 projects have several photos.
+- `public/assets/portfolio/` — the Our Work page's other photos: every spacesign.com product-gallery photo (all 257 gallery slots, checked Nov 2026 by matching each image) not already in `work/`, plus the four photos atop spacesign.com/channel-letters, named `<sign type>-<nn>[-<business>].jpg` for SEO (`portfolio` in `src/shared/projects.js`). A photo shown in two galleries is saved once and listed under both types. The business was read off each sign by eye; 14 photos show none and have no suffix. Photos of one job (same building and sign, judged by eye) share a `project` key and show as one card on Our Work, with all of them in the project gallery; 11 projects have several photos.
 - `public/assets/archive/` — every image scraped from the homepage (optimized), for future use.
 - Originals were downloaded at full resolution during scraping (not committed).

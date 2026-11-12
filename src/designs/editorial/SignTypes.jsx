@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { BASE, signTypes, projectsOf, photos } from '../../shared/content.js'
+import { BASE, signTypes, photos } from '../../shared/content.js'
+import { projectsOf } from '../../shared/projects.js'
 import PageHero from './PageHero.jsx'
 import { WorkTile } from './Work.jsx'
 import ProjectGallery from './ProjectGallery.jsx'

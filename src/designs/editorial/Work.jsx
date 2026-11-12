@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react'
-import { BASE, signTypes, projects, projectsOf, photos } from '../../shared/content.js'
+import { BASE, signTypes, photos } from '../../shared/content.js'
+import { projects, projectsOf } from '../../shared/projects.js'
 import PageHero from './PageHero.jsx'
 import ProjectGallery from './ProjectGallery.jsx'
 

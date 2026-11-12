@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
-import { BASE, MAPS_URL, LICENSE, SINCE, heroSlides, signTypes, projects, clients } from '../../shared/content.js'
+import { BASE, MAPS_URL, LICENSE, SINCE, heroSlides, signTypes, clients } from '../../shared/content.js'
+import { projects } from '../../shared/projects.js'
 import { icons } from './icons.jsx'
 import QuoteForm from './QuoteForm.jsx'
 import { SignTypeGrid } from './SignTypes.jsx'
