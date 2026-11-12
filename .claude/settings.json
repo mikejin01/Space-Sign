@@ -25,7 +25,8 @@
       "ClaudeInChromeDomain(www.google.com)",
       "ClaudeInChromeDomain(localhost:4173)",
       "ClaudeInChromeDomain(nordvpn.com)",
-      "ClaudeInChromeDomain(www.spacesign.com)"
+      "ClaudeInChromeDomain(www.spacesign.com)",
+      "ClaudeInChromeDomain(localhost:5199)"
     ]
   }
 }
