@@ -58,6 +58,8 @@ export default function Editorial({ page }) {
   useDesignAssets(css, FONTS, title)
   const [menuOpen, setMenuOpen] = useState(false)
   const [quoteService, setQuoteService] = useState('') // the pop-up form's service id; '' is none
+  const [quoteMessage, setQuoteMessage] = useState('') // the pop-up form's message
+  const suggested = useRef('') // the last message a button suggested
   const quoteRef = useRef(null)
   const closeMenu = useCallback(() => setMenuOpen(false), [])
 
@@ -72,10 +74,17 @@ export default function Editorial({ page }) {
 
   // Every "Get a free quote" button opens the quote pop-up. A button for one
   // service passes its id (from signTypes or otherServices) to choose it in the
-  // form. The rest pass their click event, which leaves the form's choice as it is.
-  const openQuote = useCallback((service) => {
+  // form, and the project gallery also suggests a message ("I'd like a sign like
+  // the one you made for …"). The suggestion replaces only an empty message or an
+  // earlier suggestion, never what the visitor typed. The other buttons pass their
+  // click event, which leaves the form as it is.
+  const openQuote = useCallback((service, message) => {
     setMenuOpen(false)
     if (typeof service === 'string') setQuoteService(service)
+    if (typeof message === 'string') {
+      setQuoteMessage((m) => (!m.trim() || m === suggested.current ? message : m))
+      suggested.current = message
+    }
     if (!quoteRef.current.open) quoteRef.current.showModal()
   }, [])
   const closeQuote = useCallback(() => quoteRef.current.close(), [])
@@ -171,7 +180,7 @@ export default function Editorial({ page }) {
         <button className="qm-close" type="button" aria-label="Close" onClick={closeQuote}>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6 18 18M18 6 6 18" /></svg>
         </button>
-        <QuoteForm service={quoteService} onService={setQuoteService} />
+        <QuoteForm service={quoteService} onService={setQuoteService} message={quoteMessage} onMessage={setQuoteMessage} />
       </dialog>
     </>
   )

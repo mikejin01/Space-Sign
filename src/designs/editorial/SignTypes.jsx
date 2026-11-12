@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { BASE, signTypes, projectsOf, photos } from '../../shared/content.js'
 import PageHero from './PageHero.jsx'
 import { WorkTile } from './Work.jsx'
+import ProjectGallery from './ProjectGallery.jsx'
 
 const SIGNS_URL = `${BASE}signs/`
 
@@ -63,12 +64,14 @@ function TypeNav() {
   )
 }
 
-// How many photos a row's strip holds. A type with more photos shows one fewer
+// How many cards a row's strip holds. A type with more projects shows one fewer
 // and ends with a tile counting the rest, which opens Our Work on that type.
 const STRIP = 5
 
-// One sign type: its title and description, its buttons, and a strip of its photos.
-function SignTypeRow({ id, title, details, onQuote }) {
+// One sign type: its title and description, its buttons, and a strip of its
+// projects. A card opens the project gallery (`onOpen(projects, index)`), which
+// steps through all of the type's projects.
+function SignTypeRow({ id, title, details, onQuote, onOpen }) {
   const all = projectsOf(id)
   const more = all.length > STRIP
   const shown = more ? all.slice(0, STRIP - 1) : all
@@ -82,16 +85,16 @@ function SignTypeRow({ id, title, details, onQuote }) {
           <p>{details}</p>
         </div>
         <div className="st-actions">
-          {more && <a className="btn ghost" href={workUrl}>See all {all.length} photos</a>}
+          {more && <a className="btn ghost" href={workUrl}>See all {all.length} projects</a>}
           <button className="btn" type="button" aria-haspopup="dialog" onClick={() => onQuote(id)}>Get a free quote</button>
         </div>
       </div>
       {shown.length > 0 && (
         <div className="work st-strip">
-          {shown.map((p) => <WorkTile key={p.img} {...p} />)}
+          {shown.map((p, k) => <WorkTile key={p.id} project={p} onOpen={() => onOpen(all, k)} />)}
           {more && (
-            <a className="cell st-more" href={workUrl} aria-label={`See all ${all.length} ${title} photos`}>
-              <img src={`${BASE}assets/${all[STRIP - 1].img}`} alt="" loading="lazy" />
+            <a className="cell st-more" href={workUrl} aria-label={`See all ${all.length} ${title} projects`}>
+              <img src={`${BASE}assets/${all[STRIP - 1].cover}`} alt="" loading="lazy" />
               <span aria-hidden="true">+{all.length - shown.length}<small>more</small></span>
             </a>
           )}
@@ -106,6 +109,8 @@ function SignTypeRow({ id, title, details, onQuote }) {
 // bar and rows share a wrapper, so the bar stops sticking after the last row.
 // `onQuote(id)` opens the quote pop-up with that sign type chosen.
 export default function SignTypes({ onQuote }) {
+  const [gallery, setGallery] = useState(null) // { projects, at } while the gallery is open
+  const open = useCallback((projects, at) => setGallery({ projects, at }), [])
   return (
     <>
       <PageHero title="Sign types" img={photos.heroLetters} onQuote={onQuote}>
@@ -115,10 +120,11 @@ export default function SignTypes({ onQuote }) {
         <TypeNav />
         <section className="sec st-list">
           <div className="wrap">
-            {signTypes.map((s) => <SignTypeRow key={s.id} {...s} onQuote={onQuote} />)}
+            {signTypes.map((s) => <SignTypeRow key={s.id} {...s} onQuote={onQuote} onOpen={open} />)}
           </div>
         </section>
       </div>
+      <ProjectGallery request={gallery} onClose={() => setGallery(null)} onQuote={onQuote} />
     </>
   )
 }

@@ -226,16 +226,18 @@ function ServiceField({ value, onChange, placeholder, dark }) {
 
 // The lead form. It appears in the homepage hero, in the quote pop-up and on the
 // Contact page; each copy keeps its own state. The pop-up's copy is handed its
-// service (`service` and `onService`) by the shell, so a button can choose one
-// before opening it.
-export default function QuoteForm({ kind = 'quote', service, onService }) {
+// service and message (`service`/`onService`, `message`/`onMessage`) by the
+// shell, so a button can choose a service and suggest a message before opening it.
+export default function QuoteForm({ kind = 'quote', service, onService, message, onMessage }) {
   const c = copy[kind]
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' })
   const [ownService, setOwnService] = useState('')
   const svc = service ?? ownService
   const setSvc = onService ?? setOwnService
+  const msg = message ?? form.message
   const [sent, setSent] = useState(false)
   const phoneRef = useRef(null)
+  const messageRef = useRef(null)
   const phoneCaret = useRef(null) // digits before the caret, restored after the phone field is reformatted
 
   const onField = useCallback((e) => {
@@ -247,8 +249,15 @@ export default function QuoteForm({ kind = 'quote', service, onService }) {
       value = formatPhone(phoneDigits(value))
     }
     el.setCustomValidity(fieldError[el.name](value))
-    setForm((f) => ({ ...f, [el.name]: value }))
-  }, [])
+    if (el.name === 'message' && onMessage) onMessage(value)
+    else setForm((f) => ({ ...f, [el.name]: value }))
+  }, [onMessage])
+
+  // A message set from outside (a suggested one) skips onField, so recheck it
+  // here; otherwise an earlier "please tell us" error would block the submit.
+  useLayoutEffect(() => {
+    messageRef.current.setCustomValidity(fieldError.message(msg))
+  }, [msg])
 
   // Show our message instead of the browser's generic one, including for fields never typed in.
   const onInvalid = useCallback((e) => {
@@ -271,9 +280,9 @@ export default function QuoteForm({ kind = 'quote', service, onService }) {
   const onSubmit = useCallback((e) => {
     e.preventDefault()
     const label = serviceById[svc]?.title
-    sendQuoteEmail({ ...form, extra: label ? { Service: label } : undefined }, label ? `${c.topic} — ${label}` : c.topic)
+    sendQuoteEmail({ ...form, message: msg, extra: label ? { Service: label } : undefined }, label ? `${c.topic} — ${label}` : c.topic)
     setSent(true)
-  }, [form, svc, c.topic])
+  }, [form, msg, svc, c.topic])
 
   return (
     <form className="quote-card" onSubmit={onSubmit}>
@@ -289,7 +298,7 @@ export default function QuoteForm({ kind = 'quote', service, onService }) {
         <input ref={phoneRef} name="phone" type="tel" value={form.phone} onChange={onField} onInvalid={onInvalid} placeholder="Contact number*" autoComplete="tel" required />
         {/* the quote card is dark (hero, pop-up); the Contact page's is light */}
         <ServiceField value={svc} onChange={setSvc} placeholder={c.service} dark={kind === 'quote'} />
-        <textarea name="message" value={form.message} onChange={onField} onInvalid={onInvalid} placeholder={c.message} rows={4} required />
+        <textarea ref={messageRef} name="message" value={msg} onChange={onField} onInvalid={onInvalid} placeholder={c.message} rows={4} required />
       </div>
       <button className="btn qc-submit" type="submit">
         {sent ? 'Thank you — opening your email…' : c.submit}

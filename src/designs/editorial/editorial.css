@@ -36,7 +36,7 @@
 /* dark palette — re-scoped on dark surfaces so child rules invert: the hero
    (text on photos), the quote pop-up (matches the hero's form), the dark
    cards, bands and page heroes (.dark) and the footer. */
-.hero,.quote-modal,.dark,footer{
+.hero,.quote-modal,.gallery-modal,.dark,footer{
   --bg2:#141413;--panel:#1a1a18;--ink:#f3f1ea;--mute:#9b988f;--line:#2a2a27;--on-ink:#0a0a0a;
 }
 .hero,.dark,footer{color:var(--ink)}
@@ -228,22 +228,63 @@ header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.88);
   max-height:calc(100% - 32px);max-height:calc(100dvh - 32px);margin:auto;padding:0;
   border:none;border-radius:var(--r-lg);background:transparent;color:var(--ink);
   overflow:auto;overscroll-behavior:contain}
-.quote-modal::backdrop{background:rgba(12,12,11,.62);
+.quote-modal::backdrop,.gallery-modal::backdrop{background:rgba(12,12,11,.62);
   backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
-.quote-modal[open]{animation:qm-in .24s ease-out}
-.quote-modal[open]::backdrop{animation:qm-fade .24s ease-out}
+.quote-modal[open],.gallery-modal[open]{animation:qm-in .24s ease-out}
+.quote-modal[open]::backdrop,.gallery-modal[open]::backdrop{animation:qm-fade .24s ease-out}
 .qm-close{position:absolute;top:16px;right:16px;z-index:2;width:36px;height:36px;padding:0;
   display:flex;align-items:center;justify-content:center;color:var(--ink);cursor:pointer;
   background:rgba(243,241,234,.06);border:1px solid rgba(243,241,234,.16);border-radius:50%;
   transition:background .18s ease,border-color .18s ease}
 .qm-close:hover{background:var(--red);border-color:var(--red)}
 .qm-close svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
-html:has(.quote-modal[open]){overflow:hidden} /* stop the page scrolling behind the pop-up */
+html:has(.quote-modal[open]),html:has(.gallery-modal[open]){overflow:hidden} /* stop the page scrolling behind a pop-up */
 @keyframes qm-in{from{opacity:0;transform:translateY(14px) scale(.98)}}
 @keyframes qm-fade{from{opacity:0}}
 @media(prefers-reduced-motion:reduce){
-  .quote-modal[open],.quote-modal[open]::backdrop{animation:none}
+  .quote-modal[open],.quote-modal[open]::backdrop,.gallery-modal[open],.gallery-modal[open]::backdrop,.gm-stage img{animation:none}
 }
+
+/* project gallery pop-up (ProjectGallery.jsx) — one dark panel: the photo on a
+   black stage with arrows, a bar of the project's photos and a count beneath it,
+   and the details beside them. The stage has a fixed size and the photo is
+   contained in it, so the pop-up keeps its size as the photos change. Under
+   900px the details go below the photo. Like the quote pop-up, its content fills
+   the dialog box, so a click on the dialog itself is a backdrop click. */
+.gallery-modal{width:min(1180px,calc(100% - 32px));max-width:none;
+  max-height:calc(100% - 32px);max-height:calc(100dvh - 32px);margin:auto;padding:0;
+  border:1px solid rgba(243,241,234,.12);border-radius:var(--r-lg);background:var(--panel);color:var(--ink);
+  overflow:auto;overscroll-behavior:contain;box-shadow:0 24px 64px rgba(0,0,0,.5)}
+.gm-close{background:rgba(12,12,11,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.gm{display:grid;grid-template-columns:minmax(0,1fr) 340px}
+.gm-media{display:flex;flex-direction:column;gap:12px;min-width:0;padding:16px;background:#0e0e0d}
+.gm-stage{position:relative;height:min(64vh,620px);border-radius:var(--r-md);overflow:hidden;background:#000;
+  touch-action:pan-y;user-select:none}
+.gm-stage img{display:block;width:100%;height:100%;object-fit:contain;animation:qm-fade .2s ease-out}
+.gm-arrow{position:absolute;top:50%;z-index:2;display:flex;align-items:center;justify-content:center;
+  width:44px;height:44px;padding:0;transform:translateY(-50%);cursor:pointer;color:#fff;
+  background:rgba(12,12,11,.55);border:1px solid rgba(243,241,234,.18);border-radius:50%;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:background .18s ease,opacity .18s ease}
+.gm-arrow:hover{background:var(--red);border-color:var(--red)}
+.gm-arrow:disabled{opacity:0;pointer-events:none}
+.gm-arrow svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.gm-arrow.prev{left:12px}
+.gm-arrow.next{right:12px}
+.gm-bar{display:flex;align-items:center;gap:16px;min-height:54px}
+.gm-thumbs{display:flex;gap:8px;min-width:0;overflow-x:auto;scrollbar-width:none}
+.gm-thumbs::-webkit-scrollbar{display:none}
+.gm-thumbs button{flex:none;width:72px;height:54px;padding:0;overflow:hidden;cursor:pointer;opacity:.55;
+  background:none;border:2px solid transparent;border-radius:6px;transition:opacity .18s ease,border-color .18s ease}
+.gm-thumbs button:hover{opacity:.9}
+.gm-thumbs button[aria-current]{opacity:1;border-color:var(--red)}
+.gm-thumbs img{display:block;width:100%;height:100%;object-fit:cover}
+.gm-count{margin-left:auto;white-space:nowrap;color:var(--mute);font-size:13px;font-variant-numeric:tabular-nums}
+.gm-info{display:flex;flex-direction:column;padding:60px 28px 28px}
+.gm-type{color:var(--red)}
+.gm-info h2{margin-top:10px;font-size:26px;font-weight:600;letter-spacing:-.015em;line-height:1.2}
+.gm-caption{margin-top:14px;font-size:16px;line-height:1.55}
+.gm-details{margin-top:12px;color:var(--mute);font-size:14px;line-height:1.6}
+.gm-actions{display:flex;flex-direction:column;align-items:flex-start;gap:16px;margin-top:auto;padding-top:28px}
 
 /* page hero — the banner atop every page but the homepage (PageHero.jsx): the
    title, lede and quote and call buttons over a photo, darkest on the left where
@@ -315,6 +356,15 @@ html:has(.quote-modal[open]){overflow:hidden} /* stop the page scrolling behind 
    absolutely so it never stretches its tile. */
 .work{display:grid;gap:14px;grid-template-columns:repeat(4,1fr)}
 .work .cell{position:relative;overflow:hidden;aspect-ratio:4/3;border:1px solid var(--line);border-radius:var(--r-lg)}
+/* a project card is a button (WorkTile): reset its look, and ring it when focused by keyboard */
+.work button.cell{display:block;width:100%;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer;background:var(--line)}
+.work .cell:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.work .cell:focus-visible .cap{opacity:1;transform:none}
+/* "3 photos" on a card of several */
+.cell-count{position:absolute;top:10px;right:10px;z-index:3;display:inline-flex;align-items:center;gap:6px;
+  padding:5px 10px;border-radius:999px;background:rgba(12,12,11,.7);color:#fff;font-size:12px;font-weight:600;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.cell-count svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
 .work-bento .cell:first-child{grid-column:span 2;grid-row:span 2;aspect-ratio:auto}
 .work .cell img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
 .work .cell:hover img{transform:scale(1.05)}
@@ -620,6 +670,11 @@ footer{padding:64px 0 44px;background:#141415}
     margin:0 -22px;padding:0 22px;scroll-padding:0 22px}
   .st-strip::-webkit-scrollbar{display:none}
   .st-strip .cell{scroll-snap-align:start}
+  /* gallery: one column, the photo 4:3 on top */
+  .gm{grid-template-columns:minmax(0,1fr)}
+  .gm-stage{height:auto;aspect-ratio:4/3}
+  .gm-info{padding:20px 22px 24px}
+  .gm-actions{margin-top:0;padding-top:22px}
   .about{grid-template-columns:1fr;gap:32px}
   .panels.pair{grid-template-columns:1fr}
   .ab-story,.ab-area{grid-template-columns:1fr;gap:28px}
@@ -688,6 +743,15 @@ footer{padding:64px 0 44px;background:#141415}
   .st-actions .btn{flex:1 1 auto;justify-content:center;padding-left:14px;padding-right:14px}
   .work.st-strip{grid-auto-columns:72%;margin:0 -18px;padding:0 18px;scroll-padding:0 18px}
   .st-more span{font-size:26px}
+  .gallery-modal{width:calc(100% - 20px);max-height:calc(100dvh - 20px)}
+  .gm-media{padding:8px;gap:8px}
+  .gm-bar{flex-wrap:wrap;gap:6px 12px;min-height:0}
+  .gm-thumbs{flex:1 1 100%} /* the strip gets the full width; the count goes under it */
+  .gm-count{margin-left:0}
+  .gm-arrow{width:38px;height:38px}
+  .gm-thumbs button{width:60px;height:45px}
+  .gm-info h2{font-size:22px}
+  .gm-caption{font-size:15px}
   .logo{height:50px;padding:0 24px}
   .logo img{max-width:160px}
   .about-bio p{font-size:16px}

@@ -1,15 +1,17 @@
 import { useState, useEffect, useCallback } from 'react'
-import { BASE, MAPS_URL, LICENSE, SINCE, heroSlides, signTypes, work, clients } from '../../shared/content.js'
+import { BASE, MAPS_URL, LICENSE, SINCE, heroSlides, signTypes, projects, clients } from '../../shared/content.js'
 import { icons } from './icons.jsx'
 import QuoteForm from './QuoteForm.jsx'
 import { SignTypeGrid } from './SignTypes.jsx'
 import { WorkTile } from './Work.jsx'
+import ProjectGallery from './ProjectGallery.jsx'
 
 // The homepage sections. The shell (Editorial.jsx) adds the header, CTA band and
 // footer around them; `onQuote` opens its quote pop-up, and `onQuote(id)` opens
 // it with that service chosen.
 export default function Home({ onQuote }) {
   const [slide, setSlide] = useState(0)
+  const [gallery, setGallery] = useState(null) // { projects, at } while the project gallery is open
   const go = useCallback((n) => setSlide((s) => (n + heroSlides.length) % heroSlides.length), [])
 
   useEffect(() => {
@@ -156,7 +158,7 @@ export default function Home({ onQuote }) {
             <p>A cross-section of recent storefront, illuminated and interior programs across NYC.</p>
           </div>
           <div className="work work-bento">
-            {work.slice(0, 5).map((w) => <WorkTile key={w.img} {...w} />)}
+            {projects.slice(0, 5).map((p, k) => <WorkTile key={p.id} project={p} onOpen={() => setGallery({ projects, at: k })} />)}
           </div>
           <div className="sec-more">
             <a className="btn ghost" href={`${BASE}work/`}>View all work</a>
@@ -194,6 +196,9 @@ export default function Home({ onQuote }) {
           </div>
         </div>
       </section>
+
+      {/* the "Our work" cards open it, and it steps on through every project */}
+      <ProjectGallery request={gallery} onClose={() => setGallery(null)} onQuote={onQuote} />
     </>
   )
 }
