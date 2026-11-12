@@ -31,33 +31,61 @@ export const heroSlides = [
   { img: 'space-sign-hero-4.png', label: 'Space Sign — Custom Sign Fabrication' },
 ]
 
-// The 12 sign types on spacesign.com/signs, in that page's order. Each photo
-// (public/assets/signs/) is the one that page shows for the type, at its crop.
+// The 12 sign types on spacesign.com/signs, in that page's order and with its
+// titles. Each photo (public/assets/signs/) is the one that page shows for the
+// type, at its crop. `id` names the type in URLs (/signs/#blade, /work/?type=blade)
+// and in the quote form. `copy` is the homepage card's one line; `details` is the
+// Sign Types page's description. spacesign.com's type pages have no description,
+// only the styles some types come in (channel letters: front lit, back lit, front
+// & back lit; awning, vestibule, canopy; custom vinyl, digital printing, banners;
+// trade show booths and displays), so `details` works those in. Drafted Nov 2026
+// for the client to approve.
 export const signTypes = [
-  { title: 'Channel Letters Sign', img: 'channel-letters.jpg', alt: 'Pizza Hut channel letters on a brick storefront',
-    copy: 'Illuminated letters, front-lit, back-lit or front & back-lit.' },
-  { title: '3D Letters Sign', img: '3d-letters.jpg', alt: 'Halo-lit Panini 3D letters above a menu board',
-    copy: 'Precision-cut dimensional letters for facades and lobbies.' },
-  { title: 'LED Neon Sign', img: 'led-neon.jpg', alt: 'Yellow LED neon sign spelling burger',
-    copy: 'The glow of classic neon from energy-efficient LED.' },
-  { title: 'Lightbox Sign', img: 'lightbox.jpg', alt: 'Round Connecticut Muffin lightbox sign',
-    copy: 'Illuminated cabinet signs, bright and even day and night.' },
-  { title: 'Blade Sign', img: 'blade.jpg', alt: 'Subway blade sign projecting from a storefront',
-    copy: 'Projecting signs that reach foot traffic up and down the block.' },
-  { title: 'Push-Thru Sign', img: 'push-thru.jpg', alt: 'Round push-thru sign for 3S Restaurant Sports Nightlife',
-    copy: 'Acrylic letters pushed through a cut face, lit from within.' },
-  { title: 'Carved Sign', img: 'carved.jpg', alt: 'Carved Flowers by Glen Head Flower Shop sign with gold lettering',
-    copy: 'Carved panels with raised lettering and real depth.' },
-  { title: 'Pylon Sign', img: 'pylon.jpg', alt: 'Feel Beauty pylon sign on two posts',
-    copy: 'Freestanding signs that mark your site from the road.' },
-  { title: 'Interior Sign', img: 'interior.jpg', alt: 'Beyond Vape Bronx Strong wall graphic in a lounge',
-    copy: 'Lobby, wall and wayfinding graphics for inside your space.' },
-  { title: 'Awning & Vestibule', img: 'awning-vestibule.jpg', alt: 'Red Carmine’s awning and entrance vestibule',
-    copy: 'Awnings, vestibules and canopies made to fit your storefront.' },
-  { title: 'Digital Printing', img: 'digital-printing.jpg', alt: 'Printed soup-can window graphics for Hudson Market',
-    copy: 'Custom vinyl, digital prints and banners.' },
-  { title: 'Trade Show', img: 'trade-show.jpg', alt: 'Neoflam trade show booth with product shelving',
-    copy: 'Booths and displays that stand out on the show floor.' },
+  { id: 'channel-letters', title: 'Channel Letters Sign', img: 'channel-letters.jpg', alt: 'Pizza Hut channel letters on a brick storefront',
+    copy: 'Illuminated letters, front-lit, back-lit or front & back-lit.',
+    details: 'Individually built, illuminated letters mounted on your storefront: the classic lit business sign. Front-lit letters glow bright and crisp, back-lit letters cast a soft halo on the wall behind them, and front & back-lit letters do both.' },
+  { id: '3d-letters', title: '3D Letters Sign', img: '3d-letters.jpg', alt: 'Halo-lit Panini 3D letters above a menu board',
+    copy: 'Precision-cut dimensional letters for facades and lobbies.',
+    details: 'Precision-cut dimensional letters and logos for facades, lobbies and reception walls. Their depth catches light and casts shadow by day, and they can be halo-lit to glow at night.' },
+  { id: 'led-neon', title: 'LED Neon Sign', img: 'led-neon.jpg', alt: 'Yellow LED neon sign spelling burger',
+    copy: 'The glow of classic neon from energy-efficient LED.',
+    details: 'The glow of classic neon, made with flexible LED instead of glass tubing. It’s energy-efficient and durable, and bends into lettering, logos and artwork for windows, walls and interiors.' },
+  { id: 'lightbox', title: 'Lightbox Sign', img: 'lightbox.jpg', alt: 'Round Connecticut Muffin lightbox sign',
+    copy: 'Illuminated cabinet signs, bright and even day and night.',
+    details: 'Illuminated cabinet signs, lit evenly from within so your logo and colors read clearly day and night. Built in the shape you need, from long storefront boxes to round logo signs.' },
+  { id: 'blade', title: 'Blade Sign', img: 'blade.jpg', alt: 'Subway blade sign projecting from a storefront',
+    copy: 'Projecting signs that reach foot traffic up and down the block.',
+    details: 'Projecting signs mounted at a right angle to your storefront, so people walking up and down the block see you before they reach your door. Lit or non-lit, in any shape.' },
+  { id: 'push-thru', title: 'Push-Thru Sign', img: 'push-thru.jpg', alt: 'Round push-thru sign for 3S Restaurant Sports Nightlife',
+    copy: 'Acrylic letters pushed through a cut face, lit from within.',
+    details: 'Acrylic letters and logos pushed through a cut-out face and lit from within, so only your lettering glows. A clean, upscale take on the lightbox.' },
+  { id: 'carved', title: 'Carved Sign', img: 'carved.jpg', alt: 'Carved Flowers by Glen Head Flower Shop sign with gold lettering',
+    copy: 'Carved panels with raised lettering and real depth.',
+    details: 'Carved panels with raised lettering and real depth, finished in paint or gold. A timeless, crafted look for boutiques, restaurants and professional offices.' },
+  { id: 'pylon', title: 'Pylon Sign', img: 'pylon.jpg', alt: 'Feel Beauty pylon sign on two posts',
+    copy: 'Freestanding signs that mark your site from the road.',
+    details: 'Freestanding signs on one or two posts that mark your site from the road. Made for plazas, dealerships and businesses set back from the street.' },
+  { id: 'interior', title: 'Interior Sign', img: 'interior.jpg', alt: 'Beyond Vape Bronx Strong wall graphic in a lounge',
+    copy: 'Lobby, wall and wayfinding graphics for inside your space.',
+    details: 'Lobby logos, wall graphics and wayfinding that carry your brand indoors, from the reception desk to feature walls in salons, clinics and markets.' },
+  { id: 'awning-vestibule', title: 'Awning & Vestibule', img: 'awning-vestibule.jpg', alt: 'Red Carmine’s awning and entrance vestibule',
+    copy: 'Awnings, vestibules and canopies made to fit your storefront.',
+    details: 'Awnings, vestibules and canopies made to fit your storefront. They shelter your entrance and put your name in front of everyone who passes, and we file the DOB permit they need.' },
+  { id: 'digital-printing', title: 'Digital Printing', img: 'digital-printing.jpg', alt: 'Printed soup-can window graphics for Hudson Market',
+    copy: 'Custom vinyl, digital prints and banners.',
+    details: 'Custom vinyl decals, digital prints and banners for windows, walls and promotions. Printed in-house in full color and installed by our crew.' },
+  { id: 'trade-show', title: 'Trade Show', img: 'trade-show.jpg', alt: 'Neoflam trade show booth with product shelving',
+    copy: 'Booths and displays that stand out on the show floor.',
+    details: 'Trade show booths and displays that stand out on the show floor, with backdrops, graphics and shelving built around your products and your brand.' },
+]
+
+// The quote form's choices after the sign types. `id` is the form's value; the
+// Permits and Violations buttons choose 'permit' and 'violation'.
+export const otherServices = [
+  { id: 'permit', title: 'DOB sign permit' },
+  { id: 'violation', title: 'Violation removal' },
+  { id: 'repair', title: 'Sign repair or maintenance' },
+  { id: 'other', title: 'Something else' },
 ]
 
 // Project photos shown first, paths under public/assets/. The homepage shows the
@@ -243,6 +271,20 @@ export const portfolio = [
     { file: 'trade-show-04.jpg' },
   ] },
 ]
+
+// Every project photo, `work` first and then `portfolio`, as { img (a path under
+// public/assets/), name, type (a `signTypes` title) }. The Our Work page shows
+// them all; the Sign Types page shows the first few of each type.
+export const projects = [
+  ...work,
+  ...portfolio.flatMap(({ type, photos }) => photos.map(({ file, name }) => ({ img: `portfolio/${file}`, name, type }))),
+]
+
+// The project photos of one sign type, by its `signTypes` id.
+export function projectsOf(id) {
+  const title = signTypes.find((s) => s.id === id)?.title
+  return projects.filter((p) => p.type === title)
+}
 
 export const clients = [
   { file: 'shinhan-bank', name: 'Shinhan Bank' },

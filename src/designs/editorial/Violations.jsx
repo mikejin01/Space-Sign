@@ -19,11 +19,13 @@ const stakes = [
 ]
 
 // The Violations page, /violations/ (violations/index.html). The copy is lightly
-// edited from spacesign.com/permit-violations.
+// edited from spacesign.com/permit-violations. Its quote buttons choose the
+// violation-removal service.
 export default function Violations({ onQuote }) {
+  const quote = () => onQuote('violation')
   return (
     <>
-      <PageHero title="NYC sign violations" img={photos.subwayCorner} position="center 36%" onQuote={onQuote}>
+      <PageHero title="NYC sign violations" img={photos.subwayCorner} position="center 36%" onQuote={quote}>
         We can help eliminate any sign and awning violations. Everything is done in house.
       </PageHero>
 
@@ -68,7 +70,7 @@ export default function Violations({ onQuote }) {
           <div className="pv-body">
             <h2>Only a licensed sign hanger can clear them</h2>
             <p>NYC Sign Violations can only be corrected and cleared by NYC Licensed Sign Hangers. Space Sign is a NYC Licensed Sign Hanger and can remove NYC DOB and NYC ECB Sign Violations.</p>
-            <button className="btn" type="button" aria-haspopup="dialog" onClick={onQuote}>Get a free quote</button>
+            <button className="btn" type="button" aria-haspopup="dialog" onClick={quote}>Get a free quote</button>
           </div>
         </div>
       </section>

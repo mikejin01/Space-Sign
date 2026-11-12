@@ -1,9 +1,9 @@
-import { useState } from 'react'
-import { BASE, signTypes, work, portfolio, photos } from '../../shared/content.js'
+import { useState, useCallback } from 'react'
+import { BASE, signTypes, projects, projectsOf, photos } from '../../shared/content.js'
 import PageHero from './PageHero.jsx'
 
 // A project photo with a hover caption: business name (when known) and sign type.
-// The homepage's bento and the Our Work page's grid both use it.
+// The homepage's bento, the Sign Types rows and the Our Work page's grid use it.
 export function WorkTile({ img, name, type }) {
   return (
     <figure className="cell">
@@ -13,21 +13,32 @@ export function WorkTile({ img, name, type }) {
   )
 }
 
-// Every photo: `work` first, then the gallery photos by sign type.
-const all = [
-  ...work,
-  ...portfolio.flatMap(({ type, photos }) => photos.map(({ file, name }) => ({ img: `portfolio/${file}`, name, type }))),
-]
-
-// One filter per sign type that has photos, in `signTypes` order, with its count.
+// One filter per sign type that has photos, in `signTypes` order, with its photos.
 const filters = signTypes
-  .map(({ title }) => [title, all.filter((p) => p.type === title).length])
-  .filter(([, n]) => n)
+  .map(({ id, title }) => ({ id, title, photos: projectsOf(id) }))
+  .filter((f) => f.photos.length)
+
+// The filter named in the URL, /work/?type=<sign type id>, which is how the Sign
+// Types page links here. A missing or unknown id shows every photo (null).
+function typeFromUrl() {
+  const id = new URLSearchParams(window.location.search).get('type')
+  return filters.some((f) => f.id === id) ? id : null
+}
 
 // The Our Work page, /work/ (work/index.html).
 export default function Work({ onQuote }) {
-  const [type, setType] = useState(null) // null shows every photo
-  const shown = type ? all.filter((p) => p.type === type) : all
+  const [type, setType] = useState(typeFromUrl)
+  const shown = filters.find((f) => f.id === type)?.photos ?? projects
+
+  // Keep the URL in step, so a filtered view can be shared or bookmarked.
+  // replaceState, so Back still leaves the page rather than stepping through filters.
+  const choose = useCallback((id) => {
+    setType(id)
+    const url = new URL(window.location.href)
+    if (id) url.searchParams.set('type', id)
+    else url.searchParams.delete('type')
+    history.replaceState(history.state, '', url)
+  }, [])
 
   return (
     <>
@@ -37,10 +48,10 @@ export default function Work({ onQuote }) {
       <section className="sec">
         <div className="wrap">
           <div className="work-filters" role="group" aria-label="Filter by sign type">
-            <button type="button" aria-pressed={!type} onClick={() => setType(null)}>All <span>{all.length}</span></button>
-            {filters.map(([t, n]) => (
-              <button type="button" key={t} aria-pressed={type === t} onClick={() => setType(t)}>
-                {t.replace(/ Sign$/, '')} <span>{n}</span>
+            <button type="button" aria-pressed={!type} onClick={() => choose(null)}>All <span>{projects.length}</span></button>
+            {filters.map((f) => (
+              <button type="button" key={f.id} aria-pressed={type === f.id} onClick={() => choose(f.id)}>
+                {f.title.replace(/ Sign$/, '')} <span>{f.photos.length}</span>
               </button>
             ))}
           </div>
